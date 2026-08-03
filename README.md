@@ -94,3 +94,12 @@ GitHub Actions workflow runs on pushes and pull requests to `main` with:
 
 - Changelog: CHANGELOG.md
 - Current release draft: RELEASE_CANDIDATE_0.1.0.md
+
+## Repository Hardening
+
+After installing GitHub CLI and authenticating, run:
+
+powershell
+./scripts/github_hardening.ps1
+
+This applies main-branch protection defaults and syncs issue labels.
