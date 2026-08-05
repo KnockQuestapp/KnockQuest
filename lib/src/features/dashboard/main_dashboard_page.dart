@@ -36,6 +36,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isMobileViewport = MediaQuery.sizeOf(context).width < 720;
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -82,51 +83,52 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                     ],
                   ),
                   const SizedBox(height: 18),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _QuickAction(
-                          icon: Icons.person_add_alt_1,
-                          color: const Color(0xFF1D5BD7),
-                          label: 'Add Lead',
-                          onTap: _openAddLead,
-                        ),
-                      ),
-                      Expanded(
-                        child: _QuickAction(
-                          icon: Icons.map_outlined,
-                          color: const Color(0xFF13B7D8),
-                          label: 'Open Map',
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            AppRoutes.interactiveMap,
+                  if (!isMobileViewport)
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _QuickAction(
+                            icon: Icons.person_add_alt_1,
+                            color: const Color(0xFF1D5BD7),
+                            label: 'Add Lead',
+                            onTap: _openAddLead,
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: _QuickAction(
-                          icon: Icons.calendar_today_outlined,
-                          color: const Color(0xFF52627C),
-                          label: 'Follow Ups',
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            AppRoutes.followUps,
+                        Expanded(
+                          child: _QuickAction(
+                            icon: Icons.map_outlined,
+                            color: const Color(0xFF13B7D8),
+                            label: 'Open Map',
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              AppRoutes.interactiveMap,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: _QuickAction(
-                          icon: Icons.ios_share_outlined,
-                          color: const Color(0xFF35C784),
-                          label: 'Export',
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            AppRoutes.analytics,
+                        Expanded(
+                          child: _QuickAction(
+                            icon: Icons.calendar_today_outlined,
+                            color: const Color(0xFF52627C),
+                            label: 'Follow Ups',
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              AppRoutes.followUps,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                        Expanded(
+                          child: _QuickAction(
+                            icon: Icons.ios_share_outlined,
+                            color: const Color(0xFF35C784),
+                            label: 'Export',
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              AppRoutes.analytics,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   const SizedBox(height: 20),
                   _SectionTitle('Sales Performance'),
                   const SizedBox(height: 12),
