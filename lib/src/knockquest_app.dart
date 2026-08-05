@@ -37,38 +37,6 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
     },
   );
 
-  static const _mobileNavDestinations = <_MobileNavDestination>[
-    _MobileNavDestination(AppRoutes.dashboard, 'Dashboard', Icons.dashboard),
-    _MobileNavDestination(AppRoutes.addLead, 'Add Lead', Icons.person_add),
-    _MobileNavDestination(
-      AppRoutes.interactiveMap,
-      'Map',
-      Icons.map_outlined,
-    ),
-    _MobileNavDestination(AppRoutes.followUps, 'Follow Ups', Icons.schedule),
-    _MobileNavDestination(AppRoutes.quests, 'Quests', Icons.flag_outlined),
-    _MobileNavDestination(
-      AppRoutes.territories,
-      'Territories',
-      Icons.grid_view,
-    ),
-    _MobileNavDestination(
-      AppRoutes.analytics,
-      'Analytics',
-      Icons.analytics_outlined,
-    ),
-    _MobileNavDestination(
-      AppRoutes.integrations,
-      'Integrations',
-      Icons.hub_outlined,
-    ),
-    _MobileNavDestination(
-      AppRoutes.subscriptions,
-      'Subscriptions',
-      Icons.workspace_premium_outlined,
-    ),
-  ];
-
   @override
   void dispose() {
     _currentRoute.dispose();
@@ -132,26 +100,77 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
               children: <Widget>[
                 child,
                 Positioned(
-                  top: 12,
                   left: 12,
+                  right: 12,
+                  bottom: 12,
                   child: SafeArea(
-                    child: Row(
-                      children: <Widget>[
-                        if (canPop)
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(18),
+                        boxShadow: const <BoxShadow>[
+                          BoxShadow(
+                            color: Color(0x22000000),
+                            blurRadius: 14,
+                            offset: Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
                           _MobileNavButton(
                             tooltip: 'Back',
                             icon: Icons.arrow_back,
-                            onPressed: () =>
-                                _navigatorKey.currentState?.maybePop(),
+                            label: 'Back',
+                            enabled: canPop,
+                            onPressed: canPop
+                                ? () =>
+                                      _navigatorKey.currentState?.maybePop()
+                                : null,
                           ),
-                        if (canPop) const SizedBox(width: 8),
-                        _MobileNavButton(
-                          tooltip: 'Open menu',
-                          icon: Icons.menu,
-                          onPressed: () =>
-                              _openMobileMenu(context, routeName),
-                        ),
-                      ],
+                          _MobileNavButton(
+                            tooltip: 'Add lead',
+                            icon: Icons.person_add_alt_1,
+                            label: 'Add Lead',
+                            onPressed: () =>
+                                _navigatorKey.currentState?.pushNamed(
+                                  AppRoutes.addLead,
+                                ),
+                          ),
+                          _MobileNavButton(
+                            tooltip: 'Open map',
+                            icon: Icons.map_outlined,
+                            label: 'Map',
+                            onPressed: () =>
+                                _navigatorKey.currentState?.pushNamed(
+                                  AppRoutes.interactiveMap,
+                                ),
+                          ),
+                          _MobileNavButton(
+                            tooltip: 'Follow ups',
+                            icon: Icons.calendar_today_outlined,
+                            label: 'Follow Ups',
+                            onPressed: () =>
+                                _navigatorKey.currentState?.pushNamed(
+                                  AppRoutes.followUps,
+                                ),
+                          ),
+                          _MobileNavButton(
+                            tooltip: 'Export',
+                            icon: Icons.ios_share_outlined,
+                            label: 'Export',
+                            onPressed: () =>
+                                _navigatorKey.currentState?.pushNamed(
+                                  AppRoutes.analytics,
+                                ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -183,47 +202,6 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
       },
     );
   }
-
-    Future<void> _openMobileMenu(BuildContext context, String currentRoute) async {
-      final selectedRoute = await showModalBottomSheet<String>(
-        context: context,
-        useSafeArea: true,
-        builder: (context) {
-          return ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              for (final destination in _mobileNavDestinations)
-                ListTile(
-                  leading: Icon(destination.icon),
-                  title: Text(destination.label),
-                  selected: destination.route == currentRoute,
-                  onTap: () => Navigator.of(context).pop(destination.route),
-                ),
-              const Divider(height: 0),
-              ListTile(
-                leading: const Icon(Icons.logout),
-                title: const Text('Log out'),
-                onTap: () => Navigator.of(context).pop(AppRoutes.login),
-              ),
-            ],
-          );
-        },
-      );
-
-      if (selectedRoute == null || selectedRoute == currentRoute) {
-        return;
-      }
-
-      if (selectedRoute == AppRoutes.login) {
-        _navigatorKey.currentState?.pushNamedAndRemoveUntil(
-          AppRoutes.login,
-          (route) => false,
-        );
-        return;
-      }
-
-      _navigatorKey.currentState?.pushNamed(selectedRoute);
-    }
 }
 
   class _RouteTrackingObserver extends NavigatorObserver {
@@ -260,36 +238,50 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
     }
   }
 
-  class _MobileNavDestination {
-    const _MobileNavDestination(this.route, this.label, this.icon);
-
-    final String route;
-    final String label;
-    final IconData icon;
-  }
-
   class _MobileNavButton extends StatelessWidget {
     const _MobileNavButton({
       required this.tooltip,
       required this.icon,
+      required this.label,
       required this.onPressed,
+      this.enabled = true,
     });
 
     final String tooltip;
     final IconData icon;
-    final VoidCallback onPressed;
+    final String label;
+    final VoidCallback? onPressed;
+    final bool enabled;
 
     @override
     Widget build(BuildContext context) {
       final colorScheme = Theme.of(context).colorScheme;
-      return Material(
-        elevation: 3,
-        color: colorScheme.surface,
-        shape: const CircleBorder(),
-        child: IconButton(
-          tooltip: tooltip,
-          onPressed: onPressed,
-          icon: Icon(icon, color: colorScheme.primary),
+      final foreground = enabled
+          ? colorScheme.primary
+          : colorScheme.onSurface.withValues(alpha: 0.45);
+      return Tooltip(
+        message: tooltip,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Icon(icon, size: 20, color: foreground),
+                const SizedBox(height: 2),
+                Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: foreground,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     }
