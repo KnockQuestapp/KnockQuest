@@ -107,11 +107,11 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                   child: SafeArea(
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 6,
+                        horizontal: 12,
+                        vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
+                        color: Colors.white.withValues(alpha: 0.96),
                         borderRadius: BorderRadius.circular(18),
                         boxShadow: const <BoxShadow>[
                           BoxShadow(
@@ -139,6 +139,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                             tooltip: 'Add lead',
                             icon: Icons.person_add_alt_1,
                             label: 'Add Lead',
+                            backgroundColor: const Color(0xFF1D5BD7),
                             onPressed: () =>
                                 _navigatorKey.currentState?.pushNamed(
                                   AppRoutes.addLead,
@@ -148,6 +149,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                             tooltip: 'Open map',
                             icon: Icons.map_outlined,
                             label: 'Map',
+                            backgroundColor: const Color(0xFF13B7D8),
                             onPressed: () =>
                                 _navigatorKey.currentState?.pushNamed(
                                   AppRoutes.interactiveMap,
@@ -157,6 +159,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                             tooltip: 'Follow ups',
                             icon: Icons.calendar_today_outlined,
                             label: 'Follow Ups',
+                            backgroundColor: const Color(0xFF52627C),
                             onPressed: () =>
                                 _navigatorKey.currentState?.pushNamed(
                                   AppRoutes.followUps,
@@ -166,6 +169,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                             tooltip: 'Export',
                             icon: Icons.ios_share_outlined,
                             label: 'Export',
+                            backgroundColor: const Color(0xFF35C784),
                             onPressed: () =>
                                 _navigatorKey.currentState?.pushNamed(
                                   AppRoutes.analytics,
@@ -246,6 +250,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
       required this.icon,
       required this.label,
       required this.onPressed,
+      this.backgroundColor = const Color(0xFF1D5BD7),
       this.enabled = true,
     });
 
@@ -253,32 +258,43 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
     final IconData icon;
     final String label;
     final VoidCallback? onPressed;
+    final Color backgroundColor;
     final bool enabled;
 
     @override
     Widget build(BuildContext context) {
-      final colorScheme = Theme.of(context).colorScheme;
-      final foreground = enabled
-          ? colorScheme.primary
-          : colorScheme.onSurface.withValues(alpha: 0.45);
+      final labelColor = enabled
+          ? const Color(0xFF5F7391)
+          : const Color(0xFF98A6BB);
+      final iconBackground = enabled
+          ? backgroundColor
+          : backgroundColor.withValues(alpha: 0.5);
       return Tooltip(
         message: tooltip,
         child: InkWell(
           borderRadius: BorderRadius.circular(12),
           onTap: onPressed,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Icon(icon, size: 20, color: foreground),
-                const SizedBox(height: 2),
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    color: iconBackground,
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: Icon(icon, size: 23, color: Colors.white),
+                ),
+                const SizedBox(height: 7),
                 Text(
                   label,
                   style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: foreground,
+                    color: labelColor,
                   ),
                 ),
               ],
