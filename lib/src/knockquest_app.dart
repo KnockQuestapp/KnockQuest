@@ -126,14 +126,24 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                         children: <Widget>[
                           if (showBackButton)
                             _MobileNavButton(
-                          tooltip: 'Back',
-                          icon: Icons.arrow_back,
-                          label: 'Back',
-                          enabled: canPop,
-                          onPressed: canPop
-                              ? () =>
-                                _navigatorKey.currentState?.maybePop()
-                              : null,
+                              tooltip: 'Back',
+                              icon: Icons.arrow_back,
+                              label: 'Back',
+                              enabled: canPop,
+                              onPressed: canPop
+                                  ? () =>
+                                      _navigatorKey.currentState?.maybePop()
+                                  : null,
+                            ),
+                          _MobileNavButton(
+                            tooltip: 'Dashboard',
+                            icon: Icons.dashboard_outlined,
+                            label: 'Dashboard',
+                            backgroundColor: const Color(0xFF0F9D58),
+                            onPressed: () =>
+                                _navigatorKey.currentState?.pushNamed(
+                                  AppRoutes.dashboard,
+                                ),
                             ),
                           _MobileNavButton(
                             tooltip: 'Add lead',
@@ -280,19 +290,19 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Container(
-                  width: 52,
-                  height: 52,
+                  width: 44,
+                  height: 44,
                   decoration: BoxDecoration(
                     color: iconBackground,
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(icon, size: 23, color: Colors.white),
+                  child: Icon(icon, size: 18, color: Colors.white),
                 ),
-                const SizedBox(height: 7),
+                const SizedBox(height: 5),
                 Text(
                   label,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 11,
                     fontWeight: FontWeight.w600,
                     color: labelColor,
                   ),

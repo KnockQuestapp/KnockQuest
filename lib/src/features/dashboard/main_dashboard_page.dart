@@ -37,11 +37,17 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
   @override
   Widget build(BuildContext context) {
     final isMobileViewport = MediaQuery.sizeOf(context).width < 720;
+    final contentPadding = EdgeInsets.fromLTRB(
+      16,
+      16,
+      16,
+      isMobileViewport ? 128 : 16,
+    );
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: contentPadding,
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 430),
