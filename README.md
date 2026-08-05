@@ -124,6 +124,15 @@ Two workflows now cover verification and release artifact generation:
 	- builds release web and Android artifacts with `APP_FLAVOR` set from workflow input
 	- uploads `build/web` and `app-<flavor>-release.apk` as downloadable GitHub Actions artifacts
 
+- `.github/workflows/deploy_pages.yml` (`deploy-pages`)
+	- triggers on pushes to `main` and manual runs
+	- builds Flutter web with repository base href for Pages
+	- publishes the app to GitHub Pages
+
+Live app URL:
+
+- `https://knockquestapp.github.io/KnockQuest/`
+
 ### Manual Release Artifact Run
 
 1. Open GitHub Actions and run `release-web-artifact`.
