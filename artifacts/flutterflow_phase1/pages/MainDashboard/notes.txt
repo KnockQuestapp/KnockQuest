@@ -1,0 +1,4 @@
+﻿Critical notes for MainDashboard
+- describe primary user goal
+- list save/navigation behavior
+- list data queries and writes

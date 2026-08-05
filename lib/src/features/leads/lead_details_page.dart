@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../app_routes.dart';
-import '../../sample_data.dart';
 import '../../state/lead_store.dart';
 
 class LeadDetailsPage extends StatelessWidget {
