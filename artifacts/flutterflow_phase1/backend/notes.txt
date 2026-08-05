@@ -1,0 +1,5 @@
+﻿Critical backend notes
+- auth flow
+- lead status rules
+- territory ownership rules
+- visit logging writes

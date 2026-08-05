@@ -1,0 +1,77 @@
+name: release-web-artifact
+
+on:
+  workflow_dispatch:
+    inputs:
+      flavor:
+        description: Build flavor (staging or production)
+        required: true
+        default: production
+        type: choice
+        options:
+          - staging
+          - production
+  push:
+    tags:
+      - v*
+
+concurrency:
+  group: release-web-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Resolve flavor
+        id: flavor
+        shell: bash
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+            echo "value=${{ github.event.inputs.flavor }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=production" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Test
+        run: flutter test
+
+      - name: Build web artifact
+        run: flutter build web --release --dart-define=APP_FLAVOR=${{ steps.flavor.outputs.value }}
+
+      - name: Build android artifact
+        run: flutter build apk --release --flavor ${{ steps.flavor.outputs.value }} --dart-define=APP_FLAVOR=${{ steps.flavor.outputs.value }}
+
+      - name: Upload web artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: knockquest-web-${{ steps.flavor.outputs.value }}-${{ github.run_number }}
+          path: build/web
+          if-no-files-found: error
+
+      - name: Upload android artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: knockquest-android-${{ steps.flavor.outputs.value }}-${{ github.run_number }}
+          path: build/app/outputs/flutter-apk/app-${{ steps.flavor.outputs.value }}-release.apk
+          if-no-files-found: error

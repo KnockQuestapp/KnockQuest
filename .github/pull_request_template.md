@@ -17,8 +17,15 @@ Closes #
 ## Validation
 
 - [ ] flutter pub get
+- [ ] dart format --output=none --set-exit-if-changed .
 - [ ] flutter analyze
 - [ ] flutter test
+- [ ] test/app_routes_smoke_test.dart passes
+- [ ] test/lead_flow_state_test.dart passes
+- [ ] test/settings_interactions_test.dart passes
+- [ ] flutter build web --release --dart-define=APP_FLAVOR=production
+- [ ] scripts/verify_github_exclusive.ps1
+- [ ] scripts/run_github_ci_parity.ps1
 
 ## Security Checklist
 
