@@ -96,6 +96,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
             }
 
             final canPop = _navigatorKey.currentState?.canPop() ?? false;
+            final showBackButton = routeName != AppRoutes.dashboard;
             return Stack(
               children: <Widget>[
                 child,
@@ -123,16 +124,17 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: <Widget>[
-                          _MobileNavButton(
-                            tooltip: 'Back',
-                            icon: Icons.arrow_back,
-                            label: 'Back',
-                            enabled: canPop,
-                            onPressed: canPop
-                                ? () =>
-                                      _navigatorKey.currentState?.maybePop()
-                                : null,
-                          ),
+                          if (showBackButton)
+                            _MobileNavButton(
+                          tooltip: 'Back',
+                          icon: Icons.arrow_back,
+                          label: 'Back',
+                          enabled: canPop,
+                          onPressed: canPop
+                              ? () =>
+                                _navigatorKey.currentState?.maybePop()
+                              : null,
+                            ),
                           _MobileNavButton(
                             tooltip: 'Add lead',
                             icon: Icons.person_add_alt_1,
