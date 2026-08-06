@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 
+import '../integrations/crm_sync_service.dart';
 import '../sample_data.dart';
 
 class LeadStore {
@@ -18,6 +21,7 @@ class LeadStore {
 
   void addLead(LeadRecord lead) {
     leads.value = [...leads.value, lead];
+    unawaited(CrmSyncService.instance.syncLeadCreated(lead));
   }
 
   LeadRecord get latestLead => leads.value.isEmpty ? sampleLead : leads.value.last;
@@ -69,6 +73,7 @@ class LeadStore {
       lastContactDate: lastContactDate,
     );
     leads.value = current;
+    unawaited(CrmSyncService.instance.syncLeadUpdated(current[latestIndex]));
   }
 
   void reset() {
