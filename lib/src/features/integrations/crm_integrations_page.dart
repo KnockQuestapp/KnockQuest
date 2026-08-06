@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../integrations/crm_sync_service.dart';
 import '../../integrations/crm_sync_store.dart';
@@ -11,13 +12,14 @@ class CrmIntegrationsPage extends StatefulWidget {
 }
 
 class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
-  bool _isLoading = true;
   final Set<CrmProvider> _testingProviders = <CrmProvider>{};
+  final Set<CrmProvider> _retryingProviders = <CrmProvider>{};
   List<_IntegrationDraft> _drafts = <_IntegrationDraft>[];
 
   @override
   void initState() {
     super.initState();
+    _hydrateDraftsFromStore();
     _loadSettings();
   }
 
@@ -31,17 +33,28 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
   }
 
   Future<void> _loadSettings() async {
-    await CrmSyncStore.instance.ensureLoaded();
+    try {
+      await CrmSyncStore.instance.ensureLoaded();
+    } catch (error) {
+      debugPrint('CRM settings load fallback: $error');
+    }
     if (!mounted) {
       return;
     }
 
     setState(() {
-      _drafts = CrmSyncStore.instance.targets.value
-          .map((target) => _IntegrationDraft.fromTarget(target))
-          .toList();
-      _isLoading = false;
+      _hydrateDraftsFromStore();
     });
+  }
+
+  void _hydrateDraftsFromStore() {
+    for (final draft in _drafts) {
+      draft.webhookController.dispose();
+      draft.apiKeyController.dispose();
+    }
+    _drafts = CrmSyncStore.instance.targets.value
+        .map((target) => _IntegrationDraft.fromTarget(target))
+        .toList();
   }
 
   void _toggleSync(int index, bool value) {
@@ -50,7 +63,7 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
     });
   }
 
-  Future<void> _configure(int index) async {
+  Future<void> _configure(int index, {bool showFeedback = true}) async {
     final draft = _drafts[index];
     final target = draft.toTarget();
     final nextTargets = [...CrmSyncStore.instance.targets.value];
@@ -62,18 +75,23 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
     }
 
     await CrmSyncStore.instance.saveTargets(nextTargets);
+    _hydrateDraftsFromStore();
     if (!mounted) {
       return;
     }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('${target.displayName} configuration saved.')),
-    );
+    setState(() {});
+
+    if (showFeedback) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('${target.displayName} configuration saved.')),
+      );
+    }
   }
 
   Future<void> _testConnection(int index) async {
     final provider = _drafts[index].provider;
-    await _configure(index);
+    await _configure(index, showFeedback: false);
     if (!mounted) {
       return;
     }
@@ -89,6 +107,33 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
     }
     setState(() {
       _testingProviders.remove(provider);
+      _hydrateDraftsFromStore();
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(result)),
+    );
+  }
+
+  Future<void> _retryFailed(int index) async {
+    final provider = _drafts[index].provider;
+    await _configure(index, showFeedback: false);
+    if (!mounted) {
+      return;
+    }
+
+    setState(() {
+      _retryingProviders.add(provider);
+    });
+
+    final result = await CrmSyncService.instance.retryFailedSyncs(provider);
+
+    if (!mounted) {
+      return;
+    }
+    setState(() {
+      _retryingProviders.remove(provider);
+      _hydrateDraftsFromStore();
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -98,13 +143,6 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(child: CircularProgressIndicator()),
-      );
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -123,23 +161,34 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
                   const Text('Connected Services', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF506178))),
                   const SizedBox(height: 12),
                   Expanded(
-                    child: ListView.separated(
-                      itemCount: _drafts.length,
-                      separatorBuilder: (_, _) => const SizedBox(height: 14),
-                      itemBuilder: (context, index) {
-                        final item = _drafts[index];
-                        return _CrmCard(
-                          name: item.displayName,
-                          accent: item.accent,
-                          autoSync: item.autoSync,
-                          webhookController: item.webhookController,
-                          apiKeyController: item.apiKeyController,
-                          isTesting: _testingProviders.contains(item.provider),
-                          onConfigure: () => _configure(index),
-                          onTestConnection: () => _testConnection(index),
-                          onAutoSyncChanged: (value) => _toggleSync(index, value),
-                        );
-                      },
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          for (var index = 0; index < _drafts.length; index++) ...[
+                            _CrmCard(
+                              name: _drafts[index].displayName,
+                              accent: _drafts[index].accent,
+                              autoSync: _drafts[index].autoSync,
+                              lastStatus: _drafts[index].lastStatus,
+                              lastMessage: _drafts[index].lastMessage,
+                              lastAttemptAt: _drafts[index].lastAttemptAt,
+                              lastSuccessAt: _drafts[index].lastSuccessAt,
+                              pendingCount: CrmSyncStore.instance
+                                  .pendingCountFor(_drafts[index].provider),
+                              webhookController: _drafts[index].webhookController,
+                              apiKeyController: _drafts[index].apiKeyController,
+                              isTesting: _testingProviders.contains(_drafts[index].provider),
+                              isRetrying: _retryingProviders.contains(_drafts[index].provider),
+                              onConfigure: () => _configure(index),
+                              onTestConnection: () => _testConnection(index),
+                              onRetryFailed: () => _retryFailed(index),
+                              onAutoSyncChanged: (value) => _toggleSync(index, value),
+                            ),
+                            if (index < _drafts.length - 1)
+                              const SizedBox(height: 14),
+                          ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -157,26 +206,58 @@ class _CrmCard extends StatelessWidget {
     required this.name,
     required this.accent,
     required this.autoSync,
+    required this.lastStatus,
+    required this.lastMessage,
+    required this.lastAttemptAt,
+    required this.lastSuccessAt,
+    required this.pendingCount,
     required this.webhookController,
     required this.apiKeyController,
     required this.isTesting,
+    required this.isRetrying,
     required this.onConfigure,
     required this.onTestConnection,
+    required this.onRetryFailed,
     required this.onAutoSyncChanged,
   });
 
   final String name;
   final Color accent;
   final bool autoSync;
+  final String lastStatus;
+  final String lastMessage;
+  final DateTime? lastAttemptAt;
+  final DateTime? lastSuccessAt;
+  final int pendingCount;
   final TextEditingController webhookController;
   final TextEditingController apiKeyController;
   final bool isTesting;
+  final bool isRetrying;
   final VoidCallback onConfigure;
   final VoidCallback onTestConnection;
+  final VoidCallback onRetryFailed;
   final ValueChanged<bool> onAutoSyncChanged;
 
   @override
   Widget build(BuildContext context) {
+    final statusColor = switch (lastStatus) {
+      'success' => const Color(0xFF35C784),
+      'failed' => const Color(0xFFD14343),
+      _ => const Color(0xFF8B99AB),
+    };
+    final statusText = switch (lastStatus) {
+      'success' => 'Last sync successful',
+      'failed' => 'Last sync failed',
+      _ => autoSync ? 'Auto-sync enabled' : 'Paused - Sync disabled',
+    };
+    final statusMeta = <String>[
+      if (lastAttemptAt != null)
+        'Attempted: ${lastAttemptAt!.toLocal().toString().split('.').first}',
+      if (lastSuccessAt != null)
+        'Success: ${lastSuccessAt!.toLocal().toString().split('.').first}',
+      if (pendingCount > 0) 'Pending retries: $pendingCount',
+    ].join(' | ');
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -196,12 +277,23 @@ class _CrmCard extends StatelessWidget {
                     Text(name, style: const TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF233655))),
                     const SizedBox(height: 2),
                     Text(
-                      autoSync ? 'Active - Last sync 2m ago' : 'Paused - Sync disabled',
+                      statusText,
                       style: TextStyle(
-                        color: autoSync ? const Color(0xFF35C784) : const Color(0xFF8B99AB),
+                        color: statusColor,
                         fontSize: 12,
                       ),
                     ),
+                    if (statusMeta.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 2),
+                        child: Text(
+                          statusMeta,
+                          style: const TextStyle(
+                            color: Color(0xFF8B99AB),
+                            fontSize: 11,
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ),
@@ -246,16 +338,35 @@ class _CrmCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          Row(
+          if (lastMessage.isNotEmpty)
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(bottom: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              decoration: BoxDecoration(
+                color: const Color(0xFFF5F8FC),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Text(
+                lastMessage,
+                style: const TextStyle(fontSize: 12, color: Color(0xFF4E6078)),
+              ),
+            ),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
             children: [
               TextButton(
                 onPressed: onConfigure,
                 child: const Text('Save Configuration'),
               ),
-              const SizedBox(width: 8),
               OutlinedButton(
                 onPressed: isTesting ? null : onTestConnection,
                 child: Text(isTesting ? 'Testing...' : 'Test Sync'),
+              ),
+              OutlinedButton(
+                onPressed: isRetrying || pendingCount == 0 ? null : onRetryFailed,
+                child: Text(isRetrying ? 'Retrying...' : 'Retry Failed'),
               ),
             ],
           ),
@@ -271,6 +382,10 @@ class _IntegrationDraft {
     required this.displayName,
     required this.accent,
     required this.autoSync,
+    required this.lastStatus,
+    required this.lastMessage,
+    required this.lastAttemptAt,
+    required this.lastSuccessAt,
     required this.webhookController,
     required this.apiKeyController,
   });
@@ -279,6 +394,10 @@ class _IntegrationDraft {
   final String displayName;
   final Color accent;
   final bool autoSync;
+  final String lastStatus;
+  final String lastMessage;
+  final DateTime? lastAttemptAt;
+  final DateTime? lastSuccessAt;
   final TextEditingController webhookController;
   final TextEditingController apiKeyController;
 
@@ -290,6 +409,10 @@ class _IntegrationDraft {
           ? const Color(0xFFE8EEFF)
           : const Color(0xFFFFEEE8),
       autoSync: target.autoSync,
+      lastStatus: target.lastStatus,
+      lastMessage: target.lastMessage,
+      lastAttemptAt: target.lastAttemptAt,
+      lastSuccessAt: target.lastSuccessAt,
       webhookController: TextEditingController(text: target.webhookUrl),
       apiKeyController: TextEditingController(text: target.apiKey),
     );
@@ -301,6 +424,10 @@ class _IntegrationDraft {
       displayName: displayName,
       accent: accent,
       autoSync: autoSync ?? this.autoSync,
+      lastStatus: lastStatus,
+      lastMessage: lastMessage,
+      lastAttemptAt: lastAttemptAt,
+      lastSuccessAt: lastSuccessAt,
       webhookController: webhookController,
       apiKeyController: apiKeyController,
     );
@@ -313,6 +440,10 @@ class _IntegrationDraft {
       autoSync: autoSync,
       webhookUrl: webhookController.text.trim(),
       apiKey: apiKeyController.text.trim(),
+      lastStatus: lastStatus,
+      lastMessage: lastMessage,
+      lastAttemptAt: lastAttemptAt,
+      lastSuccessAt: lastSuccessAt,
     );
   }
 }

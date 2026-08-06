@@ -30,11 +30,78 @@ class CrmSyncService {
       return 'Webhook URL is required before running a test.';
     }
 
-    return _postLeadEvent(
+    final result = await _postLeadEvent(
       target: target,
       event: 'integration.test',
       lead: sampleLead,
     );
+    await CrmSyncStore.instance.markSyncResult(
+      provider: provider,
+      success: result.success,
+      message: result.message,
+    );
+    return result.message;
+  }
+
+  Future<String> retryFailedSyncs(CrmProvider provider) async {
+    await CrmSyncStore.instance.ensureLoaded();
+    final target = CrmSyncStore.instance.findTarget(provider);
+    if (target == null) {
+      return 'Integration not found.';
+    }
+
+    final queued = CrmSyncStore.instance.retriesFor(provider);
+    if (queued.isEmpty) {
+      return 'No failed syncs to retry.';
+    }
+
+    if (target.webhookUrl.trim().isEmpty) {
+      return 'Configure a webhook URL before retrying failed syncs.';
+    }
+
+    var succeeded = 0;
+    var failed = 0;
+
+    for (final item in queued) {
+      try {
+        final result = await _postEventPayload(
+          target: target,
+          payload: item.payload,
+        );
+        if (result.success) {
+          succeeded += 1;
+          await CrmSyncStore.instance.removeRetryById(item.id);
+        } else {
+          failed += 1;
+          await CrmSyncStore.instance.replaceRetry(
+            item.copyWith(
+              attempts: item.attempts + 1,
+              lastError: result.message,
+            ),
+          );
+        }
+      } catch (error) {
+        failed += 1;
+        await CrmSyncStore.instance.replaceRetry(
+          item.copyWith(
+            attempts: item.attempts + 1,
+            lastError: error.toString(),
+          ),
+        );
+      }
+    }
+
+    final summary = failed == 0
+        ? 'Retry complete. $succeeded event(s) delivered.'
+        : 'Retry complete. $succeeded succeeded, $failed still pending.';
+
+    await CrmSyncStore.instance.markSyncResult(
+      provider: provider,
+      success: failed == 0,
+      message: summary,
+    );
+
+    return summary;
   }
 
   Future<void> _syncLeadEvent({
@@ -49,24 +116,52 @@ class CrmSyncService {
 
     for (final target in activeTargets) {
       try {
-        await _postLeadEvent(target: target, event: event, lead: lead);
+        final payload = _buildLeadPayload(event: event, lead: lead, target: target);
+        final result = await _postEventPayload(
+          target: target,
+          payload: payload,
+        );
+        if (result.success) {
+          await CrmSyncStore.instance.markSyncResult(
+            provider: target.provider,
+            success: true,
+            message: result.message,
+          );
+        } else {
+          await CrmSyncStore.instance.enqueueRetry(
+            provider: target.provider,
+            payload: payload,
+            lastError: result.message,
+          );
+          await CrmSyncStore.instance.markSyncResult(
+            provider: target.provider,
+            success: false,
+            message: '${result.message} Added to retry queue.',
+          );
+        }
       } catch (error) {
+        final payload = _buildLeadPayload(event: event, lead: lead, target: target);
+        await CrmSyncStore.instance.enqueueRetry(
+          provider: target.provider,
+          payload: payload,
+          lastError: error.toString(),
+        );
+        await CrmSyncStore.instance.markSyncResult(
+          provider: target.provider,
+          success: false,
+          message: 'Sync exception: $error',
+        );
         debugPrint('CRM sync failed for ${target.displayName}: $error');
       }
     }
   }
 
-  Future<String> _postLeadEvent({
-    required CrmSyncTarget target,
+  Map<String, dynamic> _buildLeadPayload({
     required String event,
     required LeadRecord lead,
-  }) async {
-    final uri = Uri.tryParse(target.webhookUrl.trim());
-    if (uri == null || !uri.hasScheme) {
-      return 'Invalid webhook URL.';
-    }
-
-    final payload = <String, dynamic>{
+    required CrmSyncTarget target,
+  }) {
+    return <String, dynamic>{
       'event': event,
       'provider': target.provider.name,
       'occurredAt': DateTime.now().toIso8601String(),
@@ -90,6 +185,25 @@ class CrmSyncService {
         'followUpDate': lead.followUpDate.toIso8601String(),
       },
     };
+  }
+
+  Future<_SyncPostResult> _postLeadEvent({
+    required CrmSyncTarget target,
+    required String event,
+    required LeadRecord lead,
+  }) async {
+    final payload = _buildLeadPayload(event: event, lead: lead, target: target);
+    return _postEventPayload(target: target, payload: payload);
+  }
+
+  Future<_SyncPostResult> _postEventPayload({
+    required CrmSyncTarget target,
+    required Map<String, dynamic> payload,
+  }) async {
+    final uri = Uri.tryParse(target.webhookUrl.trim());
+    if (uri == null || !uri.hasScheme) {
+      return const _SyncPostResult(false, 'Invalid webhook URL.');
+    }
 
     final headers = <String, String>{
       'Content-Type': 'application/json',
@@ -104,9 +218,19 @@ class CrmSyncService {
         .timeout(const Duration(seconds: 12));
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return 'Connected (${response.statusCode})';
+      return _SyncPostResult(true, 'Connected (${response.statusCode})');
     }
 
-    return 'Sync failed (${response.statusCode}): ${response.body}';
+    return _SyncPostResult(
+      false,
+      'Sync failed (${response.statusCode}): ${response.body}',
+    );
   }
+}
+
+class _SyncPostResult {
+  const _SyncPostResult(this.success, this.message);
+
+  final bool success;
+  final String message;
 }
