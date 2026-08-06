@@ -161,6 +161,18 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
     );
   }
 
+  Future<void> _clearActivity(int index) async {
+    final provider = _drafts[index].provider;
+    await CrmSyncStore.instance.clearActivityFor(provider);
+    if (!mounted) {
+      return;
+    }
+    setState(() {});
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Sync activity cleared.')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -195,14 +207,17 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
                               lastSuccessAt: _drafts[index].lastSuccessAt,
                               pendingCount: CrmSyncStore.instance
                                   .pendingCountFor(_drafts[index].provider),
+                              activity: CrmSyncStore.instance
+                                  .recentActivityFor(_drafts[index].provider),
                               webhookController: _drafts[index].webhookController,
                               apiKeyController: _drafts[index].apiKeyController,
-                                mappingControllers: _drafts[index].mappingControllers,
+                              mappingControllers: _drafts[index].mappingControllers,
                               isTesting: _testingProviders.contains(_drafts[index].provider),
                               isRetrying: _retryingProviders.contains(_drafts[index].provider),
                               onConfigure: () => _configure(index),
                               onTestConnection: () => _testConnection(index),
                               onRetryFailed: () => _retryFailed(index),
+                              onClearActivity: () => _clearActivity(index),
                               onAutoSyncChanged: (value) => _toggleSync(index, value),
                             ),
                             if (index < _drafts.length - 1)
@@ -232,6 +247,7 @@ class _CrmCard extends StatelessWidget {
     required this.lastAttemptAt,
     required this.lastSuccessAt,
     required this.pendingCount,
+    required this.activity,
     required this.webhookController,
     required this.apiKeyController,
     required this.mappingControllers,
@@ -240,6 +256,7 @@ class _CrmCard extends StatelessWidget {
     required this.onConfigure,
     required this.onTestConnection,
     required this.onRetryFailed,
+    required this.onClearActivity,
     required this.onAutoSyncChanged,
   });
 
@@ -251,6 +268,7 @@ class _CrmCard extends StatelessWidget {
   final DateTime? lastAttemptAt;
   final DateTime? lastSuccessAt;
   final int pendingCount;
+  final List<CrmSyncActivityItem> activity;
   final TextEditingController webhookController;
   final TextEditingController apiKeyController;
   final Map<String, TextEditingController> mappingControllers;
@@ -259,6 +277,7 @@ class _CrmCard extends StatelessWidget {
   final VoidCallback onConfigure;
   final VoidCallback onTestConnection;
   final VoidCallback onRetryFailed;
+  final VoidCallback onClearActivity;
   final ValueChanged<bool> onAutoSyncChanged;
 
   @override
@@ -417,6 +436,77 @@ class _CrmCard extends StatelessWidget {
                 onPressed: isRetrying || pendingCount == 0 ? null : onRetryFailed,
                 child: Text(isRetrying ? 'Retrying...' : 'Retry Failed'),
               ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ExpansionTile(
+            tilePadding: EdgeInsets.zero,
+            title: const Text(
+              'Sync Activity',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            subtitle: Text(
+              activity.isEmpty ? 'No recent events yet' : '${activity.length} recent events',
+              style: const TextStyle(fontSize: 12),
+            ),
+            trailing: activity.isEmpty
+                ? null
+                : TextButton(
+                    onPressed: onClearActivity,
+                    child: const Text('Clear'),
+                  ),
+            children: [
+              if (activity.isEmpty)
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 8),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Events will appear here after test syncs or lead updates.',
+                      style: TextStyle(color: Color(0xFF8B99AB), fontSize: 12),
+                    ),
+                  ),
+                ),
+              for (final item in activity)
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: item.success
+                        ? const Color(0xFFEFFAF4)
+                        : const Color(0xFFFFF2F2),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${item.event} - ${item.leadName}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF233655),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        item.message,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF4E6078),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        item.createdAt.toLocal().toString().split('.').first,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          color: Color(0xFF8B99AB),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
             ],
           ),
         ],
