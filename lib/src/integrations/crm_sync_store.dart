@@ -8,6 +8,35 @@ enum CrmProvider {
   zapier,
 }
 
+CrmProvider _providerFromRaw(dynamic rawProvider, String? displayName) {
+  final normalizedProvider = (rawProvider as String? ?? '').trim().toLowerCase();
+  if (normalizedProvider == 'zapier' || normalizedProvider == 'hubspot') {
+    return CrmProvider.zapier;
+  }
+  if (normalizedProvider == 'apinatio' ||
+      normalizedProvider == 'apination' ||
+      normalizedProvider == 'api nation' ||
+      normalizedProvider == 'api_nation' ||
+      normalizedProvider == 'salesforce') {
+    return CrmProvider.apiNation;
+  }
+
+  final normalizedName = (displayName ?? '').trim().toLowerCase();
+  if (normalizedName.contains('zapier') || normalizedName.contains('hubspot')) {
+    return CrmProvider.zapier;
+  }
+  return CrmProvider.apiNation;
+}
+
+String _canonicalDisplayName(CrmProvider provider) {
+  switch (provider) {
+    case CrmProvider.apiNation:
+      return 'API Nation';
+    case CrmProvider.zapier:
+      return 'Zapier';
+  }
+}
+
 Map<String, String> defaultFieldMappingsForProvider(CrmProvider provider) {
   switch (provider) {
     case CrmProvider.apiNation:
@@ -100,10 +129,7 @@ class CrmSyncTarget {
   }
 
   static CrmSyncTarget fromJson(Map<String, dynamic> json) {
-    final provider = CrmProvider.values.firstWhere(
-      (value) => value.name == json['provider'],
-      orElse: () => CrmProvider.apiNation,
-    );
+    final provider = _providerFromRaw(json['provider'], json['displayName'] as String?);
     final defaultMappings = defaultFieldMappingsForProvider(provider);
     final rawMappings = json['fieldMappings'];
     final mergedMappings = <String, String>{
@@ -116,7 +142,7 @@ class CrmSyncTarget {
 
     return CrmSyncTarget(
       provider: provider,
-      displayName: json['displayName'] as String? ?? 'API Nation',
+      displayName: json['displayName'] as String? ?? _canonicalDisplayName(provider),
       autoSync: json['autoSync'] as bool? ?? false,
       webhookUrl: json['webhookUrl'] as String? ?? '',
       apiKey: json['apiKey'] as String? ?? '',
@@ -305,7 +331,15 @@ class CrmSyncStore {
         for (final target in loaded) target.provider: target,
       };
       final merged = _defaultTargets
-          .map((target) => byProvider[target.provider] ?? target)
+          .map((target) {
+            final loadedTarget = byProvider[target.provider];
+            if (loadedTarget == null) {
+              return target;
+            }
+            return loadedTarget.copyWith(
+              displayName: _canonicalDisplayName(target.provider),
+            );
+          })
           .toList();
       targets.value = merged;
     } catch (_) {
