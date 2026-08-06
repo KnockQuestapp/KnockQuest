@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app_routes.dart';
+import '../../integrations/crm_sync_store.dart';
 import '../../sample_data.dart';
 import '../../state/lead_store.dart';
 
@@ -12,6 +13,12 @@ class MainDashboardPage extends StatefulWidget {
 }
 
 class _MainDashboardPageState extends State<MainDashboardPage> {
+  @override
+  void initState() {
+    super.initState();
+    CrmSyncStore.instance.ensureLoaded();
+  }
+
   Future<void> _openAddLead() async {
     final result = await Navigator.pushNamed(context, AppRoutes.addLead);
     if (!mounted) {
@@ -136,6 +143,13 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                       ],
                     ),
                   const SizedBox(height: 20),
+                  _CrmReadinessBanner(
+                    onOpenIntegrations: () => Navigator.pushNamed(
+                      context,
+                      AppRoutes.integrations,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
                   _SectionTitle('Sales Performance'),
                   const SizedBox(height: 12),
                   const _MetricGrid(),
@@ -220,6 +234,113 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _CrmReadinessBanner extends StatelessWidget {
+  const _CrmReadinessBanner({required this.onOpenIntegrations});
+
+  final VoidCallback onOpenIntegrations;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder<List<CrmSyncTarget>>(
+      valueListenable: CrmSyncStore.instance.targets,
+      builder: (context, targets, _) {
+        final configuredTargets = targets
+            .where((target) => target.webhookUrl.trim().isNotEmpty)
+            .toList();
+        final activeTargets = configuredTargets
+            .where((target) => target.autoSync)
+            .toList();
+        final failedTargets = activeTargets
+            .where((target) => target.lastStatus == 'failed')
+            .toList();
+
+        return ValueListenableBuilder<List<CrmSyncRetryItem>>(
+          valueListenable: CrmSyncStore.instance.retryQueue,
+          builder: (context, retryItems, child) {
+            final pendingCount = retryItems.length;
+
+            Color backgroundColor;
+            Color borderColor;
+            Color titleColor;
+            IconData icon;
+            String title;
+            String subtitle;
+
+            if (activeTargets.isEmpty) {
+              backgroundColor = const Color(0xFFFFF8E8);
+              borderColor = const Color(0xFFFFD98C);
+              titleColor = const Color(0xFF8A5A00);
+              icon = Icons.info_outline;
+              title = 'CRM sync not fully set up';
+              subtitle = configuredTargets.isEmpty
+                  ? 'Connect API Nation or Zapier to enable automatic lead sync.'
+                  : 'Enable Auto-Sync on at least one integration to push leads automatically.';
+            } else if (failedTargets.isNotEmpty || pendingCount > 0) {
+              backgroundColor = const Color(0xFFFFF1F1);
+              borderColor = const Color(0xFFF4B6B6);
+              titleColor = const Color(0xFF9E1F1F);
+              icon = Icons.error_outline;
+              title = 'CRM sync needs attention';
+              subtitle = pendingCount > 0
+                  ? '$pendingCount sync event(s) waiting for retry.'
+                  : 'At least one integration reported a sync failure.';
+            } else {
+              backgroundColor = const Color(0xFFEFFAF4);
+              borderColor = const Color(0xFFB8E7CB);
+              titleColor = const Color(0xFF1E7A47);
+              icon = Icons.check_circle_outline;
+              title = 'CRM sync is healthy';
+              subtitle = '${activeTargets.length} integration(s) actively syncing leads.';
+            }
+
+            return Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: borderColor),
+              ),
+              child: Row(
+                children: [
+                  Icon(icon, color: titleColor, size: 20),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                            color: titleColor,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          subtitle,
+                          style: const TextStyle(
+                            color: Color(0xFF4E6078),
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: onOpenIntegrations,
+                    child: const Text('Manage'),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
