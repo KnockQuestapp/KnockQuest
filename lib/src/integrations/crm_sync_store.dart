@@ -197,11 +197,60 @@ class CrmSyncRetryItem {
   }
 }
 
+class CrmSyncActivityItem {
+  const CrmSyncActivityItem({
+    required this.id,
+    required this.provider,
+    required this.event,
+    required this.success,
+    required this.message,
+    required this.createdAt,
+    required this.leadName,
+  });
+
+  final String id;
+  final CrmProvider provider;
+  final String event;
+  final bool success;
+  final String message;
+  final DateTime createdAt;
+  final String leadName;
+
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'provider': provider.name,
+      'event': event,
+      'success': success,
+      'message': message,
+      'createdAt': createdAt.toIso8601String(),
+      'leadName': leadName,
+    };
+  }
+
+  static CrmSyncActivityItem fromJson(Map<String, dynamic> json) {
+    return CrmSyncActivityItem(
+      id: json['id'] as String,
+      provider: CrmProvider.values.firstWhere(
+        (value) => value.name == json['provider'],
+        orElse: () => CrmProvider.apiNation,
+      ),
+      event: json['event'] as String? ?? 'unknown',
+      success: json['success'] as bool? ?? false,
+      message: json['message'] as String? ?? '',
+      createdAt: DateTime.tryParse(json['createdAt'] as String? ?? '') ??
+          DateTime.now(),
+      leadName: json['leadName'] as String? ?? 'Lead',
+    );
+  }
+}
+
 class CrmSyncStore {
   CrmSyncStore._();
 
   static const _prefsKey = 'crm_sync_targets_v1';
   static const _retryPrefsKey = 'crm_sync_retry_items_v1';
+  static const _activityPrefsKey = 'crm_sync_activity_items_v1';
 
   static final CrmSyncStore instance = CrmSyncStore._();
 
@@ -209,6 +258,8 @@ class CrmSyncStore {
       ValueNotifier<List<CrmSyncTarget>>(_defaultTargets);
   final ValueNotifier<List<CrmSyncRetryItem>> retryQueue =
       ValueNotifier<List<CrmSyncRetryItem>>(<CrmSyncRetryItem>[]);
+    final ValueNotifier<List<CrmSyncActivityItem>> activityLog =
+      ValueNotifier<List<CrmSyncActivityItem>>(<CrmSyncActivityItem>[]);
 
   bool _isLoaded = false;
 
@@ -274,6 +325,19 @@ class CrmSyncStore {
       }
     }
 
+    final rawActivity = prefs.getString(_activityPrefsKey);
+    if (rawActivity != null && rawActivity.isNotEmpty) {
+      try {
+        final decodedActivity = jsonDecode(rawActivity) as List<dynamic>;
+        activityLog.value = decodedActivity
+            .map((item) =>
+                CrmSyncActivityItem.fromJson(item as Map<String, dynamic>))
+            .toList();
+      } catch (_) {
+        activityLog.value = <CrmSyncActivityItem>[];
+      }
+    }
+
     _isLoaded = true;
   }
 
@@ -291,6 +355,13 @@ class CrmSyncStore {
     final prefs = await SharedPreferences.getInstance();
     final payload = jsonEncode(items.map((e) => e.toJson()).toList());
     await prefs.setString(_retryPrefsKey, payload);
+  }
+
+  Future<void> _saveActivity(List<CrmSyncActivityItem> items) async {
+    activityLog.value = items;
+    final prefs = await SharedPreferences.getInstance();
+    final payload = jsonEncode(items.map((e) => e.toJson()).toList());
+    await prefs.setString(_activityPrefsKey, payload);
   }
 
   Future<void> updateTarget(
@@ -367,6 +438,51 @@ class CrmSyncStore {
 
   int pendingCountFor(CrmProvider provider) {
     return retryQueue.value.where((item) => item.provider == provider).length;
+  }
+
+  List<CrmSyncActivityItem> recentActivityFor(CrmProvider provider,
+      {int limit = 20}) {
+    final filtered = activityLog.value
+        .where((item) => item.provider == provider)
+        .toList()
+      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+    if (filtered.length <= limit) {
+      return filtered;
+    }
+    return filtered.sublist(0, limit);
+  }
+
+  Future<void> appendActivity({
+    required CrmProvider provider,
+    required String event,
+    required bool success,
+    required String message,
+    required String leadName,
+  }) async {
+    await ensureLoaded();
+    final next = [
+      CrmSyncActivityItem(
+        id: '${provider.name}-${DateTime.now().microsecondsSinceEpoch}',
+        provider: provider,
+        event: event,
+        success: success,
+        message: message,
+        createdAt: DateTime.now(),
+        leadName: leadName,
+      ),
+      ...activityLog.value,
+    ];
+
+    // Keep local history lightweight.
+    await _saveActivity(next.take(120).toList());
+  }
+
+  Future<void> clearActivityFor(CrmProvider provider) async {
+    await ensureLoaded();
+    final next = activityLog.value
+        .where((item) => item.provider != provider)
+        .toList();
+    await _saveActivity(next);
   }
 
   CrmSyncTarget? findTarget(CrmProvider provider) {

@@ -40,6 +40,13 @@ class CrmSyncService {
       success: result.success,
       message: result.message,
     );
+    await CrmSyncStore.instance.appendActivity(
+      provider: provider,
+      event: 'integration.test',
+      success: result.success,
+      message: result.message,
+      leadName: sampleLead.name,
+    );
     return result.message;
   }
 
@@ -71,6 +78,13 @@ class CrmSyncService {
         if (result.success) {
           succeeded += 1;
           await CrmSyncStore.instance.removeRetryById(item.id);
+          await CrmSyncStore.instance.appendActivity(
+            provider: provider,
+            event: item.payload['event'] as String? ?? 'retry.unknown',
+            success: true,
+            message: 'Retry delivered (${item.attempts + 1} attempts).',
+            leadName: _leadNameFromPayload(item.payload),
+          );
         } else {
           failed += 1;
           await CrmSyncStore.instance.replaceRetry(
@@ -78,6 +92,13 @@ class CrmSyncService {
               attempts: item.attempts + 1,
               lastError: result.message,
             ),
+          );
+          await CrmSyncStore.instance.appendActivity(
+            provider: provider,
+            event: item.payload['event'] as String? ?? 'retry.unknown',
+            success: false,
+            message: result.message,
+            leadName: _leadNameFromPayload(item.payload),
           );
         }
       } catch (error) {
@@ -87,6 +108,13 @@ class CrmSyncService {
             attempts: item.attempts + 1,
             lastError: error.toString(),
           ),
+        );
+        await CrmSyncStore.instance.appendActivity(
+          provider: provider,
+          event: item.payload['event'] as String? ?? 'retry.unknown',
+          success: false,
+          message: 'Retry exception: $error',
+          leadName: _leadNameFromPayload(item.payload),
         );
       }
     }
@@ -127,6 +155,13 @@ class CrmSyncService {
             success: true,
             message: result.message,
           );
+          await CrmSyncStore.instance.appendActivity(
+            provider: target.provider,
+            event: event,
+            success: true,
+            message: result.message,
+            leadName: lead.name,
+          );
         } else {
           await CrmSyncStore.instance.enqueueRetry(
             provider: target.provider,
@@ -137,6 +172,13 @@ class CrmSyncService {
             provider: target.provider,
             success: false,
             message: '${result.message} Added to retry queue.',
+          );
+          await CrmSyncStore.instance.appendActivity(
+            provider: target.provider,
+            event: event,
+            success: false,
+            message: result.message,
+            leadName: lead.name,
           );
         }
       } catch (error) {
@@ -151,9 +193,24 @@ class CrmSyncService {
           success: false,
           message: 'Sync exception: $error',
         );
+        await CrmSyncStore.instance.appendActivity(
+          provider: target.provider,
+          event: event,
+          success: false,
+          message: 'Sync exception: $error',
+          leadName: lead.name,
+        );
         debugPrint('CRM sync failed for ${target.displayName}: $error');
       }
     }
+  }
+
+  String _leadNameFromPayload(Map<String, dynamic> payload) {
+    final lead = payload['lead'];
+    if (lead is Map && lead['name'] is String) {
+      return lead['name'] as String;
+    }
+    return 'Lead';
   }
 
   Map<String, dynamic> _buildLeadPayload({
