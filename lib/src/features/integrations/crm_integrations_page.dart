@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 
 import '../../integrations/crm_sync_service.dart';
 import '../../integrations/crm_sync_store.dart';
+
+class _FieldMappingMeta {
+  const _FieldMappingMeta({required this.key, required this.label});
+
+  final String key;
+  final String label;
+}
+
+const List<_FieldMappingMeta> _fieldMappings = <_FieldMappingMeta>[
+  _FieldMappingMeta(key: 'firstName', label: 'First Name'),
+  _FieldMappingMeta(key: 'lastName', label: 'Last Name'),
+  _FieldMappingMeta(key: 'phone', label: 'Phone'),
+  _FieldMappingMeta(key: 'email', label: 'Email'),
+  _FieldMappingMeta(key: 'address', label: 'Address'),
+];
 
 class CrmIntegrationsPage extends StatefulWidget {
   const CrmIntegrationsPage({super.key});
@@ -28,6 +42,9 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
     for (final draft in _drafts) {
       draft.webhookController.dispose();
       draft.apiKeyController.dispose();
+      for (final controller in draft.mappingControllers.values) {
+        controller.dispose();
+      }
     }
     super.dispose();
   }
@@ -51,6 +68,9 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
     for (final draft in _drafts) {
       draft.webhookController.dispose();
       draft.apiKeyController.dispose();
+      for (final controller in draft.mappingControllers.values) {
+        controller.dispose();
+      }
     }
     _drafts = CrmSyncStore.instance.targets.value
         .map((target) => _IntegrationDraft.fromTarget(target))
@@ -177,6 +197,7 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
                                   .pendingCountFor(_drafts[index].provider),
                               webhookController: _drafts[index].webhookController,
                               apiKeyController: _drafts[index].apiKeyController,
+                                mappingControllers: _drafts[index].mappingControllers,
                               isTesting: _testingProviders.contains(_drafts[index].provider),
                               isRetrying: _retryingProviders.contains(_drafts[index].provider),
                               onConfigure: () => _configure(index),
@@ -213,6 +234,7 @@ class _CrmCard extends StatelessWidget {
     required this.pendingCount,
     required this.webhookController,
     required this.apiKeyController,
+    required this.mappingControllers,
     required this.isTesting,
     required this.isRetrying,
     required this.onConfigure,
@@ -231,6 +253,7 @@ class _CrmCard extends StatelessWidget {
   final int pendingCount;
   final TextEditingController webhookController;
   final TextEditingController apiKeyController;
+  final Map<String, TextEditingController> mappingControllers;
   final bool isTesting;
   final bool isRetrying;
   final VoidCallback onConfigure;
@@ -338,6 +361,32 @@ class _CrmCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
+          ExpansionTile(
+            tilePadding: EdgeInsets.zero,
+            childrenPadding: const EdgeInsets.only(bottom: 8),
+            title: const Text(
+              'Field Mapping',
+              style: TextStyle(fontWeight: FontWeight.w600),
+            ),
+            subtitle: const Text(
+              'Map lead fields to your CRM destination keys',
+              style: TextStyle(fontSize: 12),
+            ),
+            children: [
+              for (final field in _fieldMappings)
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: TextField(
+                    controller: mappingControllers[field.key],
+                    decoration: InputDecoration(
+                      labelText: '${field.label} destination key',
+                      hintText: field.key,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 12),
           if (lastMessage.isNotEmpty)
             Container(
               width: double.infinity,
@@ -388,6 +437,7 @@ class _IntegrationDraft {
     required this.lastSuccessAt,
     required this.webhookController,
     required this.apiKeyController,
+    required this.mappingControllers,
   });
 
   final CrmProvider provider;
@@ -400,6 +450,7 @@ class _IntegrationDraft {
   final DateTime? lastSuccessAt;
   final TextEditingController webhookController;
   final TextEditingController apiKeyController;
+  final Map<String, TextEditingController> mappingControllers;
 
   factory _IntegrationDraft.fromTarget(CrmSyncTarget target) {
     return _IntegrationDraft(
@@ -415,6 +466,12 @@ class _IntegrationDraft {
       lastSuccessAt: target.lastSuccessAt,
       webhookController: TextEditingController(text: target.webhookUrl),
       apiKeyController: TextEditingController(text: target.apiKey),
+      mappingControllers: {
+        for (final field in _fieldMappings)
+          field.key: TextEditingController(
+            text: target.fieldMappings[field.key] ?? field.key,
+          ),
+      },
     );
   }
 
@@ -430,6 +487,7 @@ class _IntegrationDraft {
       lastSuccessAt: lastSuccessAt,
       webhookController: webhookController,
       apiKeyController: apiKeyController,
+      mappingControllers: mappingControllers,
     );
   }
 
@@ -440,6 +498,12 @@ class _IntegrationDraft {
       autoSync: autoSync,
       webhookUrl: webhookController.text.trim(),
       apiKey: apiKeyController.text.trim(),
+      fieldMappings: {
+        for (final field in _fieldMappings)
+          field.key: (mappingControllers[field.key]?.text.trim().isNotEmpty ?? false)
+              ? mappingControllers[field.key]!.text.trim()
+              : field.key,
+      },
       lastStatus: lastStatus,
       lastMessage: lastMessage,
       lastAttemptAt: lastAttemptAt,

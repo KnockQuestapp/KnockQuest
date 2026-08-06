@@ -8,6 +8,31 @@ enum CrmProvider {
   zapier,
 }
 
+Map<String, String> defaultFieldMappingsForProvider(CrmProvider provider) {
+  switch (provider) {
+    case CrmProvider.apiNation:
+      return Map<String, String>.from(_apiNationDefaultFieldMappings);
+    case CrmProvider.zapier:
+      return Map<String, String>.from(_zapierDefaultFieldMappings);
+  }
+}
+
+const Map<String, String> _apiNationDefaultFieldMappings = <String, String>{
+  'firstName': 'contact_first_name',
+  'lastName': 'contact_last_name',
+  'phone': 'contact_phone',
+  'email': 'contact_email',
+  'address': 'property_address',
+};
+
+const Map<String, String> _zapierDefaultFieldMappings = <String, String>{
+  'firstName': 'first_name',
+  'lastName': 'last_name',
+  'phone': 'phone',
+  'email': 'email',
+  'address': 'address',
+};
+
 class CrmSyncTarget {
   const CrmSyncTarget({
     required this.provider,
@@ -15,6 +40,7 @@ class CrmSyncTarget {
     required this.autoSync,
     required this.webhookUrl,
     required this.apiKey,
+    required this.fieldMappings,
     this.lastStatus = 'idle',
     this.lastMessage = '',
     this.lastAttemptAt,
@@ -26,6 +52,7 @@ class CrmSyncTarget {
   final bool autoSync;
   final String webhookUrl;
   final String apiKey;
+  final Map<String, String> fieldMappings;
   final String lastStatus;
   final String lastMessage;
   final DateTime? lastAttemptAt;
@@ -37,6 +64,7 @@ class CrmSyncTarget {
     bool? autoSync,
     String? webhookUrl,
     String? apiKey,
+    Map<String, String>? fieldMappings,
     String? lastStatus,
     String? lastMessage,
     DateTime? lastAttemptAt,
@@ -48,6 +76,7 @@ class CrmSyncTarget {
       autoSync: autoSync ?? this.autoSync,
       webhookUrl: webhookUrl ?? this.webhookUrl,
       apiKey: apiKey ?? this.apiKey,
+      fieldMappings: fieldMappings ?? this.fieldMappings,
       lastStatus: lastStatus ?? this.lastStatus,
       lastMessage: lastMessage ?? this.lastMessage,
       lastAttemptAt: lastAttemptAt ?? this.lastAttemptAt,
@@ -62,6 +91,7 @@ class CrmSyncTarget {
       'autoSync': autoSync,
       'webhookUrl': webhookUrl,
       'apiKey': apiKey,
+      'fieldMappings': fieldMappings,
       'lastStatus': lastStatus,
       'lastMessage': lastMessage,
       'lastAttemptAt': lastAttemptAt?.toIso8601String(),
@@ -70,15 +100,27 @@ class CrmSyncTarget {
   }
 
   static CrmSyncTarget fromJson(Map<String, dynamic> json) {
+    final provider = CrmProvider.values.firstWhere(
+      (value) => value.name == json['provider'],
+      orElse: () => CrmProvider.apiNation,
+    );
+    final defaultMappings = defaultFieldMappingsForProvider(provider);
+    final rawMappings = json['fieldMappings'];
+    final mergedMappings = <String, String>{
+      ...defaultMappings,
+      if (rawMappings is Map)
+        ...rawMappings.map(
+          (key, value) => MapEntry('$key', '$value'),
+        ),
+    };
+
     return CrmSyncTarget(
-      provider: CrmProvider.values.firstWhere(
-        (value) => value.name == json['provider'],
-        orElse: () => CrmProvider.apiNation,
-      ),
+      provider: provider,
       displayName: json['displayName'] as String? ?? 'API Nation',
       autoSync: json['autoSync'] as bool? ?? false,
       webhookUrl: json['webhookUrl'] as String? ?? '',
       apiKey: json['apiKey'] as String? ?? '',
+      fieldMappings: mergedMappings,
       lastStatus: json['lastStatus'] as String? ?? 'idle',
       lastMessage: json['lastMessage'] as String? ?? '',
       lastAttemptAt: json['lastAttemptAt'] == null
@@ -165,7 +207,7 @@ class CrmSyncStore {
 
   final ValueNotifier<List<CrmSyncTarget>> targets =
       ValueNotifier<List<CrmSyncTarget>>(_defaultTargets);
-    final ValueNotifier<List<CrmSyncRetryItem>> retryQueue =
+  final ValueNotifier<List<CrmSyncRetryItem>> retryQueue =
       ValueNotifier<List<CrmSyncRetryItem>>(<CrmSyncRetryItem>[]);
 
   bool _isLoaded = false;
@@ -177,6 +219,7 @@ class CrmSyncStore {
       autoSync: false,
       webhookUrl: '',
       apiKey: '',
+      fieldMappings: _apiNationDefaultFieldMappings,
     ),
     CrmSyncTarget(
       provider: CrmProvider.zapier,
@@ -184,6 +227,7 @@ class CrmSyncStore {
       autoSync: false,
       webhookUrl: '',
       apiKey: '',
+      fieldMappings: _zapierDefaultFieldMappings,
     ),
   ];
 
