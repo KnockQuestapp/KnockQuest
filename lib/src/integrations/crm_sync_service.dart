@@ -161,29 +161,42 @@ class CrmSyncService {
     required LeadRecord lead,
     required CrmSyncTarget target,
   }) {
+    final leadData = <String, dynamic>{
+      'name': lead.name,
+      'firstName': lead.firstName,
+      'lastName': lead.lastName,
+      'phone': lead.phone,
+      'email': lead.email,
+      'address': lead.address,
+      'unitNumber': lead.unitNumber,
+      'city': lead.city,
+      'postalCode': lead.postalCode,
+      'notes': lead.notes,
+      'latitude': lead.latitude,
+      'longitude': lead.longitude,
+      'status': lead.status,
+      'outcome': lead.outcome,
+      'estimatedValue': lead.estimatedValue,
+      'lastContactDate': lead.lastContactDate.toIso8601String(),
+      'followUpDate': lead.followUpDate.toIso8601String(),
+    };
+
+    final mappedLead = <String, dynamic>{};
+    for (final entry in target.fieldMappings.entries) {
+      final sourceKey = entry.key;
+      final destinationKey = entry.value.trim();
+      if (destinationKey.isEmpty || !leadData.containsKey(sourceKey)) {
+        continue;
+      }
+      mappedLead[destinationKey] = leadData[sourceKey];
+    }
+
     return <String, dynamic>{
       'event': event,
       'provider': target.provider.name,
       'occurredAt': DateTime.now().toIso8601String(),
-      'lead': <String, dynamic>{
-        'name': lead.name,
-        'firstName': lead.firstName,
-        'lastName': lead.lastName,
-        'phone': lead.phone,
-        'email': lead.email,
-        'address': lead.address,
-        'unitNumber': lead.unitNumber,
-        'city': lead.city,
-        'postalCode': lead.postalCode,
-        'notes': lead.notes,
-        'latitude': lead.latitude,
-        'longitude': lead.longitude,
-        'status': lead.status,
-        'outcome': lead.outcome,
-        'estimatedValue': lead.estimatedValue,
-        'lastContactDate': lead.lastContactDate.toIso8601String(),
-        'followUpDate': lead.followUpDate.toIso8601String(),
-      },
+      'lead': leadData,
+      'mappedLead': mappedLead,
     };
   }
 
