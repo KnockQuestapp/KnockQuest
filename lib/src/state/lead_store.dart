@@ -54,6 +54,25 @@ class LeadStore {
     questsNotifier.value = current;
   }
 
+  void updateQuest(int index, QuestRecord quest) {
+    if (index < 0 || index >= questsNotifier.value.length) {
+      return;
+    }
+
+    final current = [...questsNotifier.value];
+    current[index] = quest;
+    questsNotifier.value = current;
+  }
+
+  void deleteQuest(int index) {
+    if (index < 0 || index >= questsNotifier.value.length) {
+      return;
+    }
+
+    final current = [...questsNotifier.value]..removeAt(index);
+    questsNotifier.value = current;
+  }
+
   void updateLatestLead({
     String? status,
     String? outcome,
