@@ -90,9 +90,17 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
               return child;
             }
 
+            final mediaQuery = MediaQuery.of(context);
+            final dockReservedHeight = 92.0 + mediaQuery.padding.bottom;
+
             return Stack(
               children: <Widget>[
-                child,
+                Positioned.fill(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: dockReservedHeight),
+                    child: child,
+                  ),
+                ),
                 Positioned(
                   left: 12,
                   right: 12,
