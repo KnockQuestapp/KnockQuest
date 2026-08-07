@@ -31,7 +31,18 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  const Text('Subscription & Themes', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
+                      ),
+                      const Expanded(
+                        child: Text('Subscription & Themes', textAlign: TextAlign.center, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
+                      ),
+                      const SizedBox(width: 48),
+                    ],
+                  ),
                   const SizedBox(height: 6),
                   const Text('Manage your KnockQuest experience', style: TextStyle(color: Color(0xFF8B99AB))),
                   const SizedBox(height: 24),

@@ -186,7 +186,17 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('CRM & Integrations', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
+                      ),
+                      const Expanded(
+                        child: Text('CRM & Integrations', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 6),
                   const Text('Sync leads to API Nation or Zapier via secure webhooks.', style: TextStyle(color: Color(0xFF8B99AB))),
                   const SizedBox(height: 24),

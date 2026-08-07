@@ -43,26 +43,51 @@ class _QuestsPageState extends State<QuestsPage> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-              child: Row(
+              child: Column(
                 children: [
-                  Expanded(
-                    child: SegmentedButton<bool>(
-                      segments: const [
-                        ButtonSegment<bool>(value: true, label: Text('Open')),
-                        ButtonSegment<bool>(value: false, label: Text('All')),
-                      ],
-                      selected: {_showOpenOnly},
-                      onSelectionChanged: (selection) {
-                        setState(() {
-                          _showOpenOnly = selection.first;
-                        });
-                      },
-                    ),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
+                      ),
+                      const Expanded(
+                        child: Text(
+                          'Quests',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF233655),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 48),
+                    ],
                   ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    onPressed: _addQuickQuest,
-                    child: const Text('Quick Add'),
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SegmentedButton<bool>(
+                          segments: const [
+                            ButtonSegment<bool>(value: true, label: Text('Open')),
+                            ButtonSegment<bool>(value: false, label: Text('All')),
+                          ],
+                          selected: {_showOpenOnly},
+                          onSelectionChanged: (selection) {
+                            setState(() {
+                              _showOpenOnly = selection.first;
+                            });
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      ElevatedButton(
+                        onPressed: _addQuickQuest,
+                        child: const Text('Quick Add'),
+                      ),
+                    ],
                   ),
                 ],
               ),
