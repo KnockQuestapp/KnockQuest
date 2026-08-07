@@ -34,6 +34,117 @@ class _QuestsPageState extends State<QuestsPage> {
     );
   }
 
+  Future<void> _editQuest(int index, QuestRecord quest) async {
+    final titleController = TextEditingController(text: quest.title);
+    final detailsController = TextEditingController(text: quest.details);
+    final statusController = TextEditingController(text: quest.status);
+
+    final didSave = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Edit Quest'),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: titleController,
+                  decoration: const InputDecoration(labelText: 'Title'),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: statusController,
+                  decoration: const InputDecoration(labelText: 'Status'),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  controller: detailsController,
+                  minLines: 2,
+                  maxLines: 4,
+                  decoration: const InputDecoration(labelText: 'Details'),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (didSave != true) {
+      titleController.dispose();
+      detailsController.dispose();
+      statusController.dispose();
+      return;
+    }
+
+    final nextTitle = titleController.text.trim();
+    final nextStatus = statusController.text.trim();
+    final nextDetails = detailsController.text.trim();
+
+    titleController.dispose();
+    detailsController.dispose();
+    statusController.dispose();
+
+    final updated = quest.copyWith(
+      title: nextTitle.isEmpty ? quest.title : nextTitle,
+      status: nextStatus.isEmpty ? quest.status : nextStatus,
+      details: nextDetails.isEmpty ? quest.details : nextDetails,
+    );
+
+    LeadStore.instance.updateQuest(index, updated);
+    if (!mounted) {
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Quest updated.')),
+    );
+  }
+
+  Future<void> _deleteQuest(int index) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Delete Quest?'),
+          content: const Text('This action cannot be undone.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context, false),
+              child: const Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context, true),
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (confirm != true) {
+      return;
+    }
+
+    LeadStore.instance.deleteQuest(index);
+    if (!mounted) {
+      return;
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Quest deleted.')),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,6 +225,8 @@ class _QuestsPageState extends State<QuestsPage> {
                         status: quest.status,
                         details: quest.details,
                         completed: quest.completed,
+                        onEdit: () => _editQuest(sourceIndex, quest),
+                        onDelete: () => _deleteQuest(sourceIndex),
                         onComplete: quest.completed
                             ? null
                             : () => LeadStore.instance.markQuestCompleted(sourceIndex),
@@ -136,6 +249,8 @@ class _QuestTile extends StatelessWidget {
     required this.status,
     required this.details,
     required this.completed,
+    required this.onEdit,
+    required this.onDelete,
     required this.onComplete,
   });
 
@@ -143,23 +258,53 @@ class _QuestTile extends StatelessWidget {
   final String status;
   final String details;
   final bool completed;
+  final VoidCallback onEdit;
+  final VoidCallback onDelete;
   final VoidCallback? onComplete;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      child: ListTile(
-        title: Text(title),
-        subtitle: Text(details),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Chip(label: Text(status)),
-            const SizedBox(width: 8),
-            TextButton(
-              onPressed: onComplete,
-              child: Text(completed ? 'Done' : 'Complete'),
+            Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF233655),
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(details),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Chip(label: Text(status)),
+                const SizedBox(width: 8),
+                TextButton(
+                  onPressed: onComplete,
+                  child: Text(completed ? 'Done' : 'Complete'),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                TextButton.icon(
+                  onPressed: onEdit,
+                  icon: const Icon(Icons.edit_outlined, size: 18),
+                  label: const Text('Edit'),
+                ),
+                const SizedBox(width: 8),
+                TextButton.icon(
+                  onPressed: onDelete,
+                  icon: const Icon(Icons.delete_outline, size: 18),
+                  label: const Text('Delete'),
+                ),
+              ],
             ),
           ],
         ),
