@@ -24,6 +24,14 @@ class KnockQuestApp extends StatefulWidget {
 }
 
 class _KnockQuestAppState extends State<KnockQuestApp> {
+  static const Set<String> _backButtonRoutes = <String>{
+    AppRoutes.territories,
+    AppRoutes.integrations,
+    AppRoutes.subscriptions,
+    AppRoutes.quests,
+    AppRoutes.leadDetails,
+  };
+
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   final ValueNotifier<String> _currentRoute = ValueNotifier<String>(
     AppRoutes.login,
@@ -96,7 +104,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
             }
 
             final canPop = _navigatorKey.currentState?.canPop() ?? false;
-            final showBackButton = routeName != AppRoutes.dashboard;
+            final showBackButton = _backButtonRoutes.contains(routeName);
             return Stack(
               children: <Widget>[
                 child,
