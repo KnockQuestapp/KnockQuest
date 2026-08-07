@@ -24,14 +24,6 @@ class KnockQuestApp extends StatefulWidget {
 }
 
 class _KnockQuestAppState extends State<KnockQuestApp> {
-  static const Set<String> _backButtonRoutes = <String>{
-    AppRoutes.territories,
-    AppRoutes.integrations,
-    AppRoutes.subscriptions,
-    AppRoutes.quests,
-    AppRoutes.leadDetails,
-  };
-
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
   final ValueNotifier<String> _currentRoute = ValueNotifier<String>(
     AppRoutes.login,
@@ -98,8 +90,6 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
               return child;
             }
 
-            final canPop = _navigatorKey.currentState?.canPop() ?? false;
-            final showBackButton = _backButtonRoutes.contains(routeName);
             return Stack(
               children: <Widget>[
                 child,
@@ -130,17 +120,6 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
-                              if (showBackButton)
-                                _MobileNavButton(
-                                  tooltip: 'Back',
-                                  icon: Icons.arrow_back,
-                                  label: 'Back',
-                                  enabled: canPop,
-                                  onPressed: canPop
-                                      ? () =>
-                                          _navigatorKey.currentState?.maybePop()
-                                      : null,
-                                ),
                               _MobileNavButton(
                                 tooltip: 'Dashboard',
                                 icon: Icons.dashboard_outlined,
@@ -269,7 +248,6 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
       required this.label,
       required this.onPressed,
       this.backgroundColor = const Color(0xFF1D5BD7),
-      this.enabled = true,
     });
 
     final String tooltip;
@@ -277,10 +255,10 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
     final String label;
     final VoidCallback? onPressed;
     final Color backgroundColor;
-    final bool enabled;
 
     @override
     Widget build(BuildContext context) {
+      final enabled = onPressed != null;
       final labelColor = enabled
           ? const Color(0xFF5F7391)
           : const Color(0xFF98A6BB);

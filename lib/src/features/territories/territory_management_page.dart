@@ -48,6 +48,10 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                 children: [
                   Row(
                     children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
+                      ),
                       const Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,6 +62,7 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                           ],
                         ),
                       ),
+                      const SizedBox(width: 8),
                       Container(
                         width: 38,
                         height: 38,
