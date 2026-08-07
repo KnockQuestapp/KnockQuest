@@ -91,11 +91,6 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
           return const SizedBox.shrink();
         }
 
-        final isMobileViewport = MediaQuery.sizeOf(context).width < 720;
-        if (!isMobileViewport) {
-          return child;
-        }
-
         return ValueListenableBuilder<String>(
           valueListenable: _currentRoute,
           builder: (context, routeName, _) {
@@ -113,87 +108,92 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                   right: 12,
                   bottom: 12,
                   child: SafeArea(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.96),
-                        borderRadius: BorderRadius.circular(18),
-                        boxShadow: const <BoxShadow>[
-                          BoxShadow(
-                            color: Color(0x22000000),
-                            blurRadius: 14,
-                            offset: Offset(0, 5),
+                    child: Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 720),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
                           ),
-                        ],
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          if (showBackButton)
-                            _MobileNavButton(
-                              tooltip: 'Back',
-                              icon: Icons.arrow_back,
-                              label: 'Back',
-                              enabled: canPop,
-                              onPressed: canPop
-                                  ? () =>
-                                      _navigatorKey.currentState?.maybePop()
-                                  : null,
-                            ),
-                          _MobileNavButton(
-                            tooltip: 'Dashboard',
-                            icon: Icons.dashboard_outlined,
-                            label: 'Dashboard',
-                            backgroundColor: const Color(0xFF0F9D58),
-                            onPressed: () =>
-                                _navigatorKey.currentState?.pushNamed(
-                                  AppRoutes.dashboard,
-                                ),
-                            ),
-                          _MobileNavButton(
-                            tooltip: 'Add lead',
-                            icon: Icons.person_add_alt_1,
-                            label: 'Add Lead',
-                            backgroundColor: const Color(0xFF1D5BD7),
-                            onPressed: () =>
-                                _navigatorKey.currentState?.pushNamed(
-                                  AppRoutes.addLead,
-                                ),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.96),
+                            borderRadius: BorderRadius.circular(18),
+                            boxShadow: const <BoxShadow>[
+                              BoxShadow(
+                                color: Color(0x22000000),
+                                blurRadius: 14,
+                                offset: Offset(0, 5),
+                              ),
+                            ],
                           ),
-                          _MobileNavButton(
-                            tooltip: 'Open map',
-                            icon: Icons.map_outlined,
-                            label: 'Map',
-                            backgroundColor: const Color(0xFF13B7D8),
-                            onPressed: () =>
-                                _navigatorKey.currentState?.pushNamed(
-                                  AppRoutes.interactiveMap,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              if (showBackButton)
+                                _MobileNavButton(
+                                  tooltip: 'Back',
+                                  icon: Icons.arrow_back,
+                                  label: 'Back',
+                                  enabled: canPop,
+                                  onPressed: canPop
+                                      ? () =>
+                                          _navigatorKey.currentState?.maybePop()
+                                      : null,
                                 ),
+                              _MobileNavButton(
+                                tooltip: 'Dashboard',
+                                icon: Icons.dashboard_outlined,
+                                label: 'Dashboard',
+                                backgroundColor: const Color(0xFF0F9D58),
+                                onPressed: () =>
+                                    _navigatorKey.currentState?.pushNamed(
+                                      AppRoutes.dashboard,
+                                    ),
+                              ),
+                              _MobileNavButton(
+                                tooltip: 'Add lead',
+                                icon: Icons.person_add_alt_1,
+                                label: 'Add Lead',
+                                backgroundColor: const Color(0xFF1D5BD7),
+                                onPressed: () =>
+                                    _navigatorKey.currentState?.pushNamed(
+                                      AppRoutes.addLead,
+                                    ),
+                              ),
+                              _MobileNavButton(
+                                tooltip: 'Open map',
+                                icon: Icons.map_outlined,
+                                label: 'Map',
+                                backgroundColor: const Color(0xFF13B7D8),
+                                onPressed: () =>
+                                    _navigatorKey.currentState?.pushNamed(
+                                      AppRoutes.interactiveMap,
+                                    ),
+                              ),
+                              _MobileNavButton(
+                                tooltip: 'Follow ups',
+                                icon: Icons.calendar_today_outlined,
+                                label: 'Follow Ups',
+                                backgroundColor: const Color(0xFF52627C),
+                                onPressed: () =>
+                                    _navigatorKey.currentState?.pushNamed(
+                                      AppRoutes.followUps,
+                                    ),
+                              ),
+                              _MobileNavButton(
+                                tooltip: 'Export',
+                                icon: Icons.ios_share_outlined,
+                                label: 'Export',
+                                backgroundColor: const Color(0xFF35C784),
+                                onPressed: () =>
+                                    _navigatorKey.currentState?.pushNamed(
+                                      AppRoutes.analytics,
+                                    ),
+                              ),
+                            ],
                           ),
-                          _MobileNavButton(
-                            tooltip: 'Follow ups',
-                            icon: Icons.calendar_today_outlined,
-                            label: 'Follow Ups',
-                            backgroundColor: const Color(0xFF52627C),
-                            onPressed: () =>
-                                _navigatorKey.currentState?.pushNamed(
-                                  AppRoutes.followUps,
-                                ),
-                          ),
-                          _MobileNavButton(
-                            tooltip: 'Export',
-                            icon: Icons.ios_share_outlined,
-                            label: 'Export',
-                            backgroundColor: const Color(0xFF35C784),
-                            onPressed: () =>
-                                _navigatorKey.currentState?.pushNamed(
-                                  AppRoutes.analytics,
-                                ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
