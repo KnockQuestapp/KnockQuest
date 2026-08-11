@@ -94,21 +94,35 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                       ),
                       Row(
                         children: [
-                          IconButton(
-                            onPressed: widget.onThemeToggle,
-                            style: IconButton.styleFrom(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.surfaceContainerHighest,
-                              foregroundColor:
-                                  Theme.of(context).colorScheme.onSurface,
-                              padding: const EdgeInsets.all(10),
-                            ),
-                            icon: Icon(
-                              widget.isDarkMode
-                                  ? Icons.light_mode_outlined
-                                  : Icons.dark_mode_outlined,
+                          Tooltip(
+                            message: 'Toggle light/dark mode',
+                            child: IconButton(
+                              onPressed: widget.onThemeToggle,
+                              style: IconButton.styleFrom(
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .surfaceContainerHighest,
+                                foregroundColor:
+                                    Theme.of(context).colorScheme.onSurface,
+                                padding: const EdgeInsets.all(10),
+                              ),
+                              icon: Icon(
+                                widget.isDarkMode
+                                    ? Icons.light_mode_outlined
+                                    : Icons.dark_mode_outlined,
+                              ),
                             ),
                           ),
+                          if (!isMobileViewport) ...[
+                            const SizedBox(width: 8),
+                            Text(
+                              widget.isDarkMode ? 'Light Mode' : 'Dark Mode',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onSurface,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                           const SizedBox(width: 8),
                           CircleAvatar(
                             radius: 18,
