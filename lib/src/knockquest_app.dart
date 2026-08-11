@@ -28,6 +28,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
   final ValueNotifier<String> _currentRoute = ValueNotifier<String>(
     AppRoutes.login,
   );
+  ThemeMode _themeMode = ThemeMode.light;
 
   late final NavigatorObserver _routeObserver = _RouteTrackingObserver(
     onRouteChanged: (routeName) {
@@ -43,9 +44,14 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = ThemeData(
+  void _toggleThemeMode() {
+    setState(() {
+      _themeMode = _themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+    });
+  }
+
+  ThemeData _buildLightTheme() {
+    return ThemeData(
       colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1D5BD7)),
       useMaterial3: true,
       scaffoldBackgroundColor: Colors.white,
@@ -70,11 +76,46 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
         ),
       ),
     );
+  }
 
+  ThemeData _buildDarkTheme() {
+    return ThemeData.dark(useMaterial3: true).copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: const Color(0xFF1D5BD7),
+        brightness: Brightness.dark,
+      ),
+      scaffoldBackgroundColor: const Color(0xFF0F172A),
+      textTheme: const TextTheme(
+        bodySmall: TextStyle(color: Color(0xFFCBD5E1)),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
+          side: const BorderSide(color: Color(0xFF334155)),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: AppConfig.appName,
-      theme: theme,
+      themeMode: _themeMode,
+      theme: _buildLightTheme(),
+      darkTheme: _buildDarkTheme(),
       navigatorKey: _navigatorKey,
       navigatorObservers: <NavigatorObserver>[_routeObserver],
       initialRoute: AppRoutes.login,
@@ -192,7 +233,10 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
       },
       routes: {
         AppRoutes.login: (_) => const LoginRegistrationPage(),
-        AppRoutes.dashboard: (_) => const MainDashboardPage(),
+        AppRoutes.dashboard: (_) => MainDashboardPage(
+          isDarkMode: _themeMode == ThemeMode.dark,
+          onThemeToggle: _toggleThemeMode,
+        ),
         AppRoutes.addLead: (_) => const AddLeadPage(),
         AppRoutes.interactiveMap: (_) => const InteractiveMapPage(),
         AppRoutes.followUps: (_) => const FollowUpsPage(),
