@@ -534,10 +534,12 @@ class _MetricCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             _formatCompactNumber(value),
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF233655),
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? const Color(0xFF7FB3FF)
+                  : const Color(0xFF233655),
             ),
           ),
           const SizedBox(height: 4),
