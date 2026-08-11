@@ -74,12 +74,14 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
+                            Text(
                               'Good Morning, Sarah',
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
-                                color: Color(0xFF233655),
+                                color: widget.isDarkMode
+                                    ? const Color(0xFF7FB3FF)
+                                    : const Color(0xFF233655),
                               ),
                             ),
                             Text(
