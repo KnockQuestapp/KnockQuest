@@ -464,6 +464,25 @@ class _MetricGrid extends StatelessWidget {
   }
 }
 
+String _formatCompactNumber(String raw) {
+  // remove non-numeric except decimal
+  final cleaned = raw.replaceAll(RegExp('[^0-9.]'), '');
+  if (cleaned.isEmpty) return raw;
+  final value = double.tryParse(cleaned) ?? 0;
+  if (value < 1000) {
+    // return integer if whole, otherwise keep as-is without extra decimals
+    if (value == value.roundToDouble()) {
+      return value.toInt().toString();
+    }
+    return value.toString();
+  }
+  final k = value / 1000.0;
+  var out = k.toStringAsFixed(1);
+  // remove trailing .0
+  if (out.endsWith('.0')) out = out.substring(0, out.length - 2);
+  return '${out}K';
+}
+
 class _PipelineGrid extends StatelessWidget {
   const _PipelineGrid({required this.totalLeads});
 
@@ -514,7 +533,7 @@ class _MetricCard extends StatelessWidget {
           Icon(icon, color: const Color(0xFF35C784), size: 18),
           const SizedBox(height: 10),
           Text(
-            value,
+            _formatCompactNumber(value),
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
