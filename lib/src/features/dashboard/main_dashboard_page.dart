@@ -6,7 +6,14 @@ import '../../sample_data.dart';
 import '../../state/lead_store.dart';
 
 class MainDashboardPage extends StatefulWidget {
-  const MainDashboardPage({super.key});
+  const MainDashboardPage({
+    super.key,
+    required this.isDarkMode,
+    required this.onThemeToggle,
+  });
+
+  final bool isDarkMode;
+  final VoidCallback onThemeToggle;
 
   @override
   State<MainDashboardPage> createState() => _MainDashboardPageState();
@@ -51,7 +58,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
       isMobileViewport ? 128 : 16,
     );
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: contentPadding,
@@ -85,13 +92,34 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                           ],
                         ),
                       ),
-                      CircleAvatar(
-                        radius: 18,
-                        backgroundColor: Colors.white,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.notifications_none),
-                        ),
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: widget.onThemeToggle,
+                            style: IconButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surfaceContainerHighest,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onSurface,
+                              padding: const EdgeInsets.all(10),
+                            ),
+                            icon: Icon(
+                              widget.isDarkMode
+                                  ? Icons.light_mode_outlined
+                                  : Icons.dark_mode_outlined,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          CircleAvatar(
+                            radius: 18,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surface,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.notifications_none),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
