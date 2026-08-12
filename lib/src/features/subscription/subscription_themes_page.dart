@@ -68,7 +68,7 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
                         child: _PlanCard(
                           title: 'Free',
                           price: '\$0',
-                          detail: 'Basic mapping, 50 leads, Light theme',
+                          detail: 'Basic mapping, 50 leads',
                           current: _selectedPlan == 'Free',
                           onPressed: () => _choosePlan('Free'),
                         ),

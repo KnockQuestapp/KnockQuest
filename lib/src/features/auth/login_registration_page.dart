@@ -39,7 +39,8 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final primaryBlue = Theme.of(context).colorScheme.primary;
+    final colorScheme = Theme.of(context).colorScheme;
+    final primaryBlue = colorScheme.primary;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -68,11 +69,11 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                           ),
                         ],
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           '?',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: colorScheme.onPrimary,
                             fontSize: 44,
                             fontWeight: FontWeight.w700,
                           ),
@@ -150,7 +151,7 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                               onPressed: _submitLogin,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryBlue,
-                                foregroundColor: Colors.white,
+                                foregroundColor: colorScheme.onPrimary,
                                 minimumSize: const Size.fromHeight(42),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(14),
