@@ -176,7 +176,7 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -192,15 +192,28 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
                         onPressed: () => Navigator.pop(context),
                         icon: const Icon(Icons.arrow_back),
                       ),
-                      const Expanded(
-                        child: Text('CRM & Integrations', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
+                      Expanded(
+                        child: Text(
+                          'CRM & Integrations',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 6),
-                  const Text('Sync leads to API Nation or Zapier via secure webhooks.', style: TextStyle(color: Color(0xFF8B99AB))),
+                  Text(
+                    'Sync leads to API Nation or Zapier via secure webhooks.',
+                    style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                  ),
                   const SizedBox(height: 24),
-                  const Text('Connected Services', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF506178))),
+                  Text(
+                    'Connected Services',
+                    style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
+                  ),
                   const SizedBox(height: 12),
                   Expanded(
                     child: SingleChildScrollView(
@@ -293,9 +306,9 @@ class _CrmCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final statusColor = switch (lastStatus) {
-      'success' => const Color(0xFF35C784),
-      'failed' => const Color(0xFFD14343),
-      _ => const Color(0xFF8B99AB),
+      'success' => Theme.of(context).colorScheme.secondary,
+      'failed' => Theme.of(context).colorScheme.error,
+      _ => Theme.of(context).textTheme.bodySmall?.color ?? Theme.of(context).colorScheme.onSurfaceVariant,
     };
     final statusText = switch (lastStatus) {
       'success' => 'Last sync successful',
@@ -313,7 +326,8 @@ class _CrmCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFE5EAF1)),
+        color: Theme.of(context).colorScheme.surface,
+        border: Border.all(color: Theme.of(context).dividerColor),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
@@ -326,7 +340,7 @@ class _CrmCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(name, style: const TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF233655))),
+                    Text(name, style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
                     const SizedBox(height: 2),
                     Text(
                       statusText,
@@ -340,8 +354,8 @@ class _CrmCard extends StatelessWidget {
                         padding: const EdgeInsets.only(top: 2),
                         child: Text(
                           statusMeta,
-                          style: const TextStyle(
-                            color: Color(0xFF8B99AB),
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.bodySmall?.color,
                             fontSize: 11,
                           ),
                         ),
@@ -351,7 +365,10 @@ class _CrmCard extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: onConfigure,
-                style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D5BD7), foregroundColor: Colors.white),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                ),
                 child: const Text('Configure'),
               ),
             ],
@@ -359,13 +376,13 @@ class _CrmCard extends StatelessWidget {
           const Divider(height: 28),
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Auto-Sync Leads', style: TextStyle(fontWeight: FontWeight.w600, color: Color(0xFF233655))),
-                    SizedBox(height: 2),
-                    Text('Push new leads automatically', style: TextStyle(color: Color(0xFF8B99AB), fontSize: 12)),
+                    Text('Auto-Sync Leads', style: TextStyle(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                    const SizedBox(height: 2),
+                    Text('Push new leads automatically', style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12)),
                   ],
                 ),
               ),
@@ -422,12 +439,12 @@ class _CrmCard extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 10),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               decoration: BoxDecoration(
-                color: const Color(0xFFF5F8FC),
+                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
                 lastMessage,
-                style: const TextStyle(fontSize: 12, color: Color(0xFF4E6078)),
+                style: TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodySmall?.color),
               ),
             ),
           Wrap(
@@ -467,13 +484,15 @@ class _CrmCard extends StatelessWidget {
                   ),
             children: [
               if (activity.isEmpty)
-                const Padding(
-                  padding: EdgeInsets.only(bottom: 8),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Events will appear here after test syncs or lead updates.',
-                      style: TextStyle(color: Color(0xFF8B99AB), fontSize: 12),
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                     ),
                   ),
                 ),
@@ -493,25 +512,25 @@ class _CrmCard extends StatelessWidget {
                     children: [
                       Text(
                         '${item.event} - ${item.leadName}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF233655),
+                          color: Theme.of(context).colorScheme.onSurface,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         item.message,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
-                          color: Color(0xFF4E6078),
+                          color: Theme.of(context).textTheme.bodySmall?.color,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         item.createdAt.toLocal().toString().split('.').first,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 11,
-                          color: Color(0xFF8B99AB),
+                          color: Theme.of(context).textTheme.bodySmall?.color,
                         ),
                       ),
                     ],

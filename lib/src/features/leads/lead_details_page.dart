@@ -11,7 +11,7 @@ class LeadDetailsPage extends StatelessWidget {
     final lead = LeadStore.instance.latestLead;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -37,10 +37,18 @@ class LeadDetailsPage extends StatelessWidget {
                         width: 52,
                         height: 52,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFD7E4FA),
+                          color: Theme.of(context).colorScheme.primaryContainer,
                           borderRadius: BorderRadius.circular(16),
                         ),
-                        child: const Center(child: Text('JD', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF233655)))),
+                        child: Center(
+                          child: Text(
+                            'JD',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 14),
                       Expanded(
@@ -54,33 +62,46 @@ class LeadDetailsPage extends StatelessWidget {
                                     lead.name,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(fontSize: 28, fontWeight: FontWeight.w700, color: Color(0xFF233655)),
+                                    style: TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.w700,
+                                      color: Theme.of(context).colorScheme.onSurface,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 8),
                                 Flexible(
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                    decoration: BoxDecoration(color: const Color(0xFFE8F4EA), borderRadius: BorderRadius.circular(999)),
+                                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: BorderRadius.circular(999)),
                                     child: Text(
                                       lead.status,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(color: Color(0xFF3B8F52), fontSize: 11),
+                                      style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer, fontSize: 11),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                             const SizedBox(height: 4),
-                            Text(lead.address, style: const TextStyle(color: Color(0xFF7E8CA0))),
+                            Text(
+                              lead.address,
+                              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                            ),
                           ],
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 18),
-                  const Text('Building Units', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF506178))),
+                  Text(
+                    'Building Units',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   Wrap(
                     spacing: 8,
@@ -98,7 +119,10 @@ class LeadDetailsPage extends StatelessWidget {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () => Navigator.pushNamed(context, AppRoutes.visitHistory),
-                          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D5BD7), foregroundColor: Colors.white),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                          ),
                           child: const Text('Log Visit'),
                         ),
                       ),
@@ -116,7 +140,7 @@ class LeadDetailsPage extends StatelessWidget {
                     width: double.infinity,
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFFE5EAF1)),
+                      border: Border.all(color: Theme.of(context).dividerColor),
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: Column(
@@ -124,8 +148,8 @@ class LeadDetailsPage extends StatelessWidget {
                       children: [
                         const Center(child: Text('Property Info', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF7E8CA0)))),
                         const SizedBox(height: 18),
-                        const Row(
-                          children: [
+                        Row(
+                          children: const [
                             Expanded(child: _InfoPair('Building Type', 'Condo / Apartment')),
                             SizedBox(width: 16),
                             Expanded(child: _InfoPair('Ownership', 'Owner Occupied')),
@@ -163,11 +187,18 @@ class _UnitChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: selected ? const Color(0xFF1D5BD7) : Colors.white,
-        border: Border.all(color: const Color(0xFFE1E8F0)),
+        color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        border: Border.all(color: Theme.of(context).dividerColor),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: Text(label, style: TextStyle(color: selected ? Colors.white : const Color(0xFF506178))),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: selected
+              ? Theme.of(context).colorScheme.onPrimary
+              : Theme.of(context).textTheme.bodySmall?.color,
+        ),
+      ),
     );
   }
 }
@@ -183,13 +214,19 @@ class _InfoPair extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(color: Color(0xFF9AA7BA), fontSize: 12)),
+        Text(
+          label,
+          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12),
+        ),
         const SizedBox(height: 6),
         Text(
           value,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: const TextStyle(color: Color(0xFF233655), fontWeight: FontWeight.w700),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.w700,
+          ),
         ),
       ],
     );

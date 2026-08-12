@@ -79,7 +79,7 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -96,13 +96,13 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                       urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.knockquest.app',
                     ),
-                    const MarkerLayer(
+                    MarkerLayer(
                       markers: [
                         Marker(
                           point: LatLng(40.7128, -74.0060),
                           width: 30,
                           height: 30,
-                          child: Icon(Icons.location_pin, color: Color(0xFF1D5BD7), size: 30),
+                          child: Icon(Icons.location_pin, color: Theme.of(context).colorScheme.primary, size: 30),
                         ),
                       ],
                     ),
@@ -120,7 +120,7 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                               onChanged: (_) => setState(() {}),
                               decoration: InputDecoration(
                                 hintText: 'Search address or lead name',
-                                prefixIcon: const Icon(Icons.search, color: Color(0xFF73839A)),
+                                prefixIcon: Icon(Icons.search, color: Theme.of(context).textTheme.bodySmall?.color),
                                 suffixIcon: _searchText.isEmpty
                                     ? null
                                     : IconButton(
@@ -131,7 +131,7 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                                         icon: const Icon(Icons.close),
                                       ),
                                 filled: true,
-                                fillColor: Colors.white,
+                                fillColor: Theme.of(context).colorScheme.surface,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(14),
                                   borderSide: BorderSide.none,
@@ -152,12 +152,12 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                                 decoration: BoxDecoration(
-                                  color: Colors.white,
+                                  color: Theme.of(context).colorScheme.surface,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(
                                   'Searching: $_searchText',
-                                  style: const TextStyle(fontSize: 12, color: Color(0xFF4B5B72)),
+                                  style: TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodySmall?.color),
                                 ),
                               ),
                               const SizedBox(width: 8),
@@ -213,10 +213,13 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                             );
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF1D5BD7),
-                            foregroundColor: Colors.white,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
                           ),
-                          child: const Text('Save Boundary'),
+                          child: Text(
+              'Save Boundary',
+              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+            ),
                         ),
                       ),
                     ],
@@ -245,11 +248,11 @@ class _CircleIcon extends StatelessWidget {
       child: Container(
         width: 40,
         height: 40,
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
           shape: BoxShape.circle,
         ),
-        child: Icon(icon, color: const Color(0xFF4B5B72)),
+        child: Icon(icon, color: Theme.of(context).colorScheme.onSurface),
       ),
     );
   }
@@ -274,12 +277,12 @@ class _RangeChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFF1D5BD7) : Colors.white,
+          color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           label,
-          style: TextStyle(color: selected ? Colors.white : const Color(0xFF4B5B72)),
+          style: TextStyle(color: selected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).textTheme.bodySmall?.color),
         ),
       ),
     );
@@ -305,15 +308,15 @@ class _MapActionButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFF123E9E) : const Color(0xFF1D5BD7),
+          color: selected ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(28),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.edit_location_alt_outlined, color: Colors.white, size: 18),
+            Icon(Icons.edit_location_alt_outlined, color: Theme.of(context).colorScheme.onPrimary, size: 18),
             const SizedBox(width: 6),
-            Text(label, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600)),
+            Text(label, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.w600)),
           ],
         ),
       ),

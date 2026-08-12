@@ -39,7 +39,7 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
     final metrics = _metrics;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -49,10 +49,19 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Expanded(child: Text('Business Analytics', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655)))),
-                      Icon(Icons.tune),
+                      Expanded(
+                        child: Text(
+                          'Business Analytics',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
+                      ),
+                      const Icon(Icons.tune),
                     ],
                   ),
                   const SizedBox(height: 14),
@@ -82,20 +91,31 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
-                      gradient: const LinearGradient(colors: [Color(0xFF1D5BD7), Color(0xFF16C0E4)]),
+                      gradient: LinearGradient(colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary]),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
                       children: [
-                        const Text('Total GCI Performance', style: TextStyle(color: Color(0xFFDBE7FF), fontSize: 12)),
+                        Text(
+                          'Total GCI Performance',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 224),
+                            fontSize: 12,
+                          ),
+                        ),
                         const SizedBox(height: 14),
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(metrics['gci']!, style: TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.w700)),
+                          child: Text(metrics['gci']!, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 42, fontWeight: FontWeight.w700)),
                         ),
                         Align(
                           alignment: Alignment.centerLeft,
-                          child: Text('GCI $_period', style: TextStyle(color: Color(0xFFDBE7FF))),
+                          child: Text(
+                            'GCI $_period',
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 224),
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 18),
                         Row(
@@ -113,13 +133,19 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(18),
                     decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFFE5EAF1)),
+                      border: Border.all(color: Theme.of(context).dividerColor),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Leads By Source', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF506178))),
+                        Text(
+                          'Leads By Source',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
                         const SizedBox(height: 18),
                         Center(
                           child: SizedBox(
@@ -128,20 +154,30 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
                             child: Stack(
                               alignment: Alignment.center,
                               children: [
-                                CircularProgressIndicator(value: .38, strokeWidth: 28, valueColor: const AlwaysStoppedAnimation(Color(0xFF1D5BD7)), backgroundColor: const Color(0xFF445575)),
-                                const SizedBox(
+                                CircularProgressIndicator(
+                                  value: .38,
+                                  strokeWidth: 28,
+                                  valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
+                                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                                ),
+                                SizedBox(
                                   width: 92,
                                   height: 92,
-                                  child: DecoratedBox(decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle)),
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context).scaffoldBackgroundColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const _LegendRow(Color(0xFF1D5BD7), 'Door Knocking', '\$64,200', '124 leads'),
-                        const _LegendRow(Color(0xFF16C0E4), 'Referral', '\$38,000', '42 leads'),
-                        const _LegendRow(Color(0xFF35C784), 'Facebook', '\$14,500', '18 leads'),
+                        _LegendRow(Theme.of(context).colorScheme.primary, 'Door Knocking', '\$64,200', '124 leads'),
+                        _LegendRow(Theme.of(context).colorScheme.secondary, 'Referral', '\$38,000', '42 leads'),
+                        _LegendRow(Theme.of(context).colorScheme.tertiary, 'Facebook', '\$14,500', '18 leads'),
                       ],
                     ),
                   ),
@@ -174,7 +210,12 @@ class _FilterChip extends StatelessWidget {
           border: Border.all(color: const Color(0xFFE1E8F0)),
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Text(text, style: const TextStyle(color: Color(0xFF506178))),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Theme.of(context).textTheme.bodySmall?.color,
+          ),
+        ),
       ),
     );
   }
@@ -190,8 +231,21 @@ class _AnalyticsSmall extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(value, style: const TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w700)),
-        Text(label, style: const TextStyle(color: Color(0xFFDBE7FF), fontSize: 12)),
+        Text(
+          value,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        Text(
+          label,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 199),
+            fontSize: 12,
+          ),
+        ),
       ],
     );
   }
@@ -213,12 +267,29 @@ class _LegendRow extends StatelessWidget {
         children: [
           Container(width: 8, height: 8, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
           const SizedBox(width: 10),
-          Expanded(child: Text(source, style: const TextStyle(color: Color(0xFF506178)))),
+          Expanded(
+            child: Text(
+              source,
+              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+            ),
+          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text(amount, style: const TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF233655))),
-              Text(count, style: const TextStyle(color: Color(0xFF8B99AB), fontSize: 11)),
+              Text(
+                amount,
+                style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+              Text(
+                count,
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.bodySmall?.color,
+                  fontSize: 11,
+                ),
+              ),
             ],
           ),
         ],

@@ -22,7 +22,7 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -37,16 +37,30 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
                         onPressed: () => Navigator.pop(context),
                         icon: const Icon(Icons.arrow_back),
                       ),
-                      const Expanded(
-                        child: Text('Subscription & Themes', textAlign: TextAlign.center, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
+                      Expanded(
+                        child: Text(
+                          'Subscription & Themes',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
+                        ),
                       ),
                       const SizedBox(width: 48),
                     ],
                   ),
                   const SizedBox(height: 6),
-                  const Text('Manage your KnockQuest experience', style: TextStyle(color: Color(0xFF8B99AB))),
+                  Text(
+                    'Manage your KnockQuest experience',
+                    style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                  ),
                   const SizedBox(height: 24),
-                  const Text('Select a Plan', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF506178))),
+                  Text(
+                    'Select a Plan',
+                    style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
+                  ),
                   const SizedBox(height: 16),
                   Row(
                     children: [
@@ -113,8 +127,11 @@ class _PlanCard extends StatelessWidget {
       width: wide ? double.infinity : null,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         border: Border.all(
-          color: current ? const Color(0xFFE0B84B) : const Color(0xFFE5EAF1),
+          color: current
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).dividerColor,
         ),
         borderRadius: BorderRadius.circular(18),
       ),
@@ -123,23 +140,25 @@ class _PlanCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: Text(title, style: const TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF233655)))),
+              Expanded(child: Text(title, style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface))),
               Icon(
                 current ? Icons.check_circle : Icons.circle_outlined,
-                color: current ? const Color(0xFFE0B84B) : const Color(0xFF8B99AB),
+                color: current
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.onSurfaceVariant,
                 size: 18,
               ),
             ],
           ),
           const SizedBox(height: 12),
-          Text(price, style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
-          const Text('per month', style: TextStyle(color: Color(0xFF8B99AB), fontSize: 12)),
+          Text(price, style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
+          Text('per month', style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12)),
           const SizedBox(height: 14),
-          Text(detail, style: const TextStyle(color: Color(0xFF7E8CA0), fontSize: 12)),
+          Text(detail, style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12)),
           const SizedBox(height: 14),
           ElevatedButton(
             onPressed: onPressed,
-            style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D5BD7), foregroundColor: Colors.white),
+            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, foregroundColor: Theme.of(context).colorScheme.onPrimary),
             child: Text(current ? 'Current Plan' : 'Choose Plan'),
           ),
         ],

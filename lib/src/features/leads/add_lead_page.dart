@@ -95,7 +95,7 @@ class _AddLeadPageState extends State<AddLeadPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Center(
@@ -107,17 +107,17 @@ class _AddLeadPageState extends State<AddLeadPage> {
                   Container(
                     width: double.infinity,
                     padding: const EdgeInsets.fromLTRB(16, 52, 16, 24),
-                    decoration: const BoxDecoration(
-                      color: Color(0xFF1D5BD7),
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(24),
                         bottomRight: Radius.circular(24),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Add Lead',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         fontSize: 34,
                         fontWeight: FontWeight.w700,
                       ),
@@ -185,8 +185,8 @@ class _AddLeadPageState extends State<AddLeadPage> {
                             child: ElevatedButton(
                               onPressed: _saveLead,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF1D5BD7),
-                                foregroundColor: Colors.white,
+                                backgroundColor: Theme.of(context).colorScheme.primary,
+                                foregroundColor: Theme.of(context).colorScheme.onPrimary,
                               ),
                               child: const Text('Save Lead'),
                             ),

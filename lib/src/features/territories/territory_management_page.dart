@@ -36,7 +36,7 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
     final displayedTerritories = _filteredTerritories;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -52,13 +52,23 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                         onPressed: () => Navigator.pop(context),
                         icon: const Icon(Icons.arrow_back),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Territories', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
-                            SizedBox(height: 6),
-                            Text('Manage and track field performance', style: TextStyle(color: Color(0xFF8B99AB))),
+                            Text(
+                              'Territories',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              'Manage and track field performance',
+                              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                            ),
                           ],
                         ),
                       ),
@@ -66,8 +76,8 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                       Container(
                         width: 38,
                         height: 38,
-                        decoration: const BoxDecoration(color: Color(0xFF1D5BD7), shape: BoxShape.circle),
-                        child: const Icon(Icons.add_location_alt_outlined, color: Colors.white, size: 20),
+                        decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
+                        child: Icon(Icons.add_location_alt_outlined, color: Theme.of(context).colorScheme.onPrimary, size: 20),
                       ),
                     ],
                   ),
@@ -80,10 +90,10 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                           onChanged: (_) => setState(() {}),
                           decoration: InputDecoration(
                             hintText: 'Search territories...',
-                            prefixIcon: const Icon(Icons.search, color: Color(0xFF8B99AB), size: 18),
+                            prefixIcon: Icon(Icons.search, color: Theme.of(context).textTheme.bodySmall?.color, size: 18),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: const BorderSide(color: Color(0xFFD9E1EC)),
+                              borderSide: BorderSide(color: Theme.of(context).dividerColor),
                             ),
                           ),
                         ),
@@ -95,7 +105,7 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                         child: Container(
                           width: 38,
                           height: 38,
-                          decoration: BoxDecoration(border: Border.all(color: const Color(0xFFD9E1EC)), shape: BoxShape.circle),
+                          decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), shape: BoxShape.circle),
                           child: Icon(
                             _sortByGci ? Icons.tune : Icons.sort,
                             size: 18,
@@ -115,22 +125,28 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(color: const Color(0xFF1D5BD7), borderRadius: BorderRadius.circular(18)),
-                      child: const Row(
+                      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, borderRadius: BorderRadius.circular(18)),
+                      child: Row(
                       children: [
-                        CircleAvatar(backgroundColor: Color(0xFF2B6BE3), child: Icon(Icons.draw_outlined, color: Colors.white)),
-                        SizedBox(width: 12),
+                        CircleAvatar(backgroundColor: Theme.of(context).colorScheme.secondary, child: Icon(Icons.draw_outlined, color: Theme.of(context).colorScheme.onSecondary)),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Draw New Boundary', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-                              SizedBox(height: 4),
-                              Text('Define custom areas on the map', style: TextStyle(color: Color(0xFFDDE8FF), fontSize: 12)),
+                              Text(
+                                'Draw New Boundary',
+                                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.w700),
+                              ),
+                              const SizedBox(height: 4),
+                              Text(
+                                'Define custom areas on the map',
+                                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 217), fontSize: 12),
+                              ),
                             ],
                           ),
                         ),
-                        Icon(Icons.chevron_right, color: Colors.white),
+                        Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.onPrimary),
                       ],
                     ),
                   ),
@@ -138,21 +154,27 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                   const SizedBox(height: 18),
                   Row(
                     children: [
-                      Text('Active Territories', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF506178))),
+                      Text(
+                    'Active Territories',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                       const Spacer(),
                       Text(
                         _sortByGci ? 'Sort by GCI' : 'Sort by Name',
-                        style: const TextStyle(color: Color(0xFF1D5BD7), fontSize: 12),
+                        style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12),
                       ),
                     ],
                   ),
                   const SizedBox(height: 12),
                   Expanded(
                     child: displayedTerritories.isEmpty
-                        ? const Center(
+                        ? Center(
                             child: Text(
                               'No territories match your search.',
-                              style: TextStyle(color: Color(0xFF8B99AB)),
+                              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
                             ),
                           )
                         : ListView.builder(
@@ -163,30 +185,55 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                                 padding: const EdgeInsets.only(bottom: 12),
                                 child: Container(
                                   padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(border: Border.all(color: const Color(0xFFE5EAF1)), borderRadius: BorderRadius.circular(18)),
+                                  decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(18)),
                                   child: Column(
                                     children: [
                                       Row(
                                         children: [
-                                          Container(width: 14, height: 14, color: const Color(0xFF1D5BD7)),
+                                          Container(width: 14, height: 14, color: Theme.of(context).colorScheme.primary),
                                           const Spacer(),
-                                          Text(territory.change, style: const TextStyle(color: Color(0xFF35C784), fontWeight: FontWeight.w700)),
+                                          Text(
+                                            territory.change,
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.secondary,
+                                              fontWeight: FontWeight.w700,
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(height: 16),
-                                      Text(territory.name, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
+                                      Text(
+                                        territory.name,
+                                        style: TextStyle(
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w700,
+                                          color: Theme.of(context).colorScheme.onSurface,
+                                        ),
+                                      ),
                                       const SizedBox(height: 8),
                                       Row(
                                         children: [
-                                          Text(territory.gci, style: const TextStyle(color: Color(0xFF506178))),
+                                          Text(
+                                            territory.gci,
+                                            style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                                          ),
                                           const Spacer(),
-                                          Text(territory.leads, style: const TextStyle(color: Color(0xFF8B99AB))),
+                                          Text(
+                                            territory.leads,
+                                            style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                                          ),
                                         ],
                                       ),
                                       const SizedBox(height: 12),
-                                      const Align(
+                                      Align(
                                         alignment: Alignment.centerRight,
-                                        child: Text('View Map', style: TextStyle(color: Color(0xFF1D5BD7), fontWeight: FontWeight.w600)),
+                                        child: Text(
+                                          'View Map',
+                                          style: TextStyle(
+                                            color: Theme.of(context).colorScheme.primary,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
                                       ),
                                     ],
                                   ),

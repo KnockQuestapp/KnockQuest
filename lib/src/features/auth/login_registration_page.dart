@@ -39,11 +39,10 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    const primaryBlue = Color(0xFF1D5BD7);
-    const titleBlue = Color(0xFF23395D);
+    final primaryBlue = Theme.of(context).colorScheme.primary;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -82,13 +81,13 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                     ),
                   ),
                   const SizedBox(height: 14),
-                  const Text(
+                  Text(
                     'KnockQuest',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 50,
                       fontWeight: FontWeight.w700,
-                      color: titleBlue,
+                      color: Theme.of(context).colorScheme.onSurface,
                       letterSpacing: -1.0,
                     ),
                   ),
@@ -191,7 +190,7 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                     ),
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(48),
-                      side: const BorderSide(color: Color(0xFFD7E0EE)),
+                      side: BorderSide(color: Theme.of(context).dividerColor),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(14),
                       ),
@@ -208,7 +207,7 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                           context,
                           AppRoutes.subscriptions,
                         ),
-                        child: const Text(
+                        child: Text(
                           'Register Now',
                           style: TextStyle(
                             color: primaryBlue,
@@ -264,7 +263,7 @@ class _FieldLabel extends StatelessWidget {
     return Text(
       text,
       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-        color: const Color(0xFF506178),
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
         fontWeight: FontWeight.w600,
       ),
     );
@@ -298,10 +297,10 @@ class _InputShell extends StatelessWidget {
       decoration: InputDecoration(
         isDense: true,
         hintText: hint,
-        prefixIcon: Icon(icon, size: 18, color: const Color(0xFF8B99AB)),
+        prefixIcon: Icon(icon, size: 18, color: Theme.of(context).textTheme.bodySmall?.color),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(color: Color(0xFFD9E1EC)),
+          borderSide: BorderSide(color: Theme.of(context).dividerColor),
         ),
       ),
     );
