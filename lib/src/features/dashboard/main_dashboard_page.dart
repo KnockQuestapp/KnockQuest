@@ -384,6 +384,15 @@ class _QuickAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    Color iconColorFor(Color bg) {
+      if (bg == colorScheme.primary) return colorScheme.onPrimary;
+      if (bg == colorScheme.secondary) return colorScheme.onSecondary;
+      if (bg == colorScheme.tertiary) return colorScheme.onTertiary;
+      if (bg == colorScheme.surfaceContainerHighest) return colorScheme.onSurface;
+      return colorScheme.onPrimary;
+    }
+
     return InkWell(
       onTap: onTap,
       child: Column(
@@ -395,7 +404,7 @@ class _QuickAction extends StatelessWidget {
               color: color,
               borderRadius: BorderRadius.circular(14),
             ),
-            child: Icon(icon, color: Colors.white),
+            child: Icon(icon, color: iconColorFor(color)),
           ),
           const SizedBox(height: 8),
           Text(label, style: Theme.of(context).textTheme.bodySmall),
