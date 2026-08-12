@@ -148,7 +148,7 @@ class _QuestsPageState extends State<QuestsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           children: [
@@ -162,14 +162,14 @@ class _QuestsPageState extends State<QuestsPage> {
                         onPressed: () => Navigator.pop(context),
                         icon: const Icon(Icons.arrow_back),
                       ),
-                      const Expanded(
+                      Expanded(
                         child: Text(
                           'Quests',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w700,
-                            color: Color(0xFF233655),
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
                       ),
@@ -209,8 +209,11 @@ class _QuestsPageState extends State<QuestsPage> {
                 builder: (context, quests, _) {
                   final visible = _visibleQuests(quests);
                   if (visible.isEmpty) {
-                    return const Center(
-                      child: Text('No quests found for this filter.'),
+                    return Center(
+                      child: Text(
+                        'No quests found for this filter.',
+                        style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                      ),
                     );
                   }
 
@@ -273,9 +276,9 @@ class _QuestTile extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF233655),
+                color: Theme.of(context).colorScheme.onSurface,
               ),
             ),
             const SizedBox(height: 6),
@@ -295,14 +298,14 @@ class _QuestTile extends StatelessWidget {
               children: [
                 TextButton.icon(
                   onPressed: onEdit,
-                  icon: const Icon(Icons.edit_outlined, size: 18),
-                  label: const Text('Edit'),
+                  icon: Icon(Icons.edit_outlined, size: 18, color: Theme.of(context).colorScheme.primary),
+                  label: Text('Edit', style: TextStyle(color: Theme.of(context).colorScheme.primary)),
                 ),
                 const SizedBox(width: 8),
                 TextButton.icon(
                   onPressed: onDelete,
-                  icon: const Icon(Icons.delete_outline, size: 18),
-                  label: const Text('Delete'),
+                  icon: Icon(Icons.delete_outline, size: 18, color: Theme.of(context).colorScheme.error),
+                  label: Text('Delete', style: TextStyle(color: Theme.of(context).colorScheme.error)),
                 ),
               ],
             ),

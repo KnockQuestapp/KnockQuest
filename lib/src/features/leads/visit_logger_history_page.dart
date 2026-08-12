@@ -88,7 +88,7 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
         address: LeadStore.instance.latestLead.address,
         note: notes.isEmpty ? _selectedOutcome : notes,
         when: 'Today',
-        priorityColor: 0xFF1D5BD7,
+        priorityColor: Theme.of(context).colorScheme.primary.toARGB32(),
       ),
     );
 
@@ -121,7 +121,10 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                 ListTile(
                   title: Text(status),
                   trailing: status == _leadStatus
-                      ? const Icon(Icons.check, color: Color(0xFF1D5BD7))
+                      ? Icon(
+                          Icons.check,
+                          color: Theme.of(context).colorScheme.primary,
+                        )
                       : null,
                   onTap: () {
                     Navigator.pop(sheetContext);
@@ -157,7 +160,7 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
     final lead = LeadStore.instance.latestLead;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -173,21 +176,45 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                       Expanded(
                         child: Column(
                           children: [
-                            Text(lead.address, style: const TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF233655))),
+                            Text(
+                              lead.address,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                              color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
                             const SizedBox(height: 4),
-                            Text('${lead.name} - $_leadStatus', style: const TextStyle(color: Color(0xFF8B99AB), fontSize: 12)),
+                            Text(
+                              '${lead.name} - $_leadStatus',
+                              style: TextStyle(
+                                color: Theme.of(context).textTheme.bodySmall?.color,
+                                fontSize: 12,
+                              ),
+                            ),
                           ],
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(color: const Color(0xFFE8F1FB), borderRadius: BorderRadius.circular(999)),
-                        child: const Text('Visit #4', style: TextStyle(color: Color(0xFF506178), fontSize: 12)),
+                        decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(999)),
+                        child: Text(
+                          'Visit #4',
+                          style: TextStyle(
+                            color: Theme.of(context).textTheme.bodySmall?.color,
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 18),
-                  const Text('Log New Visit', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF506178))),
+                  Text(
+                    'Log New Visit',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   Wrap(
                     spacing: 8,
@@ -203,16 +230,22 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  const Text('Visit Notes', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF506178))),
+                  Text(
+                    'Visit Notes',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   TextField(
                     controller: _notesController,
                     decoration: InputDecoration(
                       hintText: 'Enter details about the conversation...',
-                      prefixIcon: const Icon(Icons.mail_outline, size: 18, color: Color(0xFF8B99AB)),
+                      prefixIcon: Icon(Icons.mail_outline, size: 18, color: Theme.of(context).textTheme.bodySmall?.color),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: const BorderSide(color: Color(0xFFD9E1EC)),
+                        borderSide: BorderSide(color: Theme.of(context).dividerColor),
                       ),
                     ),
                   ),
@@ -222,7 +255,10 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: _logVisit,
-                          style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF1D5BD7), foregroundColor: Colors.white),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                          ),
                           child: const Text('Log Visit'),
                         ),
                       ),
@@ -235,9 +271,21 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                   const SizedBox(height: 18),
                   Row(
                     children: [
-                      const Text('Visit History', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF506178))),
+                      Text(
+                        'Visit History',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                      ),
                       const Spacer(),
-                      Text('Total: ${_history.length}', style: const TextStyle(color: Color(0xFF8B99AB))),
+                      Text(
+                        'Total: ${_history.length}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 14),
@@ -259,7 +307,7 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      Expanded(child: ElevatedButton(onPressed: _viewOnMap, style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF5A6370), foregroundColor: Colors.white), child: const Text('View on Map'))),
+                      Expanded(child: ElevatedButton(onPressed: _viewOnMap, style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.secondaryContainer, foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer), child: const Text('View on Map'))),
                       const SizedBox(width: 10),
                       Expanded(child: TextButton(onPressed: _changeStatus, child: const Text('Change Status'))),
                     ],
@@ -324,14 +372,14 @@ class _OutcomeTag extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFF1D5BD7) : const Color(0xFFF1F3F6),
+            color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(999),
         ),
         child: Text(
           text,
           style: TextStyle(
             fontSize: 12,
-            color: selected ? Colors.white : const Color(0xFF506178),
+            color: selected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ),
@@ -356,8 +404,15 @@ class _VisitHistoryTile extends StatelessWidget {
         children: [
           Column(
             children: [
-              Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFF1D5BD7), shape: BoxShape.circle)),
-              Container(width: 2, height: 72, color: const Color(0xFFD9E1EC)),
+              Container(
+                width: 10,
+                height: 10,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              Container(width: 2, height: 72, color: Theme.of(context).dividerColor),
             ],
           ),
           const SizedBox(width: 12),
@@ -367,14 +422,40 @@ class _VisitHistoryTile extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(child: Text(title, style: const TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF233655)))),
-                    Text(date, style: const TextStyle(color: Color(0xFF8B99AB), fontSize: 12)),
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
+                      ),
+                    ),
+                    Text(
+                      date,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurfaceVariant,
+                            fontSize: 12,
+                          ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 4),
-                Text(meta, style: const TextStyle(color: Color(0xFF8B99AB), fontSize: 12)),
+                Text(
+                  meta,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontSize: 12,
+                      ),
+                ),
                 const SizedBox(height: 10),
-                Text(details, style: const TextStyle(color: Color(0xFF506178), fontSize: 12)),
+                Text(
+                  details,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        fontSize: 12,
+                      ),
+                ),
               ],
             ),
           ),

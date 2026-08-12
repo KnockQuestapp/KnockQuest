@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'app_routes.dart';
 import 'config/app_config.dart';
@@ -29,6 +30,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
     AppRoutes.login,
   );
   ThemeMode _themeMode = ThemeMode.light;
+  static const String _kThemeModeKey = 'knockquest_theme_mode';
 
   late final NavigatorObserver _routeObserver = _RouteTrackingObserver(
     onRouteChanged: (routeName) {
@@ -48,6 +50,38 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
     setState(() {
       _themeMode = _themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
     });
+    // persist selection
+    _saveThemeMode(_themeMode);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // load persisted theme preference
+    _loadSavedThemeMode();
+  }
+
+  Future<void> _loadSavedThemeMode() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final value = prefs.getString(_kThemeModeKey);
+      if (value == 'dark') {
+        setState(() => _themeMode = ThemeMode.dark);
+      } else if (value == 'light') {
+        setState(() => _themeMode = ThemeMode.light);
+      }
+    } catch (_) {
+      // ignore failures and keep default
+    }
+  }
+
+  Future<void> _saveThemeMode(ThemeMode mode) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_kThemeModeKey, mode == ThemeMode.dark ? 'dark' : 'light');
+    } catch (_) {
+      // ignore write errors
+    }
   }
 
   ThemeData _buildLightTheme() {
@@ -156,13 +190,18 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: Colors.white.withValues(alpha: 0.96),
+                            color: Theme.of(context).colorScheme.surface.withValues(alpha: 245),
                             borderRadius: BorderRadius.circular(18),
-                            boxShadow: const <BoxShadow>[
+                            boxShadow: [
                               BoxShadow(
-                                color: Color(0x22000000),
+                              color: Theme.of(context).shadowColor.withValues(alpha: 36),
                                 blurRadius: 14,
-                                offset: Offset(0, 5),
+                                offset: const Offset(0, 5),
+                              ),
+                              BoxShadow(
+                                color: const Color(0x22000000),
+                                blurRadius: 14,
+                                offset: const Offset(0, 5),
                               ),
                             ],
                           ),
@@ -312,11 +351,11 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
     Widget build(BuildContext context) {
       final enabled = onPressed != null;
       final labelColor = enabled
-          ? const Color(0xFF5F7391)
-          : const Color(0xFF98A6BB);
+          ? Theme.of(context).textTheme.bodySmall?.color ?? const Color(0xFF5F7391)
+          : Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 153) ?? const Color(0xFF98A6BB);
       final iconBackground = enabled
           ? backgroundColor
-          : backgroundColor.withValues(alpha: 0.5);
+          : backgroundColor.withValues(alpha: 128);
       return Material(
         color: Colors.transparent,
         child: InkWell(
@@ -334,7 +373,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                     color: iconBackground,
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  child: Icon(icon, size: 18, color: Colors.white),
+                  child: Icon(icon, size: 18, color: Theme.of(context).colorScheme.onPrimary),
                 ),
                 const SizedBox(height: 5),
                 Text(

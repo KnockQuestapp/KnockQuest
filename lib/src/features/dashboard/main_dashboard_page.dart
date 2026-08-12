@@ -79,9 +79,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
-                                color: widget.isDarkMode
-                                    ? const Color(0xFF7FB3FF)
-                                    : const Color(0xFF233655),
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                             ),
                             Text(
@@ -89,42 +87,24 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodySmall
-                                  ?.copyWith(color: const Color(0xFF8B99AB)),
+                                  ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
                             ),
                           ],
                         ),
                       ),
                       Row(
                         children: [
-                          Tooltip(
-                            message: 'Toggle light/dark mode',
-                            child: IconButton(
-                              onPressed: widget.onThemeToggle,
-                              style: IconButton.styleFrom(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .surfaceContainerHighest,
-                                foregroundColor:
-                                    Theme.of(context).colorScheme.onSurface,
-                                padding: const EdgeInsets.all(10),
-                              ),
-                              icon: Icon(
-                                widget.isDarkMode
-                                    ? Icons.light_mode_outlined
-                                    : Icons.dark_mode_outlined,
-                              ),
+                          IconButton(
+                            onPressed: widget.onThemeToggle,
+                            style: IconButton.styleFrom(
+                              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                              foregroundColor: Theme.of(context).colorScheme.onSurface,
+                              padding: const EdgeInsets.all(10),
+                            ),
+                            icon: Icon(
+                              widget.isDarkMode ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
                             ),
                           ),
-                          if (!isMobileViewport) ...[
-                            const SizedBox(width: 8),
-                            Text(
-                              widget.isDarkMode ? 'Light Mode' : 'Dark Mode',
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.onSurface,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
                           const SizedBox(width: 8),
                           CircleAvatar(
                             radius: 18,
@@ -146,7 +126,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                         Expanded(
                           child: _QuickAction(
                             icon: Icons.person_add_alt_1,
-                            color: const Color(0xFF1D5BD7),
+                            color: Theme.of(context).colorScheme.primary,
                             label: 'Add Lead',
                             onTap: _openAddLead,
                           ),
@@ -154,7 +134,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                         Expanded(
                           child: _QuickAction(
                             icon: Icons.map_outlined,
-                            color: const Color(0xFF13B7D8),
+                            color: Theme.of(context).colorScheme.secondary,
                             label: 'Open Map',
                             onTap: () => Navigator.pushNamed(
                               context,
@@ -165,7 +145,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                         Expanded(
                           child: _QuickAction(
                             icon: Icons.calendar_today_outlined,
-                            color: const Color(0xFF52627C),
+                            color: Theme.of(context).colorScheme.surfaceContainerHighest,
                             label: 'Follow Ups',
                             onTap: () => Navigator.pushNamed(
                               context,
@@ -176,7 +156,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                         Expanded(
                           child: _QuickAction(
                             icon: Icons.ios_share_outlined,
-                            color: const Color(0xFF35C784),
+                            color: Theme.of(context).colorScheme.tertiary,
                             label: 'Export',
                             onTap: () => Navigator.pushNamed(
                               context,
@@ -434,9 +414,9 @@ class _SectionTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: const TextStyle(
+      style: TextStyle(
         fontWeight: FontWeight.w700,
-        color: Color(0xFF506178),
+        color: Theme.of(context).colorScheme.onSurface,
       ),
     );
   }
@@ -523,23 +503,21 @@ class _MetricCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFE5EAF1)),
+        border: Border.all(color: Theme.of(context).dividerColor),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(icon, color: const Color(0xFF35C784), size: 18),
+          Icon(icon, color: Theme.of(context).colorScheme.secondary, size: 18),
           const SizedBox(height: 10),
           Text(
             _formatCompactNumber(value),
             style: TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w700,
-              color: Theme.of(context).brightness == Brightness.dark
-                  ? const Color(0xFF7FB3FF)
-                  : const Color(0xFF233655),
+              color: Theme.of(context).colorScheme.onSurface,
             ),
           ),
           const SizedBox(height: 4),

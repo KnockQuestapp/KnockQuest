@@ -21,7 +21,7 @@ class _FollowUpsPageState extends State<FollowUpsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -33,13 +33,23 @@ class _FollowUpsPageState extends State<FollowUpsPage> {
                 children: [
                   Row(
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Follow Ups', style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Color(0xFF233655))),
-                            SizedBox(height: 6),
-                            Text('Stay on top of your leads', style: TextStyle(color: Color(0xFF8B99AB))),
+                            Text(
+                              'Follow Ups',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              'Stay on top of your leads',
+                              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                            ),
                           ],
                         ),
                       ),
@@ -100,15 +110,31 @@ class _DayChip extends StatelessWidget {
       width: 48,
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        color: selected ? const Color(0xFF1D5BD7) : Colors.white,
-        border: Border.all(color: const Color(0xFFE1E8F0)),
+        color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        border: Border.all(color: Theme.of(context).dividerColor),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
-          Text(day, style: TextStyle(color: selected ? Colors.white : const Color(0xFF506178), fontSize: 11)),
+          Text(
+            day,
+            style: TextStyle(
+              color: selected
+                  ? Theme.of(context).colorScheme.onPrimary
+                  : Theme.of(context).textTheme.bodySmall?.color,
+              fontSize: 11,
+            ),
+          ),
           const SizedBox(height: 2),
-          Text(date, style: TextStyle(color: selected ? Colors.white : const Color(0xFF233655), fontWeight: FontWeight.w700)),
+          Text(
+            date,
+            style: TextStyle(
+              color: selected
+                  ? Theme.of(context).colorScheme.onPrimary
+                  : Theme.of(context).colorScheme.onSurface,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ],
       ),
     );
@@ -128,7 +154,9 @@ class _FollowUpCard extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         border: Border.all(
-          color: item.completed ? const Color(0xFFC9EED8) : const Color(0xFFFFC3B0),
+          color: item.completed
+              ? Theme.of(context).colorScheme.secondaryContainer
+              : Theme.of(context).colorScheme.errorContainer,
         ),
         borderRadius: BorderRadius.circular(18),
       ),
@@ -142,17 +170,37 @@ class _FollowUpCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Expanded(child: Text(item.name, style: const TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF233655)))),
-                    Text(item.when, style: const TextStyle(color: Color(0xFFFF6633), fontSize: 12)),
+                    Expanded(
+                  child: Text(
+                    item.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+                Text(
+                  item.when,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                    fontSize: 12,
+                  ),
+                ),
                   ],
                 ),
                 const SizedBox(height: 4),
-                Text(item.address, style: const TextStyle(color: Color(0xFF7E8CA0), fontSize: 12)),
+                Text(
+                  item.address,
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodySmall?.color,
+                    fontSize: 12,
+                  ),
+                ),
                 const SizedBox(height: 4),
                 Text(
                   item.note,
                   style: TextStyle(
-                    color: const Color(0xFF7E8CA0),
+                    color: Theme.of(context).textTheme.bodySmall?.color,
                     fontSize: 12,
                     decoration: item.completed ? TextDecoration.lineThrough : null,
                   ),
@@ -164,7 +212,7 @@ class _FollowUpCard extends StatelessWidget {
             onPressed: item.completed ? null : onComplete,
             icon: Icon(
               item.completed ? Icons.check_circle : Icons.task_alt_outlined,
-              color: item.completed ? const Color(0xFF35C784) : null,
+              color: item.completed ? Theme.of(context).colorScheme.secondary : null,
             ),
           ),
         ],
