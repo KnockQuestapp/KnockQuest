@@ -88,7 +88,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
     return ThemeData(
       colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1D5BD7)),
       useMaterial3: true,
-      scaffoldBackgroundColor: Colors.white,
+      scaffoldBackgroundColor: Colors.transparent,
       textTheme: const TextTheme(
         bodySmall: TextStyle(color: Color(0xFF7E8CA0)),
       ),
@@ -118,7 +118,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
         seedColor: const Color(0xFF1D5BD7),
         brightness: Brightness.dark,
       ),
-      scaffoldBackgroundColor: const Color(0xFF0F172A),
+      scaffoldBackgroundColor: Colors.transparent,
       textTheme: const TextTheme(
         bodySmall: TextStyle(color: Color(0xFFCBD5E1)),
       ),

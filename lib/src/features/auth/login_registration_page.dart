@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../app_routes.dart';
+import '../../config/supabase_client.dart';
 
 class LoginRegistrationPage extends StatefulWidget {
   const LoginRegistrationPage({super.key});
@@ -13,6 +15,8 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _isLoading = false;
+  bool _isSignUp = false;
 
   @override
   void dispose() {
@@ -21,20 +25,74 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
     super.dispose();
   }
 
-  void _submitLogin() {
-    if (!_formKey.currentState!.validate()) {
-      return;
+  Future<void> _submitAuth() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      final supabase = SupabaseClientService().client;
+      final email = _emailController.text.trim();
+      final password = _passwordController.text.trim();
+
+      AuthResponse response;
+      if (_isSignUp) {
+        response = await supabase.auth.signUp(
+          email: email,
+          password: password,
+          data: {'name': email.split('@').first},
+        );
+        if (response.user != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Account created! Please log in.')),
+          );
+          setState(() => _isSignUp = false);
+          _emailController.clear();
+          _passwordController.clear();
+          setState(() => _isLoading = false);
+          return;
+        }
+      } else {
+        response = await supabase.auth.signInWithPassword(
+          email: email,
+          password: password,
+        );
+        if (response.session != null) {
+          Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
+          return;
+        }
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Authentication failed. Please try again.')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
     }
 
-    Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
+    setState(() => _isLoading = false);
   }
 
-  void _forgotPassword() {
+  Future<void> _forgotPassword() async {
     final email = _emailController.text.trim();
-    final suffix = email.isEmpty ? '' : ' for $email';
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Password reset link sent$suffix.')),
-    );
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter your email first.')),
+      );
+      return;
+    }
+    try {
+      await SupabaseClientService().resetPassword(email: email);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password reset link sent to $email.')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    }
   }
 
   @override
@@ -202,7 +260,12 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      const Text("Don't have an account? "),
+                      Text(
+                        "Don't have an account? ",
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: const Color(0xFF7E8CA0),
+                        ),
+                      ),
                       InkWell(
                         onTap: () => Navigator.pushNamed(
                           context,

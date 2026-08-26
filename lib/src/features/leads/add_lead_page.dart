@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../sample_data.dart';
-import '../../state/lead_store.dart';
+import '../../services/lead_service.dart';
 
 class AddLeadPage extends StatefulWidget {
   const AddLeadPage({super.key});
@@ -12,6 +11,7 @@ class AddLeadPage extends StatefulWidget {
 
 class _AddLeadPageState extends State<AddLeadPage> {
   final _formKey = GlobalKey<FormState>();
+  bool _isSaving = false;
 
   final _firstName = TextEditingController();
   final _lastName = TextEditingController();
@@ -45,51 +45,44 @@ class _AddLeadPageState extends State<AddLeadPage> {
     super.dispose();
   }
 
-  void _saveLead() {
+  Future<void> _saveLead() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
-    final lastContactDate =
-        DateTime.tryParse(_lastContactDate.text.trim()) ?? DateTime.now();
-    final followUpDate =
-        DateTime.tryParse(_followUpDate.text.trim()) ?? DateTime.now();
+    setState(() => _isSaving = true);
 
-    final payload = <String, dynamic>{
-      'firstName': _firstName.text.trim(),
-      'lastName': _lastName.text.trim(),
-      'phone': _phone.text.trim(),
-      'email': _email.text.trim(),
-      'address': _address.text.trim(),
-      'unitNumber': _unitNumber.text.trim(),
-      'city': _city.text.trim(),
-      'postalCode': _postalCode.text.trim(),
-      'notes': _notes.text.trim(),
-      'latitude': double.tryParse(_latitude.text.trim()) ?? 0,
-      'longitude': double.tryParse(_longitude.text.trim()) ?? 0,
-      'lastContactDate': lastContactDate.toIso8601String(),
-      'followUpDate': followUpDate.toIso8601String(),
-    };
+    try {
+      final fullName = '${_firstName.text.trim()} ${_lastName.text.trim()}'.trim();
+      final address = [
+        _address.text.trim(),
+        _unitNumber.text.trim(),
+        _city.text.trim(),
+        _postalCode.text.trim(),
+      ].where((s) => s.isNotEmpty).join(', ');
 
-    LeadStore.instance.addLead(
-      LeadRecord(
-        firstName: payload['firstName'] as String,
-        lastName: payload['lastName'] as String,
-        phone: payload['phone'] as String,
-        email: payload['email'] as String,
-        address: payload['address'] as String,
-        unitNumber: payload['unitNumber'] as String,
-        city: payload['city'] as String,
-        postalCode: payload['postalCode'] as String,
-        notes: payload['notes'] as String,
-        latitude: payload['latitude'] as double,
-        longitude: payload['longitude'] as double,
-        lastContactDate: lastContactDate,
-        followUpDate: followUpDate,
-      ),
-    );
+      final lead = await LeadService().createLead(
+        name: fullName.isNotEmpty ? fullName : _firstName.text.trim(),
+        phone: _phone.text.trim(),
+        email: _email.text.trim(),
+        address: address.isNotEmpty ? address : null,
+        latitude: double.tryParse(_latitude.text.trim()),
+        longitude: double.tryParse(_longitude.text.trim()),
+        notes: _notes.text.trim(),
+      );
 
-    Navigator.pop(context, payload);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Lead saved successfully!')),
+      );
+
+      Navigator.pop(context, lead);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    } finally {
+      setState(() => _isSaving = false);
+    }
   }
 
   @override
