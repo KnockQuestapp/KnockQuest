@@ -190,16 +190,22 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                             vertical: 8,
                           ),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface.withValues(alpha: 245),
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? const Color(0xFF2A2A2A).withValues(alpha: 245)
+                                : Theme.of(context).colorScheme.surface.withValues(alpha: 245),
                             borderRadius: BorderRadius.circular(18),
                             boxShadow: [
                               BoxShadow(
-                              color: Theme.of(context).shadowColor.withValues(alpha: 36),
+                                color: Theme.of(context).brightness == Brightness.dark
+                                    ? const Color(0x66000000)
+                                    : Theme.of(context).shadowColor.withValues(alpha: 36),
                                 blurRadius: 14,
                                 offset: const Offset(0, 5),
                               ),
                               BoxShadow(
-                                color: const Color(0x22000000),
+                                color: Theme.of(context).brightness == Brightness.dark
+                                    ? const Color(0x88000000)
+                                    : const Color(0x22000000),
                                 blurRadius: 14,
                                 offset: const Offset(0, 5),
                               ),
