@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../services/territory_service.dart';
+import '../../services/lead_service.dart';
+
 class InteractiveMapPage extends StatefulWidget {
   const InteractiveMapPage({super.key});
 
@@ -11,33 +14,120 @@ class InteractiveMapPage extends StatefulWidget {
 
 class _InteractiveMapPageState extends State<InteractiveMapPage> {
   final _searchController = TextEditingController();
+  final TerritoryService _territoryService = TerritoryService();
+  final LeadService _leadService = LeadService();
+  
   int _selectedRangeIndex = 1;
-  int _selectedDrawTool = 0;
+  bool _isDrawing = false;
+  List<LatLng> _currentPolygon = [];
+  List<List<LatLng>> _territories = [];
+  List<Map<String, dynamic>> _leads = [];
+  bool _isLoading = true;
+  String? _territoryName;
+  bool _isSavingTerritory = false;
 
   static const _ranges = ['100m', '250m', '500m', '1km'];
+  final MapController _mapController = MapController();
 
   String get _searchText => _searchController.text.trim();
 
   @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  Future<void> _loadData() async {
+    setState(() => _isLoading = true);
+    try {
+      final territories = await _territoryService.getTerritories();
+      final leads = await _leadService.getLeads();
+      setState(() {
+        _territories = territories.map((t) => _parsePolygon(t['polygon'])).toList();
+        _leads = leads;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() => _isLoading = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error loading data: ${e.toString()}')),
+      );
+    }
+  }
+
+  List<LatLng> _parsePolygon(String? polygonWKT) {
+    if (polygonWKT == null) return [];
+    try {
+      // Simple parser for POLYGON((lng lat, lng lat, ...))
+      final coords = polygonWKT
+          .replaceAll('POLYGON((', '')
+          .replaceAll('))', '')
+          .split(',');
+      return coords.map((c) {
+        final parts = c.trim().split(' ');
+        return LatLng(double.parse(parts[1]), double.parse(parts[0]));
+      }).toList();
+    } catch (e) {
+      return [];
+    }
+  }
+
+  void _toggleDrawing() {
+    setState(() {
+      _isDrawing = !_isDrawing;
+      if (!_isDrawing) {
+        _currentPolygon = [];
+        _territoryName = null;
+      }
+    });
+  }
+
+  void _addPointToPolygon(LatLng point) {
+    if (!_isDrawing) return;
+    setState(() {
+      _currentPolygon.add(point);
+    });
+  }
+
+  Future<void> _saveTerritory() async {
+    if (_currentPolygon.length < 3) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Draw a polygon with at least 3 points')),
+      );
+      return;
+    }
+    
+    final name = _territoryName?.trim() ?? 'Territory ${DateTime.now().day}/${DateTime.now().month}';
+    setState(() => _isSavingTerritory = true);
+    
+    try {
+      await _territoryService.createTerritory(
+        name: name,
+        description: 'Created on ${DateTime.now().toLocal().toString().split(' ')[0]}',
+        polygon: _currentPolygon,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Territory saved successfully!')),
+      );
+      setState(() {
+        _isDrawing = false;
+        _currentPolygon = [];
+        _territoryName = null;
+        _isSavingTerritory = false;
+      });
+      await _loadData();
+    } catch (e) {
+      setState(() => _isSavingTerritory = false);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error saving territory: ${e.toString()}')),
+      );
+    }
   }
 
   void _selectRange(int index) {
     setState(() {
       _selectedRangeIndex = index;
     });
-  }
-
-  void _selectDrawTool(int index) {
-    setState(() {
-      _selectedDrawTool = index;
-    });
-    final label = 'Draw tool ${index + 1} selected';
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(label)),
-    );
   }
 
   void _openFilters() {
@@ -87,27 +177,75 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
             child: Stack(
               children: [
                 FlutterMap(
-                  options: const MapOptions(
-                    initialCenter: LatLng(40.7128, -74.0060),
+                  mapController: _mapController,
+                  options: MapOptions(
+                    initialCenter: const LatLng(40.7128, -74.0060),
                     initialZoom: 12.8,
+                    onTap: (tapPosition, point) {
+                      if (_isDrawing) {
+                        _addPointToPolygon(point);
+                      }
+                    },
                   ),
                   children: [
                     TileLayer(
                       urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                       userAgentPackageName: 'com.knockquest.app',
                     ),
+                    // Show existing territories
+                    if (!_isLoading && _territories.isNotEmpty)
+                      ..._territories.map((polygon) => PolygonLayer(
+                        polygons: [
+                          Polygon(
+                            points: polygon,
+                            color: Colors.blue.withOpacity(0.3),
+                            borderColor: Colors.blue,
+                            borderStrokeWidth: 2,
+                          ),
+                        ],
+                      )),
+                    // Show current drawing polygon
+                    if (_isDrawing && _currentPolygon.isNotEmpty)
+                      PolygonLayer(
+                        polygons: [
+                          Polygon(
+                            points: _currentPolygon,
+                            color: Colors.green.withOpacity(0.4),
+                            borderColor: Colors.green,
+                            borderStrokeWidth: 3,
+                          ),
+                        ],
+                      ),
+                    // Show lead markers
                     MarkerLayer(
-                      markers: [
-                        Marker(
-                          point: LatLng(40.7128, -74.0060),
-                          width: 30,
-                          height: 30,
-                          child: Icon(Icons.location_pin, color: Theme.of(context).colorScheme.primary, size: 30),
+                      markers: _leads.map((lead) => Marker(
+                        point: LatLng(
+                          (lead['latitude'] ?? 40.7128).toDouble(),
+                          (lead['longitude'] ?? -74.0060).toDouble(),
                         ),
-                      ],
+                        width: 30,
+                        height: 30,
+                        child: GestureDetector(
+                          onTap: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Lead: ${lead['name']}')),
+                            );
+                          },
+                          child: Icon(
+                            Icons.location_pin,
+                            color: Theme.of(context).colorScheme.primary,
+                            size: 30,
+                          ),
+                        ),
+                      )).toList(),
                     ),
                   ],
                 ),
+                // Loading indicator
+                if (_isLoading)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
