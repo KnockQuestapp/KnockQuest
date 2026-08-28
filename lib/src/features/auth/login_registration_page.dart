@@ -262,8 +262,10 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                     children: [
                       Text(
                         "Don't have an account? ",
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: const Color(0xFF7E8CA0),
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
                         ),
                       ),
                       InkWell(
@@ -275,7 +277,8 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                           'Register Now',
                           style: TextStyle(
                             color: primaryBlue,
-                            fontWeight: FontWeight.w600,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15,
                           ),
                         ),
                       ),
