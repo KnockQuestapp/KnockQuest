@@ -25,6 +25,7 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
   bool _isLoading = true;
   String? _territoryName;
   bool _isSavingTerritory = false;
+  int _selectedDrawTool = 0;
 
   static const _ranges = ['100m', '250m', '500m', '1km'];
   final MapController _mapController = MapController();
@@ -73,13 +74,19 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
   }
 
   void _toggleDrawing() {
-    setState(() {
-      _isDrawing = !_isDrawing;
-      if (!_isDrawing) {
+    // If not in drawing mode, navigate to the map view
+    if (!_isDrawing) {
+      // The map is already visible, just toggle drawing mode
+      setState(() {
+        _isDrawing = true;
+      });
+    } else {
+      setState(() {
+        _isDrawing = false;
         _currentPolygon = [];
         _territoryName = null;
-      }
-    });
+      });
+    }
   }
 
   void _addPointToPolygon(LatLng point) {
@@ -127,6 +134,12 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
   void _selectRange(int index) {
     setState(() {
       _selectedRangeIndex = index;
+    });
+  }
+
+  void _selectDrawTool(int index) {
+    setState(() {
+      _selectedDrawTool = index;
     });
   }
 
@@ -317,19 +330,22 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                         child: Column(
                           children: [
                             _MapActionButton(
-                              'draw',
+                              icon: Icons.draw,
+                              label: 'Draw',
                               selected: _selectedDrawTool == 0,
                               onTap: () => _selectDrawTool(0),
                             ),
                             const SizedBox(height: 10),
                             _MapActionButton(
-                              'draw',
+                              icon: Icons.edit,
+                              label: 'Edit',
                               selected: _selectedDrawTool == 1,
                               onTap: () => _selectDrawTool(1),
                             ),
                             const SizedBox(height: 10),
                             _MapActionButton(
-                              'draw',
+                              icon: Icons.delete,
+                              label: 'Delete',
                               selected: _selectedDrawTool == 2,
                               onTap: () => _selectDrawTool(2),
                             ),
@@ -396,6 +412,67 @@ class _CircleIcon extends StatelessWidget {
   }
 }
 
+class _MapActionButton extends StatelessWidget {
+  const _MapActionButton({
+    required this.icon,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: selected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 4,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              icon,
+              color: selected
+                  ? Theme.of(context).colorScheme.onPrimary
+                  : Theme.of(context).colorScheme.onSurface,
+              size: 24,
+            ),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 10,
+                color: selected
+                    ? Theme.of(context).colorScheme.onPrimary
+                    : Theme.of(context).colorScheme.onSurface,
+                fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _RangeChip extends StatelessWidget {
   const _RangeChip(
     this.label, {
@@ -427,37 +504,4 @@ class _RangeChip extends StatelessWidget {
   }
 }
 
-class _MapActionButton extends StatelessWidget {
-  const _MapActionButton(
-    this.label, {
-    required this.selected,
-    required this.onTap,
-  });
-
-  final String label;
-  final bool selected;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(28),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
-        decoration: BoxDecoration(
-          color: selected ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.primary,
-          borderRadius: BorderRadius.circular(28),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.edit_location_alt_outlined, color: Theme.of(context).colorScheme.onPrimary, size: 18),
-            const SizedBox(width: 6),
-            Text(label, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.w600)),
-          ],
-        ),
-      ),
-    );
-  }
-}
+// _MapActionButton is already defined above with a proper implementation.
