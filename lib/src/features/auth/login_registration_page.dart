@@ -206,7 +206,7 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                           child: SizedBox(
                             width: 102,
                             child: ElevatedButton(
-                              onPressed: _submitLogin,
+                              onPressed: _submitAuth,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryBlue,
                                 foregroundColor: colorScheme.onPrimary,

@@ -24,19 +24,20 @@ android {
         versionName = flutter.versionName
     }
 
-    flavorDimensions += "environment"
-    productFlavors {
-        create("staging") {
-            dimension = "environment"
-            applicationIdSuffix = ".staging"
-            versionNameSuffix = "-staging"
-            resValue("string", "app_name", "KnockQuest Staging")
-        }
-        create("production") {
-            dimension = "environment"
-            resValue("string", "app_name", "KnockQuest")
-        }
-    }
+    // Product flavors disabled for beta build
+    // flavorDimensions += "environment"
+    // productFlavors {
+    //     create("staging") {
+    //         dimension = "environment"
+    //         applicationIdSuffix = ".staging"
+    //         versionNameSuffix = "-staging"
+    //         resValue("string", "app_name", "KnockQuest Staging")
+    //     }
+    //     create("production") {
+    //         dimension = "environment"
+    //         resValue("string", "app_name", "KnockQuest")
+    //     }
+    // }
 
     buildTypes {
         release {
