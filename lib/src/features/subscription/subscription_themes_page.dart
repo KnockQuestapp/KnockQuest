@@ -77,7 +77,7 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
                       Expanded(
                         child: _PlanCard(
                           title: 'Professional',
-                          price: '\$29',
+                          price: '\$10',
                           detail: 'Unlimited leads, CRM sync, Route optimization',
                           current: _selectedPlan == 'Professional',
                           onPressed: () => _choosePlan('Professional'),
@@ -88,7 +88,7 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
                   const SizedBox(height: 16),
                   _PlanCard(
                     title: 'Team',
-                    price: '\$99',
+                    price: '\$100',
                     detail: 'Multi-user access, team dashboards, territory sharing',
                     current: _selectedPlan == 'Team',
                     wide: true,
