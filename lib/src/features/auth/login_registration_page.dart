@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app_routes.dart';
+import '../../state/auth_store.dart';
 
 class LoginRegistrationPage extends StatefulWidget {
   const LoginRegistrationPage({super.key});
@@ -13,6 +14,7 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -21,12 +23,40 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
     super.dispose();
   }
 
-  void _submitLogin() {
+  Future<void> _submitLogin() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
-    Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
+    setState(() => _isLoading = true);
+    try {
+      final success = await AuthStore.instance.signIn(
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+      );
+
+      if (success) {
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, AppRoutes.dashboard);
+        }
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid email or password')),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login error: $e')),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   void _forgotPassword() {
@@ -148,7 +178,7 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                           child: SizedBox(
                             width: 102,
                             child: ElevatedButton(
-                              onPressed: _submitLogin,
+                              onPressed: _isLoading ? null : _submitLogin,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryBlue,
                                 foregroundColor: colorScheme.onPrimary,
@@ -157,7 +187,16 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                                   borderRadius: BorderRadius.circular(14),
                                 ),
                               ),
-                              child: const Text('Login'),
+                              child: _isLoading
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
+                                    )
+                                  : const Text('Login'),
                             ),
                           ),
                         ),
@@ -185,10 +224,18 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                   ),
                   const SizedBox(height: 14),
                   OutlinedButton(
-                    onPressed: () => Navigator.pushReplacementNamed(
-                      context,
-                      AppRoutes.dashboard,
-                    ),
+                    onPressed: () async {
+                      final success = await AuthStore.instance.signIn(
+                        'google_user@example.com',
+                        'mock_password',
+                      );
+                      if (success && mounted) {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          AppRoutes.dashboard,
+                        );
+                      }
+                    },
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(48),
                       side: BorderSide(color: Theme.of(context).dividerColor),

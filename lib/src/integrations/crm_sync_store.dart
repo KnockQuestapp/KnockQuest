@@ -284,8 +284,9 @@ class CrmSyncStore {
       ValueNotifier<List<CrmSyncTarget>>(_defaultTargets);
   final ValueNotifier<List<CrmSyncRetryItem>> retryQueue =
       ValueNotifier<List<CrmSyncRetryItem>>(<CrmSyncRetryItem>[]);
-    final ValueNotifier<List<CrmSyncActivityItem>> activityLog =
+  final ValueNotifier<List<CrmSyncActivityItem>> activityLog =
       ValueNotifier<List<CrmSyncActivityItem>>(<CrmSyncActivityItem>[]);
+  final ValueNotifier<bool> isSyncing = ValueNotifier<bool>(false);
 
   bool _isLoaded = false;
 

@@ -74,6 +74,48 @@ class LeadRecord {
       estimatedValue: estimatedValue ?? this.estimatedValue,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'firstName': firstName,
+      'lastName': lastName,
+      'phone': phone,
+      'email': email,
+      'address': address,
+      'unitNumber': unitNumber,
+      'city': city,
+      'postalCode': postalCode,
+      'notes': notes,
+      'latitude': latitude,
+      'longitude': longitude,
+      'lastContactDate': lastContactDate.toIso8601String(),
+      'followUpDate': followUpDate.toIso8601String(),
+      'status': status,
+      'outcome': outcome,
+      'estimatedValue': estimatedValue,
+    };
+  }
+
+  factory LeadRecord.fromMap(Map<String, dynamic> map) {
+    return LeadRecord(
+      firstName: map['firstName'] as String,
+      lastName: map['lastName'] as String,
+      phone: map['phone'] as String,
+      email: map['email'] as String,
+      address: map['address'] as String,
+      unitNumber: map['unitNumber'] as String,
+      city: map['city'] as String,
+      postalCode: map['postalCode'] as String,
+      notes: map['notes'] as String,
+      latitude: (map['latitude'] as num).toDouble(),
+      longitude: (map['longitude'] as num).toDouble(),
+      lastContactDate: DateTime.parse(map['lastContactDate'] as String),
+      followUpDate: DateTime.parse(map['followUpDate'] as String),
+      status: map['status'] as String? ?? 'Active Lead',
+      outcome: map['outcome'] as String? ?? 'Door Knocking',
+      estimatedValue: map['estimatedValue'] as String? ?? r'$450,000',
+    );
+  }
 }
 
 class FollowUpRecord {
@@ -110,6 +152,28 @@ class FollowUpRecord {
       completed: completed ?? this.completed,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'address': address,
+      'note': note,
+      'when': when,
+      'priorityColor': priorityColor,
+      'completed': completed,
+    };
+  }
+
+  factory FollowUpRecord.fromMap(Map<String, dynamic> map) {
+    return FollowUpRecord(
+      name: map['name'] as String,
+      address: map['address'] as String,
+      note: map['note'] as String,
+      when: map['when'] as String,
+      priorityColor: map['priorityColor'] as int,
+      completed: map['completed'] as bool? ?? false,
+    );
+  }
 }
 
 class TerritoryRecord {
@@ -124,6 +188,24 @@ class TerritoryRecord {
   final String gci;
   final String leads;
   final String change;
+
+  Map<String, dynamic> toMap() {
+    return {
+      'name': name,
+      'gci': gci,
+      'leads': leads,
+      'change': change,
+    };
+  }
+
+  factory TerritoryRecord.fromMap(Map<String, dynamic> map) {
+    return TerritoryRecord(
+      name: map['name'] as String,
+      gci: map['gci'] as String,
+      leads: map['leads'] as String,
+      change: map['change'] as String,
+    );
+  }
 }
 
 class QuestRecord {
@@ -150,6 +232,24 @@ class QuestRecord {
       status: status ?? this.status,
       details: details ?? this.details,
       completed: completed ?? this.completed,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'status': status,
+      'details': details,
+      'completed': completed,
+    };
+  }
+
+  factory QuestRecord.fromMap(Map<String, dynamic> map) {
+    return QuestRecord(
+      title: map['title'] as String,
+      status: map['status'] as String,
+      details: map['details'] as String,
+      completed: map['completed'] as bool? ?? false,
     );
   }
 }

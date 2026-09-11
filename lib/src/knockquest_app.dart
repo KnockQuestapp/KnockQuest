@@ -16,6 +16,8 @@ import 'features/placeholder/unknown_route_page.dart';
 import 'features/quests/quests_page.dart';
 import 'features/subscription/subscription_themes_page.dart';
 import 'features/territories/territory_management_page.dart';
+import 'state/auth_store.dart';
+import 'services/notification_service.dart';
 
 class KnockQuestApp extends StatefulWidget {
   const KnockQuestApp({super.key});
@@ -144,250 +146,257 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: AppConfig.appName,
-      themeMode: _themeMode,
-      theme: _buildLightTheme(),
-      darkTheme: _buildDarkTheme(),
-      navigatorKey: _navigatorKey,
-      navigatorObservers: <NavigatorObserver>[_routeObserver],
-      initialRoute: AppRoutes.login,
-      builder: (context, child) {
-        if (child == null) {
-          return const SizedBox.shrink();
-        }
-
-        return ValueListenableBuilder<String>(
-          valueListenable: _currentRoute,
-          builder: (context, routeName, _) {
-            if (routeName == AppRoutes.login) {
-              return child;
+    return ValueListenableBuilder<AuthUser?>(
+      valueListenable: AuthStore.instance.currentUser,
+      builder: (context, user, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: AppConfig.appName,
+          themeMode: _themeMode,
+          theme: _buildLightTheme(),
+          darkTheme: _buildDarkTheme(),
+          navigatorKey: _navigatorKey,
+          navigatorObservers: <NavigatorObserver>[_routeObserver],
+          initialRoute: user == null ? AppRoutes.login : AppRoutes.dashboard,
+          builder: (context, child) {
+            if (child == null) {
+              return const SizedBox.shrink();
             }
 
-            final mediaQuery = MediaQuery.of(context);
-            final dockReservedHeight = 92.0 + mediaQuery.padding.bottom;
+            NotificationService.instance.setContext(context);
 
-            return Stack(
-              children: <Widget>[
-                Positioned.fill(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: dockReservedHeight),
-                    child: child,
-                  ),
-                ),
-                Positioned(
-                  left: 12,
-                  right: 12,
-                  bottom: 12,
-                  child: SafeArea(
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 720),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface.withValues(alpha: 245),
-                            borderRadius: BorderRadius.circular(18),
-                            boxShadow: [
-                              BoxShadow(
-                              color: Theme.of(context).shadowColor.withValues(alpha: 36),
-                                blurRadius: 14,
-                                offset: const Offset(0, 5),
+            return ValueListenableBuilder<String>(
+              valueListenable: _currentRoute,
+              builder: (context, routeName, _) {
+                if (routeName == AppRoutes.login) {
+                  return child;
+                }
+
+                final mediaQuery = MediaQuery.of(context);
+                final dockReservedHeight = 92.0 + mediaQuery.padding.bottom;
+
+                return Stack(
+                  children: <Widget>[
+                    Positioned.fill(
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: dockReservedHeight),
+                        child: child,
+                      ),
+                    ),
+                    Positioned(
+                      left: 12,
+                      right: 12,
+                      bottom: 12,
+                      child: SafeArea(
+                        child: Center(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 720),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 8,
                               ),
-                              BoxShadow(
-                                color: const Color(0x22000000),
-                                blurRadius: 14,
-                                offset: const Offset(0, 5),
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.surface.withValues(alpha: 245),
+                                borderRadius: BorderRadius.circular(18),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Theme.of(context).shadowColor.withValues(alpha: 36),
+                                    blurRadius: 14,
+                                    offset: const Offset(0, 5),
+                                  ),
+                                  BoxShadow(
+                                    color: const Color(0x22000000),
+                                    blurRadius: 14,
+                                    offset: const Offset(0, 5),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              _MobileNavButton(
-                                tooltip: 'Dashboard',
-                                icon: Icons.dashboard_outlined,
-                                label: 'Dashboard',
-                                backgroundColor: const Color(0xFF0F9D58),
-                                onPressed: () =>
-                                    _navigatorKey.currentState?.pushNamed(
-                                      AppRoutes.dashboard,
-                                    ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  _MobileNavButton(
+                                    tooltip: 'Dashboard',
+                                    icon: Icons.dashboard_outlined,
+                                    label: 'Dashboard',
+                                    backgroundColor: const Color(0xFF0F9D58),
+                                    onPressed: () =>
+                                        _navigatorKey.currentState?.pushNamed(
+                                          AppRoutes.dashboard,
+                                        ),
+                                  ),
+                                  _MobileNavButton(
+                                    tooltip: 'Add lead',
+                                    icon: Icons.person_add_alt_1,
+                                    label: 'Add Lead',
+                                    backgroundColor: const Color(0xFF1D5BD7),
+                                    onPressed: () =>
+                                        _navigatorKey.currentState?.pushNamed(
+                                          AppRoutes.addLead,
+                                        ),
+                                  ),
+                                  _MobileNavButton(
+                                    tooltip: 'Open map',
+                                    icon: Icons.map_outlined,
+                                    label: 'Map',
+                                    backgroundColor: const Color(0xFF13B7D8),
+                                    onPressed: () =>
+                                        _navigatorKey.currentState?.pushNamed(
+                                          AppRoutes.interactiveMap,
+                                        ),
+                                  ),
+                                  _MobileNavButton(
+                                    tooltip: 'Follow ups',
+                                    icon: Icons.calendar_today_outlined,
+                                    label: 'Follow Ups',
+                                    backgroundColor: const Color(0xFF52627C),
+                                    onPressed: () =>
+                                        _navigatorKey.currentState?.pushNamed(
+                                          AppRoutes.followUps,
+                                        ),
+                                  ),
+                                  _MobileNavButton(
+                                    tooltip: 'Export',
+                                    icon: Icons.ios_share_outlined,
+                                    label: 'Export',
+                                    backgroundColor: const Color(0xFF35C784),
+                                    onPressed: () =>
+                                        _navigatorKey.currentState?.pushNamed(
+                                          AppRoutes.analytics,
+                                        ),
+                                  ),
+                                ],
                               ),
-                              _MobileNavButton(
-                                tooltip: 'Add lead',
-                                icon: Icons.person_add_alt_1,
-                                label: 'Add Lead',
-                                backgroundColor: const Color(0xFF1D5BD7),
-                                onPressed: () =>
-                                    _navigatorKey.currentState?.pushNamed(
-                                      AppRoutes.addLead,
-                                    ),
-                              ),
-                              _MobileNavButton(
-                                tooltip: 'Open map',
-                                icon: Icons.map_outlined,
-                                label: 'Map',
-                                backgroundColor: const Color(0xFF13B7D8),
-                                onPressed: () =>
-                                    _navigatorKey.currentState?.pushNamed(
-                                      AppRoutes.interactiveMap,
-                                    ),
-                              ),
-                              _MobileNavButton(
-                                tooltip: 'Follow ups',
-                                icon: Icons.calendar_today_outlined,
-                                label: 'Follow Ups',
-                                backgroundColor: const Color(0xFF52627C),
-                                onPressed: () =>
-                                    _navigatorKey.currentState?.pushNamed(
-                                      AppRoutes.followUps,
-                                    ),
-                              ),
-                              _MobileNavButton(
-                                tooltip: 'Export',
-                                icon: Icons.ios_share_outlined,
-                                label: 'Export',
-                                backgroundColor: const Color(0xFF35C784),
-                                onPressed: () =>
-                                    _navigatorKey.currentState?.pushNamed(
-                                      AppRoutes.analytics,
-                                    ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ],
+                  ],
+                );
+              },
             );
           },
-        );
-      },
-      routes: {
-        AppRoutes.login: (_) => const LoginRegistrationPage(),
-        AppRoutes.dashboard: (_) => MainDashboardPage(
-          isDarkMode: _themeMode == ThemeMode.dark,
-          onThemeToggle: _toggleThemeMode,
-        ),
-        AppRoutes.addLead: (_) => const AddLeadPage(),
-        AppRoutes.interactiveMap: (_) => const InteractiveMapPage(),
-        AppRoutes.followUps: (_) => const FollowUpsPage(),
-        AppRoutes.leadDetails: (_) => const LeadDetailsPage(),
-        AppRoutes.visitHistory: (_) => const VisitLoggerHistoryPage(),
-        AppRoutes.territories: (_) => const TerritoryManagementPage(),
-        AppRoutes.analytics: (_) => const BusinessAnalyticsPage(),
-        AppRoutes.integrations: (_) => const CrmIntegrationsPage(),
-        AppRoutes.subscriptions: (_) => const SubscriptionThemesPage(),
-        AppRoutes.quests: (_) => const QuestsPage(),
-      },
-      onUnknownRoute: (settings) {
-        final routeName = settings.name ?? AppRoutes.unknown;
-        return MaterialPageRoute<void>(
-          settings: settings,
-          builder: (_) => UnknownRoutePage(routeName: routeName),
+          routes: {
+            AppRoutes.login: (_) => const LoginRegistrationPage(),
+            AppRoutes.dashboard: (_) => MainDashboardPage(
+              isDarkMode: _themeMode == ThemeMode.dark,
+              onThemeToggle: _toggleThemeMode,
+            ),
+            AppRoutes.addLead: (_) => const AddLeadPage(),
+            AppRoutes.interactiveMap: (_) => const InteractiveMapPage(),
+            AppRoutes.followUps: (_) => const FollowUpsPage(),
+            AppRoutes.leadDetails: (_) => const LeadDetailsPage(),
+            AppRoutes.visitHistory: (_) => const VisitLoggerHistoryPage(),
+            AppRoutes.territories: (_) => const TerritoryManagementPage(),
+            AppRoutes.analytics: (_) => const BusinessAnalyticsPage(),
+            AppRoutes.integrations: (_) => const CrmIntegrationsPage(),
+            AppRoutes.subscriptions: (_) => const SubscriptionThemesPage(),
+            AppRoutes.quests: (_) => const QuestsPage(),
+          },
+          onUnknownRoute: (settings) {
+            final routeName = settings.name ?? AppRoutes.unknown;
+            return MaterialPageRoute<void>(
+              settings: settings,
+              builder: (_) => UnknownRoutePage(routeName: routeName),
+            );
+          },
         );
       },
     );
   }
 }
 
-  class _RouteTrackingObserver extends NavigatorObserver {
-    _RouteTrackingObserver({required this.onRouteChanged});
+class _RouteTrackingObserver extends NavigatorObserver {
+  _RouteTrackingObserver({required this.onRouteChanged});
 
-    final ValueChanged<String?> onRouteChanged;
+  final ValueChanged<String?> onRouteChanged;
 
-    void _notify(Route<dynamic>? route) {
-      onRouteChanged(route?.settings.name);
-    }
-
-    @override
-    void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
-      _notify(route);
-      super.didPush(route, previousRoute);
-    }
-
-    @override
-    void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-      _notify(previousRoute);
-      super.didPop(route, previousRoute);
-    }
-
-    @override
-    void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
-      _notify(newRoute);
-      super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
-    }
-
-    @override
-    void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
-      _notify(previousRoute);
-      super.didRemove(route, previousRoute);
-    }
+  void _notify(Route<dynamic>? route) {
+    onRouteChanged(route?.settings.name);
   }
 
-  class _MobileNavButton extends StatelessWidget {
-    const _MobileNavButton({
-      required this.tooltip,
-      required this.icon,
-      required this.label,
-      required this.onPressed,
-      this.backgroundColor = const Color(0xFF1D5BD7),
-    });
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    _notify(route);
+    super.didPush(route, previousRoute);
+  }
 
-    final String tooltip;
-    final IconData icon;
-    final String label;
-    final VoidCallback? onPressed;
-    final Color backgroundColor;
+  @override
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    _notify(previousRoute);
+    super.didPop(route, previousRoute);
+  }
 
-    @override
-    Widget build(BuildContext context) {
-      final enabled = onPressed != null;
-      final labelColor = enabled
-          ? Theme.of(context).textTheme.bodySmall?.color ?? const Color(0xFF5F7391)
-          : Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 153) ?? const Color(0xFF98A6BB);
-      final iconBackground = enabled
-          ? backgroundColor
-          : backgroundColor.withValues(alpha: 128);
-      return Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: onPressed,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: iconBackground,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(icon, size: 18, color: Theme.of(context).colorScheme.onPrimary),
+  @override
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
+    _notify(newRoute);
+    super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
+  }
+
+  @override
+  void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    _notify(previousRoute);
+    super.didRemove(route, previousRoute);
+  }
+}
+
+class _MobileNavButton extends StatelessWidget {
+  const _MobileNavButton({
+    required this.tooltip,
+    required this.icon,
+    required this.label,
+    required this.onPressed,
+    this.backgroundColor = const Color(0xFF1D5BD7),
+  });
+
+  final String tooltip;
+  final IconData icon;
+  final String label;
+  final VoidCallback? onPressed;
+  final Color backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    final enabled = onPressed != null;
+    final labelColor = enabled
+        ? Theme.of(context).textTheme.bodySmall?.color ?? const Color(0xFF5F7391)
+        : Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 153) ?? const Color(0xFF98A6BB);
+    final iconBackground = enabled
+        ? backgroundColor
+        : backgroundColor.withValues(alpha: 128);
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: onPressed,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Container(
+                width: 44,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: iconBackground,
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                const SizedBox(height: 5),
-                Text(
-                  label,
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: labelColor,
-                  ),
+                child: Icon(icon, size: 18, color: Theme.of(context).colorScheme.onPrimary),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 11,
+                  fontWeight: FontWeight.w600,
+                  color: labelColor,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-      );
-    }
+      ),
+    );
   }
+}

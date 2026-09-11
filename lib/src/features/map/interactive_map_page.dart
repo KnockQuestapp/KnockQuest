@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../state/lead_store.dart';
+
 class InteractiveMapPage extends StatefulWidget {
   const InteractiveMapPage({super.key});
 
@@ -86,27 +88,42 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
             constraints: const BoxConstraints(maxWidth: 430),
             child: Stack(
               children: [
-                FlutterMap(
-                  options: const MapOptions(
-                    initialCenter: LatLng(40.7128, -74.0060),
-                    initialZoom: 12.8,
-                  ),
-                  children: [
-                    TileLayer(
-                      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                      userAgentPackageName: 'com.knockquest.app',
-                    ),
-                    MarkerLayer(
-                      markers: [
-                        Marker(
-                          point: LatLng(40.7128, -74.0060),
-                          width: 30,
-                          height: 30,
-                          child: Icon(Icons.location_pin, color: Theme.of(context).colorScheme.primary, size: 30),
+                ValueListenableBuilder<List<LeadRecord>>(
+                  valueListenable: LeadStore.instance.leads,
+                  builder: (context, leads, _) {
+                    return FlutterMap(
+                      options: const MapOptions(
+                        initialCenter: LatLng(40.7128, -74.0060),
+                        initialZoom: 12.8,
+                      ),
+                      children: [
+                        TileLayer(
+                          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          userAgentPackageName: 'com.knockquest.app',
+                        ),
+                        MarkerLayer(
+                          markers: leads.map((lead) {
+                            return Marker(
+                              point: LatLng(lead.latitude, lead.longitude),
+                              width: 30,
+                              height: 30,
+                              child: GestureDetector(
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.leadDetails,
+                                ),
+                                child: Icon(
+                                  Icons.location_pin,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  size: 30,
+                                ),
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ],
-                    ),
-                  ],
+                    );
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
@@ -195,6 +212,23 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                               selected: _selectedDrawTool == 2,
                               onTap: () => _selectDrawTool(2),
                             ),
+                            const SizedBox(height: 10),
+                            _MapActionButton(
+                              'Add Lead',
+                              selected: false,
+                              onTap: () {
+                                // Quick add lead at the current map center
+                                final center = LatLng(40.7128, -74.0060); // In a real app, use mapController.camera.center
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.addLead,
+                                  arguments: {
+                                    'latitude': center.latitude,
+                                    'longitude': center.longitude,
+                                  },
+                                );
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -217,9 +251,9 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                             foregroundColor: Theme.of(context).colorScheme.onPrimary,
                           ),
                           child: Text(
-              'Save Boundary',
-              style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-            ),
+                            'Save Boundary',
+                            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                          ),
                         ),
                       ),
                     ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../state/lead_store.dart';
 
 class BusinessAnalyticsPage extends StatefulWidget {
   const BusinessAnalyticsPage({super.key});
@@ -10,179 +11,181 @@ class BusinessAnalyticsPage extends StatefulWidget {
 class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
   String _period = 'This Month';
 
-  Map<String, String> get _metrics {
-    switch (_period) {
-      case 'This Year':
-        return {
-          'gci': r'$142,500.00',
-          'avg': '12,400',
-          'rate': '4.8%',
-        };
-      case 'All Time':
-        return {
-          'gci': r'$463,920.00',
-          'avg': '9,870',
-          'rate': '5.4%',
-        };
-      case 'This Month':
-      default:
-        return {
-          'gci': r'$32,700.00',
-          'avg': '10,900',
-          'rate': '4.2%',
-        };
+  Map<String, String> _calculateMetrics() {
+    final leads = LeadStore.instance.leads.value;
+
+    // Sum up estimated value
+    double totalGci = 0;
+    for (final lead in leads) {
+      final valueString = lead.estimatedValue.replaceAll(RegExp(r'[$,]'), '');
+      totalGci += double.tryParse(valueString) ?? 0;
     }
+
+    final closedLeads = leads.where((l) => l.status.toLowerCase().contains('closed')).length;
+    final conversionRate = leads.isEmpty
+        ? 0.0
+        : (closedLeads / leads.length) * 100;
+
+    return {
+      'gci': r'$' + totalGci.toStringAsFixed(2),
+      'count': '${leads.length} leads',
+      'rate': '${conversionRate.toStringAsFixed(1)}%',
+    };
   }
 
   @override
   Widget build(BuildContext context) {
-    final metrics = _metrics;
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 430),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+            child: ValueListenableBuilder<List<LeadRecord>>(
+              valueListenable: LeadStore.instance.leads,
+              builder: (context, leads, _) {
+                final metrics = _calculateMetrics();
+
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Text(
-                          'Business Analytics',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                        ),
-                      ),
-                      const Icon(Icons.tune),
-                    ],
-                  ),
-                  const SizedBox(height: 14),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      _FilterChip(
-                        'This Month',
-                        selected: _period == 'This Month',
-                        onTap: () => setState(() => _period = 'This Month'),
-                      ),
-                      _FilterChip(
-                        'This Year',
-                        selected: _period == 'This Year',
-                        onTap: () => setState(() => _period = 'This Year'),
-                      ),
-                      _FilterChip(
-                        'All Time',
-                        selected: _period == 'All Time',
-                        onTap: () => setState(() => _period = 'All Time'),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 18),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary]),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Total GCI Performance',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 224),
-                            fontSize: 12,
-                          ),
-                        ),
-                        const SizedBox(height: 14),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(metrics['gci']!, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 42, fontWeight: FontWeight.w700)),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'GCI $_period',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 224),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Business Analytics',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 18),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _AnalyticsSmall(metrics['avg']!, 'Avg GCI / Deal'),
-                            _AnalyticsSmall(metrics['rate']!, 'Conversion Rate'),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 18),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).dividerColor),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Leads By Source',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).colorScheme.onSurface,
+                          const Icon(Icons.tune),
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [
+                          _FilterChip(
+                            'This Month',
+                            selected: _period == 'This Month',
+                            onTap: () => setState(() => _period = 'This Month'),
                           ),
+                          _FilterChip(
+                            'This Year',
+                            selected: _period == 'This Year',
+                            onTap: () => setState(() => _period = 'This Year'),
+                          ),
+                          _FilterChip(
+                            'All Time',
+                            selected: _period == 'All Time',
+                            onTap: () => setState(() => _period = 'All Time'),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 18),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary]),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        const SizedBox(height: 18),
-                        Center(
-                          child: SizedBox(
-                            width: 150,
-                            height: 150,
-                            child: Stack(
-                              alignment: Alignment.center,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Total GCI Performance',
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 224),
+                                fontSize: 12,
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(metrics['gci']!, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 42, fontWeight: FontWeight.w700)),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'GCI $_period',
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 224),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 18),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CircularProgressIndicator(
-                                  value: .38,
-                                  strokeWidth: 28,
-                                  valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
-                                  backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                                ),
-                                SizedBox(
-                                  width: 92,
-                                  height: 92,
-                                  child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context).scaffoldBackgroundColor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                ),
+                                _AnalyticsSmall(metrics['count']!, 'Total Leads'),
+                                _AnalyticsSmall(metrics['rate']!, 'Conversion Rate'),
                               ],
                             ),
-                          ),
+                          ],
                         ),
-                        const SizedBox(height: 20),
-                        _LegendRow(Theme.of(context).colorScheme.primary, 'Door Knocking', '\$64,200', '124 leads'),
-                        _LegendRow(Theme.of(context).colorScheme.secondary, 'Referral', '\$38,000', '42 leads'),
-                        _LegendRow(Theme.of(context).colorScheme.tertiary, 'Facebook', '\$14,500', '18 leads'),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 18),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Theme.of(context).dividerColor),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Leads By Status',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
+                            ),
+                            const SizedBox(height: 18),
+                            Center(
+                              child: SizedBox(
+                                width: 150,
+                                height: 150,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    CircularProgressIndicator(
+                                      value: leads.isEmpty ? 0 : (leads.where((l) => l.status.toLowerCase().contains('closed')).length / leads.length),
+                                      strokeWidth: 28,
+                                      valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
+                                      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                                    ),
+                                    SizedBox(
+                                      width: 92,
+                                      height: 92,
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context).scaffoldBackgroundColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            _LegendRow(Theme.of(context).colorScheme.primary, 'Closed', metrics['gci']!, '${leads.where((l) => l.status.toLowerCase().contains('closed')).length} leads'),
+                            _LegendRow(Theme.of(context).colorScheme.secondary, 'Active', '\$0.00', '${leads.where((l) => !l.status.toLowerCase().contains('closed')).length} leads'),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
           ),
         ),

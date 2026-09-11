@@ -20,188 +20,203 @@ class CrmSyncService {
   }
 
   Future<String> sendTestEvent(CrmProvider provider) async {
-    await CrmSyncStore.instance.ensureLoaded();
-    final target = CrmSyncStore.instance.findTarget(provider);
-    if (target == null) {
-      return 'Integration not found.';
-    }
+    CrmSyncStore.instance.isSyncing.value = true;
+    try {
+      await CrmSyncStore.instance.ensureLoaded();
+      final target = CrmSyncStore.instance.findTarget(provider);
+      if (target == null) {
+        return 'Integration not found.';
+      }
 
-    if (target.webhookUrl.trim().isEmpty) {
-      return 'Webhook URL is required before running a test.';
-    }
+      if (target.webhookUrl.trim().isEmpty) {
+        return 'Webhook URL is required before running a test.';
+      }
 
-    final result = await _postLeadEvent(
-      target: target,
-      event: 'integration.test',
-      lead: sampleLead,
-    );
-    await CrmSyncStore.instance.markSyncResult(
-      provider: provider,
-      success: result.success,
-      message: result.message,
-    );
-    await CrmSyncStore.instance.appendActivity(
-      provider: provider,
-      event: 'integration.test',
-      success: result.success,
-      message: result.message,
-      leadName: sampleLead.name,
-    );
-    return result.message;
+      final result = await _postLeadEvent(
+        target: target,
+        event: 'integration.test',
+        lead: sampleLead,
+      );
+      await CrmSyncStore.instance.markSyncResult(
+        provider: provider,
+        success: result.success,
+        message: result.message,
+      );
+      await CrmSyncStore.instance.appendActivity(
+        provider: provider,
+        event: 'integration.test',
+        success: result.success,
+        message: result.message,
+        leadName: sampleLead.name,
+      );
+      return result.message;
+    } finally {
+      CrmSyncStore.instance.isSyncing.value = false;
+    }
   }
 
   Future<String> retryFailedSyncs(CrmProvider provider) async {
-    await CrmSyncStore.instance.ensureLoaded();
-    final target = CrmSyncStore.instance.findTarget(provider);
-    if (target == null) {
-      return 'Integration not found.';
-    }
+    CrmSyncStore.instance.isSyncing.value = true;
+    try {
+      await CrmSyncStore.instance.ensureLoaded();
+      final target = CrmSyncStore.instance.findTarget(provider);
+      if (target == null) {
+        return 'Integration not found.';
+      }
 
-    final queued = CrmSyncStore.instance.retriesFor(provider);
-    if (queued.isEmpty) {
-      return 'No failed syncs to retry.';
-    }
+      final queued = CrmSyncStore.instance.retriesFor(provider);
+      if (queued.isEmpty) {
+        return 'No failed syncs to retry.';
+      }
 
-    if (target.webhookUrl.trim().isEmpty) {
-      return 'Configure a webhook URL before retrying failed syncs.';
-    }
+      if (target.webhookUrl.trim().isEmpty) {
+        return 'Configure a webhook URL before retrying failed syncs.';
+      }
 
-    var succeeded = 0;
-    var failed = 0;
+      var succeeded = 0;
+      var failed = 0;
 
-    for (final item in queued) {
-      try {
-        final result = await _postEventPayload(
-          target: target,
-          payload: item.payload,
-        );
-        if (result.success) {
-          succeeded += 1;
-          await CrmSyncStore.instance.removeRetryById(item.id);
-          await CrmSyncStore.instance.appendActivity(
-            provider: provider,
-            event: item.payload['event'] as String? ?? 'retry.unknown',
-            success: true,
-            message: 'Retry delivered (${item.attempts + 1} attempts).',
-            leadName: _leadNameFromPayload(item.payload),
+      for (final item in queued) {
+        try {
+          final result = await _postEventPayload(
+            target: target,
+            payload: item.payload,
           );
-        } else {
+          if (result.success) {
+            succeeded += 1;
+            await CrmSyncStore.instance.removeRetryById(item.id);
+            await CrmSyncStore.instance.appendActivity(
+              provider: provider,
+              event: item.payload['event'] as String? ?? 'retry.unknown',
+              success: true,
+              message: 'Retry delivered (${item.attempts + 1} attempts).',
+              leadName: _leadNameFromPayload(item.payload),
+            );
+          } else {
+            failed += 1;
+            await CrmSyncStore.instance.replaceRetry(
+              item.copyWith(
+                attempts: item.attempts + 1,
+                lastError: result.message,
+              ),
+            );
+            await CrmSyncStore.instance.appendActivity(
+              provider: provider,
+              event: item.payload['event'] as String? ?? 'retry.unknown',
+              success: false,
+              message: result.message,
+              leadName: _leadNameFromPayload(item.payload),
+            );
+          }
+        } catch (error) {
           failed += 1;
           await CrmSyncStore.instance.replaceRetry(
             item.copyWith(
               attempts: item.attempts + 1,
-              lastError: result.message,
+              lastError: error.toString(),
             ),
           );
           await CrmSyncStore.instance.appendActivity(
             provider: provider,
             event: item.payload['event'] as String? ?? 'retry.unknown',
             success: false,
-            message: result.message,
+            message: 'Retry exception: $error',
             leadName: _leadNameFromPayload(item.payload),
           );
         }
-      } catch (error) {
-        failed += 1;
-        await CrmSyncStore.instance.replaceRetry(
-          item.copyWith(
-            attempts: item.attempts + 1,
-            lastError: error.toString(),
-          ),
-        );
-        await CrmSyncStore.instance.appendActivity(
-          provider: provider,
-          event: item.payload['event'] as String? ?? 'retry.unknown',
-          success: false,
-          message: 'Retry exception: $error',
-          leadName: _leadNameFromPayload(item.payload),
-        );
       }
+
+      final summary = failed == 0
+          ? 'Retry complete. $succeeded event(s) delivered.'
+          : 'Retry complete. $succeeded succeeded, $failed still pending.';
+
+      await CrmSyncStore.instance.markSyncResult(
+        provider: provider,
+        success: failed == 0,
+        message: summary,
+      );
+
+      return summary;
+    } finally {
+      CrmSyncStore.instance.isSyncing.value = false;
     }
-
-    final summary = failed == 0
-        ? 'Retry complete. $succeeded event(s) delivered.'
-        : 'Retry complete. $succeeded succeeded, $failed still pending.';
-
-    await CrmSyncStore.instance.markSyncResult(
-      provider: provider,
-      success: failed == 0,
-      message: summary,
-    );
-
-    return summary;
   }
 
   Future<void> _syncLeadEvent({
     required String event,
     required LeadRecord lead,
   }) async {
-    await CrmSyncStore.instance.ensureLoaded();
+    CrmSyncStore.instance.isSyncing.value = true;
+    try {
+      await CrmSyncStore.instance.ensureLoaded();
 
-    final activeTargets = CrmSyncStore.instance.targets.value.where((target) {
-      return target.autoSync && target.webhookUrl.trim().isNotEmpty;
-    });
+      final activeTargets = CrmSyncStore.instance.targets.value.where((target) {
+        return target.autoSync && target.webhookUrl.trim().isNotEmpty;
+      });
 
-    for (final target in activeTargets) {
-      try {
-        final payload = _buildLeadPayload(event: event, lead: lead, target: target);
-        final result = await _postEventPayload(
-          target: target,
-          payload: payload,
-        );
-        if (result.success) {
-          await CrmSyncStore.instance.markSyncResult(
-            provider: target.provider,
-            success: true,
-            message: result.message,
+      for (final target in activeTargets) {
+        try {
+          final payload = _buildLeadPayload(event: event, lead: lead, target: target);
+          final result = await _postEventPayload(
+            target: target,
+            payload: payload,
           );
-          await CrmSyncStore.instance.appendActivity(
-            provider: target.provider,
-            event: event,
-            success: true,
-            message: result.message,
-            leadName: lead.name,
-          );
-        } else {
+          if (result.success) {
+            await CrmSyncStore.instance.markSyncResult(
+              provider: target.provider,
+              success: true,
+              message: result.message,
+            );
+            await CrmSyncStore.instance.appendActivity(
+              provider: target.provider,
+              event: event,
+              success: true,
+              message: result.message,
+              leadName: lead.name,
+            );
+          } else {
+            await CrmSyncStore.instance.enqueueRetry(
+              provider: target.provider,
+              payload: payload,
+              lastError: result.message,
+            );
+            await CrmSyncStore.instance.markSyncResult(
+              provider: target.provider,
+              success: false,
+              message: '${result.message} Added to retry queue.',
+            );
+            await CrmSyncStore.instance.appendActivity(
+              provider: target.provider,
+              event: event,
+              success: false,
+              message: result.message,
+              leadName: lead.name,
+            );
+          }
+        } catch (error) {
+          final payload = _buildLeadPayload(event: event, lead: lead, target: target);
           await CrmSyncStore.instance.enqueueRetry(
             provider: target.provider,
             payload: payload,
-            lastError: result.message,
+            lastError: error.toString(),
           );
           await CrmSyncStore.instance.markSyncResult(
             provider: target.provider,
             success: false,
-            message: '${result.message} Added to retry queue.',
+            message: 'Sync exception: $error',
           );
           await CrmSyncStore.instance.appendActivity(
             provider: target.provider,
             event: event,
             success: false,
-            message: result.message,
+            message: 'Sync exception: $error',
             leadName: lead.name,
           );
+          debugPrint('CRM sync failed for ${target.displayName}: $error');
         }
-      } catch (error) {
-        final payload = _buildLeadPayload(event: event, lead: lead, target: target);
-        await CrmSyncStore.instance.enqueueRetry(
-          provider: target.provider,
-          payload: payload,
-          lastError: error.toString(),
-        );
-        await CrmSyncStore.instance.markSyncResult(
-          provider: target.provider,
-          success: false,
-          message: 'Sync exception: $error',
-        );
-        await CrmSyncStore.instance.appendActivity(
-          provider: target.provider,
-          event: event,
-          success: false,
-          message: 'Sync exception: $error',
-          leadName: lead.name,
-        );
-        debugPrint('CRM sync failed for ${target.displayName}: $error');
       }
+    } finally {
+      CrmSyncStore.instance.isSyncing.value = false;
     }
   }
 

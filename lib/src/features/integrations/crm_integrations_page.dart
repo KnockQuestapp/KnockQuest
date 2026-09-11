@@ -178,82 +178,112 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 430),
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.arrow_back),
-                      ),
-                      Expanded(
-                        child: Text(
-                          'CRM & Integrations',
-                          style: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).colorScheme.onSurface,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  Text(
-                    'Sync leads to API Nation or Zapier via secure webhooks.',
-                    style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    'Connected Services',
-                    style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
-                  ),
-                  const SizedBox(height: 12),
-                  Expanded(
-                    child: SingleChildScrollView(
+        child: ValueListenableBuilder<bool>(
+          valueListenable: CrmSyncStore.instance.isSyncing,
+          builder: (context, isSyncing, _) {
+            return Stack(
+              children: [
+                Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 430),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          for (var index = 0; index < _drafts.length; index++) ...[
-                            _CrmCard(
-                              name: _drafts[index].displayName,
-                              accent: _drafts[index].accent,
-                              autoSync: _drafts[index].autoSync,
-                              lastStatus: _drafts[index].lastStatus,
-                              lastMessage: _drafts[index].lastMessage,
-                              lastAttemptAt: _drafts[index].lastAttemptAt,
-                              lastSuccessAt: _drafts[index].lastSuccessAt,
-                              pendingCount: CrmSyncStore.instance
-                                  .pendingCountFor(_drafts[index].provider),
-                              activity: CrmSyncStore.instance
-                                  .recentActivityFor(_drafts[index].provider),
-                              webhookController: _drafts[index].webhookController,
-                              apiKeyController: _drafts[index].apiKeyController,
-                              mappingControllers: _drafts[index].mappingControllers,
-                              isTesting: _testingProviders.contains(_drafts[index].provider),
-                              isRetrying: _retryingProviders.contains(_drafts[index].provider),
-                              onConfigure: () => _configure(index),
-                              onTestConnection: () => _testConnection(index),
-                              onRetryFailed: () => _retryFailed(index),
-                              onClearActivity: () => _clearActivity(index),
-                              onAutoSyncChanged: (value) => _toggleSync(index, value),
+                          Row(
+                            children: [
+                              IconButton(
+                                onPressed: () => Navigator.pop(context),
+                                icon: const Icon(Icons.arrow_back),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  'CRM & Integrations',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w700,
+                                    color: Theme.of(context).colorScheme.onSurface,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'Sync leads to API Nation or Zapier via secure webhooks.',
+                            style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            'Connected Services',
+                            style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
+                          ),
+                          const SizedBox(height: 12),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  for (var index = 0; index < _drafts.length; index++) ...[
+                                    _CrmCard(
+                                      name: _drafts[index].displayName,
+                                      accent: _drafts[index].accent,
+                                      autoSync: _drafts[index].autoSync,
+                                      lastStatus: _drafts[index].lastStatus,
+                                      lastMessage: _drafts[index].lastMessage,
+                                      lastAttemptAt: _drafts[index].lastAttemptAt,
+                                      lastSuccessAt: _drafts[index].lastSuccessAt,
+                                      pendingCount: CrmSyncStore.instance
+                                          .pendingCountFor(_drafts[index].provider),
+                                      activity: CrmSyncStore.instance
+                                          .recentActivityFor(_drafts[index].provider),
+                                      webhookController: _drafts[index].webhookController,
+                                      apiKeyController: _drafts[index].apiKeyController,
+                                      mappingControllers: _drafts[index].mappingControllers,
+                                      isTesting: _testingProviders.contains(_drafts[index].provider),
+                                      isRetrying: _retryingProviders.contains(_drafts[index].provider),
+                                      onConfigure: () => _configure(index),
+                                      onTestConnection: () => _testConnection(index),
+                                      onRetryFailed: () => _retryFailed(index),
+                                      onClearActivity: () => _clearActivity(index),
+                                      onAutoSyncChanged: (value) => _toggleSync(index, value),
+                                    ),
+                                    if (index < _drafts.length - 1)
+                                      const SizedBox(height: 14),
+                                  ],
+                                ),
+                              ),
                             ),
-                            if (index < _drafts.length - 1)
-                              const SizedBox(height: 14),
-                          ],
+                          ),
                         ],
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
+                ),
+                if (isSyncing)
+                  Positioned.fill(
+                    child: Container(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      child: Center(
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                CircularProgressIndicator(),
+                                SizedBox(height: 16),
+                                Text('Syncing with CRM...'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            );
+          },
         ),
       ),
     );

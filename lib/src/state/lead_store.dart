@@ -4,23 +4,49 @@ import 'package:flutter/foundation.dart';
 
 import '../integrations/crm_sync_service.dart';
 import '../sample_data.dart';
+import '../services/local_storage_service.dart';
 
 class LeadStore {
   LeadStore._();
 
   static final LeadStore instance = LeadStore._();
 
-  final ValueNotifier<List<LeadRecord>> leads =
-      ValueNotifier<List<LeadRecord>>([sampleLead]);
+  late final ValueNotifier<List<LeadRecord>> leads;
+  late final ValueNotifier<List<FollowUpRecord>> followUpsNotifier;
+  late final ValueNotifier<List<QuestRecord>> questsNotifier;
+  late final ValueNotifier<List<TerritoryRecord>> territoriesNotifier;
 
-  final ValueNotifier<List<FollowUpRecord>> followUpsNotifier =
-      ValueNotifier<List<FollowUpRecord>>(List<FollowUpRecord>.from(followUps));
+  bool _initialized = false;
 
-    final ValueNotifier<List<QuestRecord>> questsNotifier =
-      ValueNotifier<List<QuestRecord>>(List<QuestRecord>.from(quests));
+  void init() {
+    if (_initialized) return;
+
+    final storedLeads = LocalStorageService.instance.loadLeads();
+    leads = ValueNotifier<List<LeadRecord>>(
+      storedLeads.isEmpty ? [sampleLead] : storedLeads,
+    );
+
+    final storedFollowUps = LocalStorageService.instance.loadFollowUps();
+    followUpsNotifier = ValueNotifier<List<FollowUpRecord>>(
+      storedFollowUps.isEmpty ? List<FollowUpRecord>.from(followUps) : storedFollowUps,
+    );
+
+    final storedQuests = LocalStorageService.instance.loadQuests();
+    questsNotifier = ValueNotifier<List<QuestRecord>>(
+      storedQuests.isEmpty ? List<QuestRecord>.from(quests) : storedQuests,
+    );
+
+    final storedTerritories = LocalStorageService.instance.loadTerritories();
+    territoriesNotifier = ValueNotifier<List<TerritoryRecord>>(
+      storedTerritories.isEmpty ? List<TerritoryRecord>.from(territories) : storedTerritories,
+    );
+
+    _initialized = true;
+  }
 
   void addLead(LeadRecord lead) {
     leads.value = [...leads.value, lead];
+    unawaited(LocalStorageService.instance.saveLeads(leads.value));
     unawaited(CrmSyncService.instance.syncLeadCreated(lead));
   }
 
@@ -28,6 +54,7 @@ class LeadStore {
 
   void addFollowUp(FollowUpRecord followUp) {
     followUpsNotifier.value = [...followUpsNotifier.value, followUp];
+    unawaited(LocalStorageService.instance.saveFollowUps(followUpsNotifier.value));
   }
 
   void markFollowUpCompleted(int index) {
@@ -38,10 +65,12 @@ class LeadStore {
     final current = [...followUpsNotifier.value];
     current[index] = current[index].copyWith(completed: true);
     followUpsNotifier.value = current;
+    unawaited(LocalStorageService.instance.saveFollowUps(followUpsNotifier.value));
   }
 
   void addQuest(QuestRecord quest) {
     questsNotifier.value = [...questsNotifier.value, quest];
+    unawaited(LocalStorageService.instance.saveQuests(questsNotifier.value));
   }
 
   void markQuestCompleted(int index) {
@@ -52,6 +81,7 @@ class LeadStore {
     final current = [...questsNotifier.value];
     current[index] = current[index].copyWith(completed: true, status: 'Completed');
     questsNotifier.value = current;
+    unawaited(LocalStorageService.instance.saveQuests(questsNotifier.value));
   }
 
   void updateQuest(int index, QuestRecord quest) {
@@ -62,6 +92,7 @@ class LeadStore {
     final current = [...questsNotifier.value];
     current[index] = quest;
     questsNotifier.value = current;
+    unawaited(LocalStorageService.instance.saveQuests(questsNotifier.value));
   }
 
   void deleteQuest(int index) {
@@ -71,6 +102,33 @@ class LeadStore {
 
     final current = [...questsNotifier.value]..removeAt(index);
     questsNotifier.value = current;
+    unawaited(LocalStorageService.instance.saveQuests(questsNotifier.value));
+  }
+
+  void addTerritory(TerritoryRecord territory) {
+    territoriesNotifier.value = [...territoriesNotifier.value, territory];
+    unawaited(LocalStorageService.instance.saveTerritories(territoriesNotifier.value));
+  }
+
+  void updateTerritory(int index, TerritoryRecord territory) {
+    if (index < 0 || index >= territoriesNotifier.value.length) {
+      return;
+    }
+
+    final current = [...territoriesNotifier.value];
+    current[index] = territory;
+    territoriesNotifier.value = current;
+    unawaited(LocalStorageService.instance.saveTerritories(territoriesNotifier.value));
+  }
+
+  void deleteTerritory(int index) {
+    if (index < 0 || index >= territoriesNotifier.value.length) {
+      return;
+    }
+
+    final current = [...territoriesNotifier.value]..removeAt(index);
+    territoriesNotifier.value = current;
+    unawaited(LocalStorageService.instance.saveTerritories(territoriesNotifier.value));
   }
 
   void updateLatestLead({
@@ -92,6 +150,7 @@ class LeadStore {
       lastContactDate: lastContactDate,
     );
     leads.value = current;
+    unawaited(LocalStorageService.instance.saveLeads(leads.value));
     unawaited(CrmSyncService.instance.syncLeadUpdated(current[latestIndex]));
   }
 
@@ -99,5 +158,8 @@ class LeadStore {
     leads.value = [sampleLead];
     followUpsNotifier.value = List<FollowUpRecord>.from(followUps);
     questsNotifier.value = List<QuestRecord>.from(quests);
+    unawaited(LocalStorageService.instance.saveLeads(leads.value));
+    unawaited(LocalStorageService.instance.saveFollowUps(followUpsNotifier.value));
+    unawaited(LocalStorageService.instance.saveQuests(questsNotifier.value));
   }
 }

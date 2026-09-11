@@ -4,6 +4,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'src/knockquest_app.dart';
+import 'src/services/local_storage_service.dart';
+import 'src/state/auth_store.dart';
+import 'src/state/lead_store.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +22,12 @@ void main() {
   };
 
   runZonedGuarded(
-    () => runApp(const KnockQuestApp()),
+    () async {
+      await LocalStorageService.instance.init();
+      await AuthStore.instance.init();
+      LeadStore.instance.init();
+      runApp(const KnockQuestApp());
+    },
     (error, stackTrace) {
       log(
         'Uncaught zone error',

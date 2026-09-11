@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../sample_data.dart';
+import '../../state/lead_store.dart';
 
 class TerritoryManagementPage extends StatefulWidget {
   const TerritoryManagementPage({super.key});
@@ -19,9 +20,9 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
     super.dispose();
   }
 
-  List<TerritoryRecord> get _filteredTerritories {
+  List<TerritoryRecord> _getFilteredTerritories(List<TerritoryRecord> all) {
     final query = _searchController.text.trim().toLowerCase();
-    final items = territories
+    final items = all
         .where((t) => t.name.toLowerCase().contains(query))
         .toList();
 
@@ -31,10 +32,48 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
     return items;
   }
 
+  void _addNewTerritory() {
+    final controller = TextEditingController();
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Add Territory'),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(labelText: 'Territory Name'),
+        ),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          ElevatedButton(
+            onPressed: () {
+              if (controller.text.trim().isNotEmpty) {
+                LeadStore.instance.addTerritory(TerritoryRecord(
+                  name: controller.text.trim(),
+                  gci: '\$0 GCI',
+                  leads: '0 Leads',
+                  change: '0%',
+                ));
+                Navigator.pop(context);
+              }
+            },
+            child: const Text('Add'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _deleteTerritory(int index) {
+    final territory = _getFilteredTerritories(LeadStore.instance.territoriesNotifier.value)[index];
+    final all = LeadStore.instance.territoriesNotifier.value;
+    final realIndex = all.indexOf(territory);
+    if (realIndex >= 0) {
+      LeadStore.instance.deleteTerritory(realIndex);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final displayedTerritories = _filteredTerritories;
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -61,7 +100,7 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
-                              color: Theme.of(context).colorScheme.onSurface,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                             ),
                             const SizedBox(height: 6),
@@ -73,11 +112,14 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                         ),
                       ),
                       const SizedBox(width: 8),
-                      Container(
-                        width: 38,
-                        height: 38,
-                        decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
-                        child: Icon(Icons.add_location_alt_outlined, color: Theme.of(context).colorScheme.onPrimary, size: 20),
+                      GestureDetector(
+                        onTap: _addNewTerritory,
+                        child: Container(
+                          width: 38,
+                          height: 38,
+                          decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
+                          child: Icon(Icons.add_location_alt_outlined, color: Theme.of(context).colorScheme.onPrimary, size: 20),
+                        ),
                       ),
                     ],
                   ),
@@ -170,77 +212,89 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                   ),
                   const SizedBox(height: 12),
                   Expanded(
-                    child: displayedTerritories.isEmpty
-                        ? Center(
+                    child: ValueListenableBuilder<List<TerritoryRecord>>(
+                      valueListenable: LeadStore.instance.territoriesNotifier,
+                      builder: (context, territories, _) {
+                        final displayedTerritories = _getFilteredTerritories(territories);
+                        if (displayedTerritories.isEmpty) {
+                          return Center(
                             child: Text(
                               'No territories match your search.',
                               style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
                             ),
-                          )
-                        : ListView.builder(
-                            itemCount: displayedTerritories.length,
-                            itemBuilder: (context, index) {
-                              final territory = displayedTerritories[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: Container(
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(18)),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Container(width: 14, height: 14, color: Theme.of(context).colorScheme.primary),
-                                          const Spacer(),
-                                          Text(
-                                            territory.change,
-                                            style: TextStyle(
-                                              color: Theme.of(context).colorScheme.secondary,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 16),
-                                      Text(
-                                        territory.name,
-                                        style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.w700,
-                                          color: Theme.of(context).colorScheme.onSurface,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            territory.gci,
-                                            style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-                                          ),
-                                          const Spacer(),
-                                          Text(
-                                            territory.leads,
-                                            style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
-                                          ),
-                                        ],
-                                      ),
-                                      const SizedBox(height: 12),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Text(
-                                          'View Map',
+                          );
+                        }
+                        return ListView.builder(
+                          itemCount: displayedTerritories.length,
+                          itemBuilder: (context, index) {
+                            final territory = displayedTerritories[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: Container(
+                                padding: const EdgeInsets.all(16),
+                                decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(18)),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Container(width: 14, height: 14, color: Theme.of(context).colorScheme.primary),
+                                        const Spacer(),
+                                        Text(
+                                          territory.change,
                                           style: TextStyle(
-                                            color: Theme.of(context).colorScheme.primary,
-                                            fontWeight: FontWeight.w600,
+                                            color: Theme.of(context).colorScheme.secondary,
+                                            fontWeight: FontWeight.w700,
                                           ),
                                         ),
+                                        const SizedBox(width: 8),
+                                        IconButton(
+                                          onPressed: () => _deleteTerritory(index),
+                                          icon: const Icon(Icons.delete_outline, size: 18),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      territory.name,
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w700,
+                                        color: Theme.of(context).colorScheme.onSurface,
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    const SizedBox(height: 8),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          territory.gci,
+                                          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                                        ),
+                                        const Spacer(),
+                                        Text(
+                                          territory.leads,
+                                          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 12),
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: Text(
+                                        'View Map',
+                                        style: TextStyle(
+                                          color: Theme.of(context).colorScheme.primary,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
-                          ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

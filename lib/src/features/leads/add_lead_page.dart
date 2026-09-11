@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../sample_data.dart';
 import '../../state/lead_store.dart';
@@ -24,8 +25,8 @@ class _AddLeadPageState extends State<AddLeadPage> {
   final _notes = TextEditingController();
   final _latitude = TextEditingController(text: '40.7128');
   final _longitude = TextEditingController(text: '-74.0060');
-  final _lastContactDate = TextEditingController(text: '2026-08-04');
-  final _followUpDate = TextEditingController(text: '2026-08-11');
+  final _lastContactDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
+  final _followUpDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
 
   @override
   void dispose() {
@@ -171,11 +172,11 @@ class _AddLeadPageState extends State<AddLeadPage> {
                             controller: _longitude,
                             keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           ),
-                          _FormLine(
+                          _DateFormLine(
                             label: 'Last Contact Date',
                             controller: _lastContactDate,
                           ),
-                          _FormLine(
+                          _DateFormLine(
                             label: 'Follow Up Date',
                             controller: _followUpDate,
                           ),
@@ -241,6 +242,57 @@ class _FormLine extends StatelessWidget {
               isDense: true,
               border: UnderlineInputBorder(),
               contentPadding: EdgeInsets.only(bottom: 8),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DateFormLine extends StatelessWidget {
+  const _DateFormLine({
+    required this.label,
+    required this.controller,
+  });
+
+  final String label;
+  final TextEditingController controller;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime now = DateTime.now();
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2100),
+    );
+    if (picked != null) {
+      controller.text = DateFormat('yyyy-MM-dd').format(picked);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          const SizedBox(height: 8),
+          TextFormField(
+            controller: controller,
+            readOnly: true,
+            onTap: () => _selectDate(context),
+            decoration: const InputDecoration(
+              isDense: true,
+              border: UnderlineInputBorder(),
+              contentPadding: EdgeInsets.only(bottom: 8),
+              suffixIcon: Icon(Icons.calendar_today, size: 16),
             ),
           ),
         ],
