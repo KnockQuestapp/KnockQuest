@@ -5,7 +5,10 @@ import 'package:knockquest/src/knockquest_app.dart';
 import 'package:knockquest/src/state/lead_store.dart';
 
 void main() {
-  setUp(() {
+  setUp(() async {
+    // Initialize storage for tests
+    // We use a temporary directory for Hive in tests to avoid polluting real data
+    await LocalStorageService.instance.init();
     LeadStore.instance.reset();
   });
 

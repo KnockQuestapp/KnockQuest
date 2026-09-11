@@ -5,7 +5,8 @@ import 'package:knockquest/src/knockquest_app.dart';
 import 'package:knockquest/src/state/lead_store.dart';
 
 void main() {
-  setUp(() {
+  setUp(() async {
+    await LocalStorageService.instance.init();
     LeadStore.instance.reset();
   });
 
