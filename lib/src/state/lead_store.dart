@@ -11,10 +11,14 @@ class LeadStore {
 
   static final LeadStore instance = LeadStore._();
 
-  late final ValueNotifier<List<LeadRecord>> leads;
-  late final ValueNotifier<List<FollowUpRecord>> followUpsNotifier;
-  late final ValueNotifier<List<QuestRecord>> questsNotifier;
-  late final ValueNotifier<List<TerritoryRecord>> territoriesNotifier;
+  final ValueNotifier<List<LeadRecord>> leads =
+      ValueNotifier<List<LeadRecord>>([sampleLead]);
+  final ValueNotifier<List<FollowUpRecord>> followUpsNotifier =
+      ValueNotifier<List<FollowUpRecord>>(List<FollowUpRecord>.from(followUps));
+  final ValueNotifier<List<QuestRecord>> questsNotifier =
+      ValueNotifier<List<QuestRecord>>(List<QuestRecord>.from(quests));
+  final ValueNotifier<List<TerritoryRecord>> territoriesNotifier =
+      ValueNotifier<List<TerritoryRecord>>(List<TerritoryRecord>.from(territories));
 
   bool _initialized = false;
 
@@ -22,24 +26,24 @@ class LeadStore {
     if (_initialized) return;
 
     final storedLeads = LocalStorageService.instance.loadLeads();
-    leads = ValueNotifier<List<LeadRecord>>(
-      storedLeads.isEmpty ? [sampleLead] : storedLeads,
-    );
+    if (storedLeads.isNotEmpty) {
+      leads.value = storedLeads;
+    }
 
     final storedFollowUps = LocalStorageService.instance.loadFollowUps();
-    followUpsNotifier = ValueNotifier<List<FollowUpRecord>>(
-      storedFollowUps.isEmpty ? List<FollowUpRecord>.from(followUps) : storedFollowUps,
-    );
+    if (storedFollowUps.isNotEmpty) {
+      followUpsNotifier.value = storedFollowUps;
+    }
 
     final storedQuests = LocalStorageService.instance.loadQuests();
-    questsNotifier = ValueNotifier<List<QuestRecord>>(
-      storedQuests.isEmpty ? List<QuestRecord>.from(quests) : storedQuests,
-    );
+    if (storedQuests.isNotEmpty) {
+      questsNotifier.value = storedQuests;
+    }
 
     final storedTerritories = LocalStorageService.instance.loadTerritories();
-    territoriesNotifier = ValueNotifier<List<TerritoryRecord>>(
-      storedTerritories.isEmpty ? List<TerritoryRecord>.from(territories) : storedTerritories,
-    );
+    if (storedTerritories.isNotEmpty) {
+      territoriesNotifier.value = storedTerritories;
+    }
 
     _initialized = true;
   }
@@ -158,8 +162,10 @@ class LeadStore {
     leads.value = [sampleLead];
     followUpsNotifier.value = List<FollowUpRecord>.from(followUps);
     questsNotifier.value = List<QuestRecord>.from(quests);
+    territoriesNotifier.value = List<TerritoryRecord>.from(territories);
     unawaited(LocalStorageService.instance.saveLeads(leads.value));
     unawaited(LocalStorageService.instance.saveFollowUps(followUpsNotifier.value));
     unawaited(LocalStorageService.instance.saveQuests(questsNotifier.value));
+    unawaited(LocalStorageService.instance.saveTerritories(territoriesNotifier.value));
   }
 }
