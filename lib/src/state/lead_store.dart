@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import '../integrations/crm_sync_service.dart';
 import '../sample_data.dart';
 import '../services/local_storage_service.dart';
+import '../services/supabase_service.dart';
 
 class LeadStore {
   LeadStore._();
@@ -22,9 +23,10 @@ class LeadStore {
 
   bool _initialized = false;
 
-  void init() {
+  void init() async {
     if (_initialized) return;
 
+    // Load from local storage first for offline-first experience
     final storedLeads = LocalStorageService.instance.loadLeads();
     if (storedLeads.isNotEmpty) {
       leads.value = storedLeads;
@@ -45,12 +47,20 @@ class LeadStore {
       territoriesNotifier.value = storedTerritories;
     }
 
+    // Sync with Supabase
+    final cloudLeads = await SupabaseService.instance.fetchLeads();
+    if (cloudLeads.isNotEmpty) {
+      leads.value = cloudLeads;
+      unawaited(LocalStorageService.instance.saveLeads(leads.value));
+    }
+
     _initialized = true;
   }
 
   void addLead(LeadRecord lead) {
     leads.value = [...leads.value, lead];
     unawaited(LocalStorageService.instance.saveLeads(leads.value));
+    unawaited(SupabaseService.instance.syncLeads(leads.value));
     unawaited(CrmSyncService.instance.syncLeadCreated(lead));
   }
 
@@ -155,6 +165,7 @@ class LeadStore {
     );
     leads.value = current;
     unawaited(LocalStorageService.instance.saveLeads(leads.value));
+    unawaited(SupabaseService.instance.syncLeads(leads.value));
     unawaited(CrmSyncService.instance.syncLeadUpdated(current[latestIndex]));
   }
 

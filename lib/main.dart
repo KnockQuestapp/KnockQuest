@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'src/knockquest_app.dart';
 import 'src/services/local_storage_service.dart';
+import 'src/services/supabase_service.dart';
 import 'src/state/auth_store.dart';
 import 'src/state/lead_store.dart';
 
@@ -23,6 +24,7 @@ void main() {
 
   runZonedGuarded(
     () async {
+      await SupabaseService.instance.init();
       await LocalStorageService.instance.init();
       await AuthStore.instance.init();
       LeadStore.instance.init();

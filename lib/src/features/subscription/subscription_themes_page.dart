@@ -77,7 +77,7 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
                       Expanded(
                         child: _PlanCard(
                           title: 'Professional',
-                          price: '\$29',
+                          price: '\$10',
                           detail: 'Unlimited leads, CRM sync, Route optimization',
                           current: _selectedPlan == 'Professional',
                           onPressed: () => _choosePlan('Professional'),
@@ -87,12 +87,13 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
                   ),
                   const SizedBox(height: 16),
                   _PlanCard(
-                    title: 'Team',
-                    price: '\$99',
-                    detail: 'Multi-user access, team dashboards, territory sharing',
-                    current: _selectedPlan == 'Team',
+                    title: 'Annual Plan',
+                    price: '\$100',
+                    detail: 'All Professional features, billed yearly (Save \$20)',
+                    current: _selectedPlan == 'Annual',
                     wide: true,
-                    onPressed: () => _choosePlan('Team'),
+                    billingCycle: 'per year',
+                    onPressed: () => _choosePlan('Annual'),
                   ),
                 ],
               ),
@@ -112,6 +113,7 @@ class _PlanCard extends StatelessWidget {
     required this.current,
     required this.onPressed,
     this.wide = false,
+    this.billingCycle = 'per month',
   });
 
   final String title;
@@ -120,6 +122,7 @@ class _PlanCard extends StatelessWidget {
   final bool current;
   final VoidCallback onPressed;
   final bool wide;
+  final String billingCycle;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +155,7 @@ class _PlanCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(price, style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
-          Text('per month', style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12)),
+          Text(billingCycle, style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12)),
           const SizedBox(height: 14),
           Text(detail, style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12)),
           const SizedBox(height: 14),

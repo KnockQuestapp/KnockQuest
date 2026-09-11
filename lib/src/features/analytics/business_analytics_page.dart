@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../state/lead_store.dart';
+import '../../services/supabase_service.dart';
 
 class BusinessAnalyticsPage extends StatefulWidget {
   const BusinessAnalyticsPage({super.key});
@@ -10,8 +11,30 @@ class BusinessAnalyticsPage extends StatefulWidget {
 
 class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
   String _period = 'This Month';
+  Map<String, dynamic>? _globalMetrics;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadGlobalMetrics();
+  }
+
+  Future<void> _loadGlobalMetrics() async {
+    final metrics = await SupabaseService.instance.fetchGlobalMetrics();
+    setState(() {
+      _globalMetrics = metrics;
+    });
+  }
 
   Map<String, String> _calculateMetrics() {
+    if (_period == 'All Time' && _globalMetrics != null) {
+      return {
+        'gci': r'$' + (_globalMetrics!['total_gci'] as double).toStringAsFixed(2),
+        'count': '${_globalMetrics!['total_leads']} leads',
+        'rate': '${(_globalMetrics!['conversion_rate'] as double).toStringAsFixed(1)}%',
+      };
+    }
+
     final leads = LeadStore.instance.leads.value;
 
     // Sum up estimated value
