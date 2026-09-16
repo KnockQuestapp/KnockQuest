@@ -1,0 +1,4 @@
+﻿Storyboard notes
+- page to page navigation
+- hidden modal flows
+- conditional routes

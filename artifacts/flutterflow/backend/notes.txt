@@ -1,0 +1,5 @@
+﻿Backend notes
+- auth provider behavior
+- collection relationships
+- role rules
+- API/webhook details

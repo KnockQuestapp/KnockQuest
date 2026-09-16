@@ -1,0 +1,27 @@
+﻿{
+    "createdAt":  "2026-08-04T06:01:16",
+    "root":  "C:\\Users\\Administrator\\Documents\\GitHub\\KnockQuest\\.\\\\artifacts\\\\flutterflow_phase1",
+    "phase":  "phase1",
+    "pages":  [
+                  "LoginRegistration",
+                  "MainDashboard",
+                  "AddLead",
+                  "InteractiveMap",
+                  "LeadDetails",
+                  "VisitLoggerHistory",
+                  "TerritoryManagement"
+              ],
+    "backend":  [
+                    "auth-providers.png",
+                    "collections-overview.png",
+                    "users-fields.png",
+                    "leads-fields.png",
+                    "territories-fields.png",
+                    "followups-fields.png",
+                    "app-state.png",
+                    "api-calls.png",
+                    "custom-functions.png",
+                    "custom-actions.png",
+                    "notes.txt"
+                ]
+}

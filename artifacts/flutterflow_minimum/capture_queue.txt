@@ -1,0 +1,18 @@
+﻿FlutterFlow Minimum Capture Queue
+Generated: 2026-08-04T06:30:07
+
+- pages\\LoginRegistration\\widget-tree.png
+- pages\\LoginRegistration\\action-login.png
+- pages\\LoginRegistration\\action-google-signin.png
+- backend\\auth-providers.png
+- backend\\collections-overview.png
+- backend\\users-fields.png
+- backend\\leads-fields.png
+- pages\\MainDashboard\\widget-tree.png
+- pages\\MainDashboard\\action-add-lead.png
+- pages\\MainDashboard\\action-open-map.png
+- pages\\MainDashboard\\action-follow-ups.png
+- pages\\AddLead\\widget-tree.png
+- pages\\AddLead\\action-save-lead.png
+- pages\\InteractiveMap\\widget-tree.png
+- pages\\InteractiveMap\\action-draw-boundary.png

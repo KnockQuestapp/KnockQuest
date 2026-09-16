@@ -1,0 +1,4 @@
+﻿Buttons and rules for MainDashboard
+- describe what each major button does
+- note required fields
+- note page load queries

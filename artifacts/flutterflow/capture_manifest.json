@@ -1,0 +1,42 @@
+﻿{
+    "createdAt":  "2026-08-04T05:59:17",
+    "root":  "C:\\Users\\Administrator\\Documents\\GitHub\\KnockQuest\\.\\\\artifacts\\\\flutterflow",
+    "pages":  [
+                  "LoginRegistration",
+                  "MainDashboard",
+                  "AddLead",
+                  "InteractiveMap",
+                  "LeadDetails",
+                  "VisitLoggerHistory",
+                  "FollowUpsReminders",
+                  "TerritoryManagement",
+                  "BusinessAnalytics",
+                  "CRMIntegrations",
+                  "SubscriptionThemes"
+              ],
+    "components":  [
+                       "TextField",
+                       "OutcomeChip",
+                       "SourceRow",
+                       "PieChart",
+                       "PlanCard",
+                       "MapAction",
+                       "TabGroup",
+                       "VisitLogItem",
+                       "SwitchComponent",
+                       "ThemeSwatch"
+                   ],
+    "backend":  [
+                    "auth-providers.png",
+                    "collections-overview.png",
+                    "users-fields.png",
+                    "leads-fields.png",
+                    "territories-fields.png",
+                    "followups-fields.png",
+                    "app-state.png",
+                    "api-calls.png",
+                    "custom-functions.png",
+                    "custom-actions.png",
+                    "notes.txt"
+                ]
+}
