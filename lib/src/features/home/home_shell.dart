@@ -48,21 +48,6 @@ class _HomeShellState extends State<HomeShell> {
         ],
       ),
       body: _pages[_selectedIndex],
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: _selectedIndex,
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.map_outlined), label: 'Map'),
-          NavigationDestination(
-            icon: Icon(Icons.assignment_outlined),
-            label: 'Quests',
-          ),
-        ],
-        onDestinationSelected: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
-      ),
     );
   }
 }
