@@ -180,10 +180,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                   child: Stack(
                     children: <Widget>[
                       Positioned.fill(
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: dockReservedHeight),
-                          child: child,
-                        ),
+                        child: child,
                       ),
                       Positioned(
                         left: 12,
@@ -199,11 +196,11 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                                   vertical: 8,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.surface.withValues(alpha: 245),
+                                  color: Theme.of(context).colorScheme.surface.withOpacity(0.96),
                                   borderRadius: BorderRadius.circular(18),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Theme.of(context).shadowColor.withValues(alpha: 36),
+                                      color: Theme.of(context).shadowColor.withOpacity(0.14),
                                       blurRadius: 14,
                                       offset: const Offset(0, 5),
                                     ),
@@ -359,10 +356,10 @@ class _MobileNavButton extends StatelessWidget {
     final enabled = onPressed != null;
     final labelColor = enabled
         ? Theme.of(context).textTheme.bodySmall?.color ?? const Color(0xFF5F7391)
-        : Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 153) ?? const Color(0xFF98A6BB);
+        : Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.6) ?? const Color(0xFF98A6BB);
     final iconBackground = enabled
         ? backgroundColor
-        : backgroundColor.withValues(alpha: 128);
+        : backgroundColor.withOpacity(0.5);
     return Material(
       color: Colors.transparent,
       child: InkWell(
