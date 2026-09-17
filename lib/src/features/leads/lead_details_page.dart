@@ -23,11 +23,21 @@ class LeadDetailsPage extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back)),
-                      const Expanded(
-                        child: Text('Lead Details', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.w700)),
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
                       ),
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.edit)),
+                      const Expanded(
+                        child: Text(
+                          'Lead Details',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.edit),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 12),
@@ -45,7 +55,9 @@ class LeadDetailsPage extends StatelessWidget {
                             'JD',
                             style: TextStyle(
                               fontWeight: FontWeight.w700,
-                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.onPrimaryContainer,
                             ),
                           ),
                         ),
@@ -65,20 +77,35 @@ class LeadDetailsPage extends StatelessWidget {
                                     style: TextStyle(
                                       fontSize: 28,
                                       fontWeight: FontWeight.w700,
-                                      color: Theme.of(context).colorScheme.onSurface,
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurface,
                                     ),
                                   ),
                                 ),
                                 const SizedBox(width: 8),
                                 Flexible(
                                   child: Container(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                                    decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: BorderRadius.circular(999)),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 4,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.secondaryContainer,
+                                      borderRadius: BorderRadius.circular(999),
+                                    ),
                                     child: Text(
                                       lead.status.label,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer, fontSize: 11),
+                                      style: TextStyle(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onSecondaryContainer,
+                                        fontSize: 11,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -87,7 +114,11 @@ class LeadDetailsPage extends StatelessWidget {
                             const SizedBox(height: 4),
                             Text(
                               lead.address,
-                              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                              style: TextStyle(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.color,
+                              ),
                             ),
                           ],
                         ),
@@ -118,10 +149,17 @@ class LeadDetailsPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () => Navigator.pushNamed(context, AppRoutes.visitHistory),
+                          onPressed: () => Navigator.pushNamed(
+                            context,
+                            AppRoutes.visitHistory,
+                          ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
+                            foregroundColor: Theme.of(
+                              context,
+                            ).colorScheme.onPrimary,
                           ),
                           child: const Text('Log Visit'),
                         ),
@@ -129,7 +167,8 @@ class LeadDetailsPage extends StatelessWidget {
                       const SizedBox(width: 10),
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () => Navigator.pushNamed(context, AppRoutes.followUps),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, AppRoutes.followUps),
                           child: const Text('Follow Up'),
                         ),
                       ),
@@ -146,21 +185,43 @@ class LeadDetailsPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Center(child: Text('Property Info', style: TextStyle(fontWeight: FontWeight.w700, color: Color(0xFF7E8CA0)))),
+                        const Center(
+                          child: Text(
+                            'Property Info',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF7E8CA0),
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 18),
                         Row(
                           children: const [
-                            Expanded(child: _InfoPair('Building Type', 'Condo / Apartment')),
+                            Expanded(
+                              child: _InfoPair(
+                                'Building Type',
+                                'Condo / Apartment',
+                              ),
+                            ),
                             SizedBox(width: 16),
-                            Expanded(child: _InfoPair('Ownership', 'Owner Occupied')),
+                            Expanded(
+                              child: _InfoPair('Ownership', 'Owner Occupied'),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 26),
                         Row(
                           children: [
-                            Expanded(child: _InfoPair('Lead Source', lead.outcome)),
+                            Expanded(
+                              child: _InfoPair('Lead Source', lead.outcome),
+                            ),
                             const SizedBox(width: 16),
-                            Expanded(child: _InfoPair('Est. Value', lead.estimatedValue)),
+                            Expanded(
+                              child: _InfoPair(
+                                'Est. Value',
+                                lead.estimatedValue,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -187,7 +248,9 @@ class _UnitChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        color: selected
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.surface,
         border: Border.all(color: Theme.of(context).dividerColor),
         borderRadius: BorderRadius.circular(12),
       ),
@@ -216,7 +279,10 @@ class _InfoPair extends StatelessWidget {
       children: [
         Text(
           label,
-          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12),
+          style: TextStyle(
+            color: Theme.of(context).textTheme.bodySmall?.color,
+            fontSize: 12,
+          ),
         ),
         const SizedBox(height: 6),
         Text(

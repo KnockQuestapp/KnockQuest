@@ -25,8 +25,12 @@ class _AddLeadPageState extends State<AddLeadPage> {
   final _notes = TextEditingController();
   final _latitude = TextEditingController(text: '40.7128');
   final _longitude = TextEditingController(text: '-74.0060');
-  final _lastContactDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
-  final _followUpDate = TextEditingController(text: DateFormat('yyyy-MM-dd').format(DateTime.now()));
+  final _lastContactDate = TextEditingController(
+    text: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+  );
+  final _followUpDate = TextEditingController(
+    text: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+  );
 
   @override
   void dispose() {
@@ -158,19 +162,33 @@ class _AddLeadPageState extends State<AddLeadPage> {
                             keyboardType: TextInputType.emailAddress,
                           ),
                           _FormLine(label: 'Address', controller: _address),
-                          _FormLine(label: 'Unit Number', controller: _unitNumber),
+                          _FormLine(
+                            label: 'Unit Number',
+                            controller: _unitNumber,
+                          ),
                           _FormLine(label: 'City', controller: _city),
-                          _FormLine(label: 'Postal Code', controller: _postalCode),
-                          _FormLine(label: 'Notes', controller: _notes, maxLines: 3),
+                          _FormLine(
+                            label: 'Postal Code',
+                            controller: _postalCode,
+                          ),
+                          _FormLine(
+                            label: 'Notes',
+                            controller: _notes,
+                            maxLines: 3,
+                          ),
                           _FormLine(
                             label: 'Latitude',
                             controller: _latitude,
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true,
+                            ),
                           ),
                           _FormLine(
                             label: 'Longitude',
                             controller: _longitude,
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true,
+                            ),
                           ),
                           _DateFormLine(
                             label: 'Last Contact Date',
@@ -186,8 +204,12 @@ class _AddLeadPageState extends State<AddLeadPage> {
                             child: ElevatedButton(
                               onPressed: _saveLead,
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context).colorScheme.primary,
-                                foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.primary,
+                                foregroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimary,
                               ),
                               child: const Text('Save Lead'),
                             ),
@@ -228,10 +250,7 @@ class _FormLine extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
+          Text(label, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
           TextFormField(
             controller: controller,
@@ -251,10 +270,7 @@ class _FormLine extends StatelessWidget {
 }
 
 class _DateFormLine extends StatelessWidget {
-  const _DateFormLine({
-    required this.label,
-    required this.controller,
-  });
+  const _DateFormLine({required this.label, required this.controller});
 
   final String label;
   final TextEditingController controller;
@@ -279,10 +295,7 @@ class _DateFormLine extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
+          Text(label, style: Theme.of(context).textTheme.bodySmall),
           const SizedBox(height: 8),
           TextFormField(
             controller: controller,

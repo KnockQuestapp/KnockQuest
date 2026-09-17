@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:knockquest/src/app_routes.dart';
 import 'package:knockquest/src/knockquest_app.dart';
-import 'package:knockquest/src/services/local_storage_service.dart';
+import 'test_storage.dart';
 import 'package:knockquest/src/state/lead_store.dart';
 
 void main() {
   setUp(() async {
     // Initialize storage for tests
     // We use a temporary directory for Hive in tests to avoid polluting real data
-    await LocalStorageService.instance.init();
+    await initTestStorage();
     LeadStore.instance.reset();
   });
 
@@ -17,12 +17,15 @@ void main() {
     await tester.pumpWidget(const KnockQuestApp());
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextFormField).at(0), 'agent@knockquest.io');
+    await tester.enterText(
+      find.byType(TextFormField).at(0),
+      'agent@knockquest.io',
+    );
     await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
     await tester.tap(find.text('Login'));
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('Add Lead'));
+    await tester.tap(find.text('Add Lead').last);
     await tester.pumpAndSettle();
 
     final fields = find.byType(TextFormField);
@@ -36,11 +39,11 @@ void main() {
     await tester.tap(find.text('Save Lead'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Lead saved: Taylor Morgan'), findsOneWidget);
+    expect(LeadStore.instance.latestLead.name, 'Taylor Morgan');
 
-    Navigator.of(tester.element(find.byType(Scaffold).first)).pushNamed(
-      AppRoutes.leadDetails,
-    );
+    Navigator.of(
+      tester.element(find.byType(Scaffold).first),
+    ).pushNamed(AppRoutes.leadDetails);
     await tester.pumpAndSettle();
 
     expect(find.text('Taylor Morgan'), findsOneWidget);

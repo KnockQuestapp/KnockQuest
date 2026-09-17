@@ -3,14 +3,12 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum CrmProvider {
-  apiNation,
-  zapier,
-  boldTrail,
-}
+enum CrmProvider { apiNation, zapier, boldTrail }
 
 CrmProvider _providerFromRaw(dynamic rawProvider, String? displayName) {
-  final normalizedProvider = (rawProvider as String? ?? '').trim().toLowerCase();
+  final normalizedProvider = (rawProvider as String? ?? '')
+      .trim()
+      .toLowerCase();
   if (normalizedProvider == 'zapier' || normalizedProvider == 'hubspot') {
     return CrmProvider.zapier;
   }
@@ -29,7 +27,8 @@ CrmProvider _providerFromRaw(dynamic rawProvider, String? displayName) {
   if (normalizedName.contains('zapier') || normalizedName.contains('hubspot')) {
     return CrmProvider.zapier;
   }
-  if (normalizedName.contains('boldtrail') || normalizedName.contains('exprealty')) {
+  if (normalizedName.contains('boldtrail') ||
+      normalizedName.contains('exprealty')) {
     return CrmProvider.boldTrail;
   }
   return CrmProvider.apiNation;
@@ -148,20 +147,22 @@ class CrmSyncTarget {
   }
 
   static CrmSyncTarget fromJson(Map<String, dynamic> json) {
-    final provider = _providerFromRaw(json['provider'], json['displayName'] as String?);
+    final provider = _providerFromRaw(
+      json['provider'],
+      json['displayName'] as String?,
+    );
     final defaultMappings = defaultFieldMappingsForProvider(provider);
     final rawMappings = json['fieldMappings'];
     final mergedMappings = <String, String>{
       ...defaultMappings,
       if (rawMappings is Map)
-        ...rawMappings.map(
-          (key, value) => MapEntry('$key', '$value'),
-        ),
+        ...rawMappings.map((key, value) => MapEntry('$key', '$value')),
     };
 
     return CrmSyncTarget(
       provider: provider,
-      displayName: json['displayName'] as String? ?? _canonicalDisplayName(provider),
+      displayName:
+          json['displayName'] as String? ?? _canonicalDisplayName(provider),
       autoSync: json['autoSync'] as bool? ?? false,
       webhookUrl: json['webhookUrl'] as String? ?? '',
       apiKey: json['apiKey'] as String? ?? '',
@@ -234,7 +235,8 @@ class CrmSyncRetryItem {
       payload: json['payload'] is Map
           ? Map<String, dynamic>.from(json['payload'] as Map)
           : <String, dynamic>{},
-      createdAt: DateTime.tryParse(json['createdAt'] as String? ?? '') ??
+      createdAt:
+          DateTime.tryParse(json['createdAt'] as String? ?? '') ??
           DateTime.now(),
       attempts: json['attempts'] as int? ?? 1,
       lastError: json['lastError'] as String? ?? '',
@@ -283,7 +285,8 @@ class CrmSyncActivityItem {
       event: json['event'] as String? ?? 'unknown',
       success: json['success'] as bool? ?? false,
       message: json['message'] as String? ?? '',
-      createdAt: DateTime.tryParse(json['createdAt'] as String? ?? '') ??
+      createdAt:
+          DateTime.tryParse(json['createdAt'] as String? ?? '') ??
           DateTime.now(),
       leadName: json['leadName'] as String? ?? 'Lead',
     );
@@ -358,17 +361,15 @@ class CrmSyncStore {
       final byProvider = <CrmProvider, CrmSyncTarget>{
         for (final target in loaded) target.provider: target,
       };
-      final merged = _defaultTargets
-          .map((target) {
-            final loadedTarget = byProvider[target.provider];
-            if (loadedTarget == null) {
-              return target;
-            }
-            return loadedTarget.copyWith(
-              displayName: _canonicalDisplayName(target.provider),
-            );
-          })
-          .toList();
+      final merged = _defaultTargets.map((target) {
+        final loadedTarget = byProvider[target.provider];
+        if (loadedTarget == null) {
+          return target;
+        }
+        return loadedTarget.copyWith(
+          displayName: _canonicalDisplayName(target.provider),
+        );
+      }).toList();
       targets.value = merged;
     } catch (_) {
       targets.value = _defaultTargets;
@@ -379,8 +380,9 @@ class CrmSyncStore {
       try {
         final decodedRetry = jsonDecode(rawRetry) as List<dynamic>;
         retryQueue.value = decodedRetry
-            .map((item) =>
-                CrmSyncRetryItem.fromJson(item as Map<String, dynamic>))
+            .map(
+              (item) => CrmSyncRetryItem.fromJson(item as Map<String, dynamic>),
+            )
             .toList();
       } catch (_) {
         retryQueue.value = <CrmSyncRetryItem>[];
@@ -392,8 +394,10 @@ class CrmSyncStore {
       try {
         final decodedActivity = jsonDecode(rawActivity) as List<dynamic>;
         activityLog.value = decodedActivity
-            .map((item) =>
-                CrmSyncActivityItem.fromJson(item as Map<String, dynamic>))
+            .map(
+              (item) =>
+                  CrmSyncActivityItem.fromJson(item as Map<String, dynamic>),
+            )
             .toList();
       } catch (_) {
         activityLog.value = <CrmSyncActivityItem>[];
@@ -493,21 +497,20 @@ class CrmSyncStore {
   }
 
   List<CrmSyncRetryItem> retriesFor(CrmProvider provider) {
-    return retryQueue.value
-        .where((item) => item.provider == provider)
-        .toList();
+    return retryQueue.value.where((item) => item.provider == provider).toList();
   }
 
   int pendingCountFor(CrmProvider provider) {
     return retryQueue.value.where((item) => item.provider == provider).length;
   }
 
-  List<CrmSyncActivityItem> recentActivityFor(CrmProvider provider,
-      {int limit = 20}) {
-    final filtered = activityLog.value
-        .where((item) => item.provider == provider)
-        .toList()
-      ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+  List<CrmSyncActivityItem> recentActivityFor(
+    CrmProvider provider, {
+    int limit = 20,
+  }) {
+    final filtered =
+        activityLog.value.where((item) => item.provider == provider).toList()
+          ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
     if (filtered.length <= limit) {
       return filtered;
     }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:knockquest/src/app_routes.dart';
 import 'package:knockquest/src/knockquest_app.dart';
-import 'package:knockquest/src/services/local_storage_service.dart';
+import 'test_storage.dart';
 import 'package:knockquest/src/state/lead_store.dart';
 
 void main() {
   setUp(() async {
-    await LocalStorageService.instance.init();
+    await initTestStorage();
     LeadStore.instance.reset();
   });
 

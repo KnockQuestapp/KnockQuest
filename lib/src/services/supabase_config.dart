@@ -3,5 +3,7 @@ class SupabaseConfig {
   static const String url = 'https://your-project-id.supabase.co';
   static const String anonKey = 'your-anon-key';
 
-  static bool get isConfigured => url != 'https://your-project-id.supabase.co' && anonKey != 'your-anon-key';
+  static bool get isConfigured =>
+      url != 'https://your-project-id.supabase.co' &&
+      anonKey != 'your-anon-key';
 }

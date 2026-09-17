@@ -50,7 +50,9 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
 
   void _toggleThemeMode() {
     setState(() {
-      _themeMode = _themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
+      _themeMode = _themeMode == ThemeMode.dark
+          ? ThemeMode.light
+          : ThemeMode.dark;
     });
     // persist selection
     _saveThemeMode(_themeMode);
@@ -80,7 +82,10 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
   Future<void> _saveThemeMode(ThemeMode mode) async {
     try {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_kThemeModeKey, mode == ThemeMode.dark ? 'dark' : 'light');
+      await prefs.setString(
+        _kThemeModeKey,
+        mode == ThemeMode.dark ? 'dark' : 'light',
+      );
     } catch (_) {
       // ignore write errors
     }
@@ -92,6 +97,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
       useMaterial3: true,
       scaffoldBackgroundColor: Colors.white,
       textTheme: const TextTheme(
+        bodyLarge: TextStyle(color: Color(0xFF7E8CA0)),
         bodySmall: TextStyle(color: Color(0xFF7E8CA0)),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -122,6 +128,7 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
       ),
       scaffoldBackgroundColor: const Color(0xFF0F172A),
       textTheme: const TextTheme(
+        bodyLarge: TextStyle(color: Color(0xFF7E8CA0)),
         bodySmall: TextStyle(color: Color(0xFFCBD5E1)),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
@@ -168,20 +175,15 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
             return ValueListenableBuilder<String>(
               valueListenable: _currentRoute,
               builder: (context, routeName, _) {
-                if (routeName == AppRoutes.login) {
+                if (routeName != AppRoutes.dashboard) {
                   return child;
                 }
-
-                final mediaQuery = MediaQuery.of(context);
-                final dockReservedHeight = 92.0 + mediaQuery.padding.bottom;
 
                 return Container(
                   color: Theme.of(context).scaffoldBackgroundColor,
                   child: Stack(
                     children: <Widget>[
-                      Positioned.fill(
-                        child: child,
-                      ),
+                      Positioned.fill(child: child),
                       Positioned(
                         left: 12,
                         right: 12,
@@ -196,68 +198,68 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
                                   vertical: 8,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.surface.withOpacity(0.96),
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.surface.withValues(alpha: 0.96),
                                   borderRadius: BorderRadius.circular(18),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Theme.of(context).shadowColor.withOpacity(0.14),
+                                      color: Theme.of(
+                                        context,
+                                      ).shadowColor.withValues(alpha: 0.14),
                                       blurRadius: 14,
                                       offset: const Offset(0, 5),
                                     ),
                                   ],
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
                                   children: <Widget>[
                                     _MobileNavButton(
                                       tooltip: 'Dashboard',
                                       icon: Icons.dashboard_outlined,
                                       label: 'Dashboard',
                                       backgroundColor: const Color(0xFF0F9D58),
-                                      onPressed: () =>
-                                          _navigatorKey.currentState?.pushNamed(
-                                            AppRoutes.dashboard,
-                                          ),
+                                      onPressed: () => _navigatorKey
+                                          .currentState
+                                          ?.pushNamed(AppRoutes.dashboard),
                                     ),
                                     _MobileNavButton(
                                       tooltip: 'Add lead',
                                       icon: Icons.person_add_alt_1,
                                       label: 'Add Lead',
                                       backgroundColor: const Color(0xFF1D5BD7),
-                                      onPressed: () =>
-                                          _navigatorKey.currentState?.pushNamed(
-                                            AppRoutes.addLead,
-                                          ),
+                                      onPressed: () => _navigatorKey
+                                          .currentState
+                                          ?.pushNamed(AppRoutes.addLead),
                                     ),
                                     _MobileNavButton(
                                       tooltip: 'Open map',
                                       icon: Icons.map_outlined,
                                       label: 'Map',
                                       backgroundColor: const Color(0xFF13B7D8),
-                                      onPressed: () =>
-                                          _navigatorKey.currentState?.pushNamed(
-                                            AppRoutes.interactiveMap,
-                                          ),
+                                      onPressed: () => _navigatorKey
+                                          .currentState
+                                          ?.pushNamed(AppRoutes.interactiveMap),
                                     ),
                                     _MobileNavButton(
                                       tooltip: 'Follow ups',
                                       icon: Icons.calendar_today_outlined,
                                       label: 'Follow Ups',
                                       backgroundColor: const Color(0xFF52627C),
-                                      onPressed: () =>
-                                          _navigatorKey.currentState?.pushNamed(
-                                            AppRoutes.followUps,
-                                          ),
+                                      onPressed: () => _navigatorKey
+                                          .currentState
+                                          ?.pushNamed(AppRoutes.followUps),
                                     ),
                                     _MobileNavButton(
                                       tooltip: 'Export',
                                       icon: Icons.ios_share_outlined,
                                       label: 'Export',
                                       backgroundColor: const Color(0xFF35C784),
-                                      onPressed: () =>
-                                          _navigatorKey.currentState?.pushNamed(
-                                            AppRoutes.analytics,
-                                          ),
+                                      onPressed: () => _navigatorKey
+                                          .currentState
+                                          ?.pushNamed(AppRoutes.analytics),
                                     ),
                                   ],
                                 ),
@@ -355,11 +357,15 @@ class _MobileNavButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final enabled = onPressed != null;
     final labelColor = enabled
-        ? Theme.of(context).textTheme.bodySmall?.color ?? const Color(0xFF5F7391)
-        : Theme.of(context).textTheme.bodySmall?.color?.withOpacity(0.6) ?? const Color(0xFF98A6BB);
+        ? Theme.of(context).textTheme.bodySmall?.color ??
+              const Color(0xFF5F7391)
+        : Theme.of(
+                context,
+              ).textTheme.bodySmall?.color?.withValues(alpha: 0.6) ??
+              const Color(0xFF98A6BB);
     final iconBackground = enabled
         ? backgroundColor
-        : backgroundColor.withOpacity(0.5);
+        : backgroundColor.withValues(alpha: 0.5);
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -377,7 +383,11 @@ class _MobileNavButton extends StatelessWidget {
                   color: iconBackground,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(icon, size: 18, color: Theme.of(context).colorScheme.onPrimary),
+                child: Icon(
+                  icon,
+                  size: 18,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
               ),
               const SizedBox(height: 5),
               Text(

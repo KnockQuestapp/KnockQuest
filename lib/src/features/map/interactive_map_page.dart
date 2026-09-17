@@ -39,10 +39,9 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
       _selectedDrawTool = index;
     });
     final tools = ['Circle', 'Polygon', 'Route'];
-    final label = '${tools[index]} drawing mode activated. Tap on the map to define points.';
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(label)),
-    );
+    final label =
+        '${tools[index]} drawing mode activated. Tap on the map to define points.';
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(label)));
   }
 
   void _openFilters() {
@@ -61,9 +60,7 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  'Selected radius: ${_ranges[_selectedRangeIndex]}',
-                ),
+                Text('Selected radius: ${_ranges[_selectedRangeIndex]}'),
                 if (_searchText.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   Text('Search query: "$_searchText"'),
@@ -101,7 +98,8 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                       ),
                       children: [
                         TileLayer(
-                          urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                          urlTemplate:
+                              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                           userAgentPackageName: 'com.knockquest.app',
                         ),
                         MarkerLayer(
@@ -140,7 +138,12 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                               onChanged: (_) => setState(() {}),
                               decoration: InputDecoration(
                                 hintText: 'Search address or lead name',
-                                prefixIcon: Icon(Icons.search, color: Theme.of(context).textTheme.bodySmall?.color),
+                                prefixIcon: Icon(
+                                  Icons.search,
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodySmall?.color,
+                                ),
                                 suffixIcon: _searchText.isEmpty
                                     ? null
                                     : IconButton(
@@ -151,7 +154,9 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                                         icon: const Icon(Icons.close),
                                       ),
                                 filled: true,
-                                fillColor: Theme.of(context).colorScheme.surface,
+                                fillColor: Theme.of(
+                                  context,
+                                ).colorScheme.surface,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(14),
                                   borderSide: BorderSide.none,
@@ -170,14 +175,22 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                           children: [
                             if (_searchText.isNotEmpty) ...[
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 10,
+                                  vertical: 6,
+                                ),
                                 decoration: BoxDecoration(
                                   color: Theme.of(context).colorScheme.surface,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: Text(
                                   'Searching: $_searchText',
-                                  style: TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodySmall?.color),
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall?.color,
+                                  ),
                                 ),
                               ),
                               const SizedBox(width: 8),
@@ -188,7 +201,8 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                                 selected: _selectedRangeIndex == i,
                                 onTap: () => _selectRange(i),
                               ),
-                              if (i != _ranges.length - 1) const SizedBox(width: 8),
+                              if (i != _ranges.length - 1)
+                                const SizedBox(width: 8),
                             ],
                           ],
                         ),
@@ -221,7 +235,10 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                               selected: false,
                               onTap: () {
                                 // Quick add lead at the current map center
-                                final center = LatLng(40.7128, -74.0060); // In a real app, use mapController.camera.center
+                                final center = LatLng(
+                                  40.7128,
+                                  -74.0060,
+                                ); // In a real app, use mapController.camera.center
                                 Navigator.pushNamed(
                                   context,
                                   AppRoutes.addLead,
@@ -245,17 +262,23 @@ class _InteractiveMapPageState extends State<InteractiveMapPage> {
                                 : ' for "$_searchText"';
                             final message =
                                 'Boundary saved (${_ranges[_selectedRangeIndex]})$searchSuffix';
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(message)),
-                            );
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(SnackBar(content: Text(message)));
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
+                            foregroundColor: Theme.of(
+                              context,
+                            ).colorScheme.onPrimary,
                           ),
                           child: Text(
                             'Save Boundary',
-                            style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.onPrimary,
+                            ),
                           ),
                         ),
                       ),
@@ -296,11 +319,7 @@ class _CircleIcon extends StatelessWidget {
 }
 
 class _RangeChip extends StatelessWidget {
-  const _RangeChip(
-    this.label, {
-    this.selected = false,
-    required this.onTap,
-  });
+  const _RangeChip(this.label, {this.selected = false, required this.onTap});
 
   final String label;
   final bool selected;
@@ -314,12 +333,18 @@ class _RangeChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+          color: selected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.surface,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           label,
-          style: TextStyle(color: selected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).textTheme.bodySmall?.color),
+          style: TextStyle(
+            color: selected
+                ? Theme.of(context).colorScheme.onPrimary
+                : Theme.of(context).textTheme.bodySmall?.color,
+          ),
         ),
       ),
     );
@@ -345,15 +370,27 @@ class _MapActionButton extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
-          color: selected ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).colorScheme.primary,
+          color: selected
+              ? Theme.of(context).colorScheme.primaryContainer
+              : Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(28),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.edit_location_alt_outlined, color: Theme.of(context).colorScheme.onPrimary, size: 18),
+            Icon(
+              Icons.edit_location_alt_outlined,
+              color: Theme.of(context).colorScheme.onPrimary,
+              size: 18,
+            ),
             const SizedBox(width: 6),
-            Text(label, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.w600)),
+            Text(
+              label,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.onPrimary,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ],
         ),
       ),

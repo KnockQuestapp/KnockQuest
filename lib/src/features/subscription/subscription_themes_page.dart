@@ -14,9 +14,9 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
     setState(() {
       _selectedPlan = plan;
     });
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Plan updated: $plan')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text('Plan updated: $plan')));
   }
 
   @override
@@ -54,12 +54,17 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
                   const SizedBox(height: 6),
                   Text(
                     'Manage your KnockQuest experience',
-                    style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.bodySmall?.color,
+                    ),
                   ),
                   const SizedBox(height: 24),
                   Text(
                     'Select a Plan',
-                    style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Row(
@@ -78,7 +83,8 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
                         child: _PlanCard(
                           title: 'Professional',
                           price: '\$10',
-                          detail: 'Unlimited leads, CRM sync, Route optimization',
+                          detail:
+                              'Unlimited leads, CRM sync, Route optimization',
                           current: _selectedPlan == 'Professional',
                           onPressed: () => _choosePlan('Professional'),
                         ),
@@ -89,7 +95,8 @@ class _SubscriptionThemesPageState extends State<SubscriptionThemesPage> {
                   _PlanCard(
                     title: 'Team',
                     price: '\$99',
-                    detail: 'All Professional features, billed yearly (Save \$20)',
+                    detail:
+                        'All Professional features, billed yearly (Save \$20)',
                     current: _selectedPlan == 'Team',
                     wide: true,
                     billingCycle: 'per year',
@@ -143,7 +150,15 @@ class _PlanCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: Text(title, style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface))),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+              ),
               Icon(
                 current ? Icons.check_circle : Icons.circle_outlined,
                 color: current
@@ -154,14 +169,36 @@ class _PlanCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          Text(price, style: TextStyle(fontSize: 32, fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
-          Text(billingCycle, style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12)),
+          Text(
+            price,
+            style: TextStyle(
+              fontSize: 32,
+              fontWeight: FontWeight.w700,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          Text(
+            billingCycle,
+            style: TextStyle(
+              color: Theme.of(context).textTheme.bodySmall?.color,
+              fontSize: 12,
+            ),
+          ),
           const SizedBox(height: 14),
-          Text(detail, style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12)),
+          Text(
+            detail,
+            style: TextStyle(
+              color: Theme.of(context).textTheme.bodySmall?.color,
+              fontSize: 12,
+            ),
+          ),
           const SizedBox(height: 14),
           ElevatedButton(
             onPressed: onPressed,
-            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary, foregroundColor: Theme.of(context).colorScheme.onPrimary),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            ),
             child: Text(current ? 'Current Plan' : 'Choose Plan'),
           ),
         ],

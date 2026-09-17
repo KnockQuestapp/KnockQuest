@@ -208,12 +208,7 @@ class TerritoryRecord {
   final String change;
 
   Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'gci': gci,
-      'leads': leads,
-      'change': change,
-    };
+    return {'name': name, 'gci': gci, 'leads': leads, 'change': change};
   }
 
   factory TerritoryRecord.fromMap(Map<String, dynamic> map) {

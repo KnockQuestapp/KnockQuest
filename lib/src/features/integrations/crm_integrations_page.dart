@@ -130,9 +130,7 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
       _hydrateDraftsFromStore();
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(result)),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result)));
   }
 
   Future<void> _retryFailed(int index) async {
@@ -156,9 +154,7 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
       _hydrateDraftsFromStore();
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(result)),
-    );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(result)));
   }
 
   Future<void> _clearActivity(int index) async {
@@ -168,9 +164,9 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
       return;
     }
     setState(() {});
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Sync activity cleared.')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('Sync activity cleared.')));
   }
 
   @override
@@ -203,7 +199,9 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
                                   style: TextStyle(
                                     fontSize: 22,
                                     fontWeight: FontWeight.w700,
-                                    color: Theme.of(context).colorScheme.onSurface,
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurface,
                                   ),
                                 ),
                               ),
@@ -212,41 +210,68 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
                           const SizedBox(height: 6),
                           Text(
                             'Sync leads to API Nation or Zapier via secure webhooks.',
-                            style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                            style: TextStyle(
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodySmall?.color,
+                            ),
                           ),
                           const SizedBox(height: 24),
                           Text(
                             'Connected Services',
-                            style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: Theme.of(context).colorScheme.onSurface,
+                            ),
                           ),
                           const SizedBox(height: 12),
                           Expanded(
                             child: SingleChildScrollView(
                               child: Column(
                                 children: [
-                                  for (var index = 0; index < _drafts.length; index++) ...[
+                                  for (
+                                    var index = 0;
+                                    index < _drafts.length;
+                                    index++
+                                  ) ...[
                                     _CrmCard(
                                       name: _drafts[index].displayName,
                                       accent: _drafts[index].accent,
                                       autoSync: _drafts[index].autoSync,
                                       lastStatus: _drafts[index].lastStatus,
                                       lastMessage: _drafts[index].lastMessage,
-                                      lastAttemptAt: _drafts[index].lastAttemptAt,
-                                      lastSuccessAt: _drafts[index].lastSuccessAt,
+                                      lastAttemptAt:
+                                          _drafts[index].lastAttemptAt,
+                                      lastSuccessAt:
+                                          _drafts[index].lastSuccessAt,
                                       pendingCount: CrmSyncStore.instance
-                                          .pendingCountFor(_drafts[index].provider),
+                                          .pendingCountFor(
+                                            _drafts[index].provider,
+                                          ),
                                       activity: CrmSyncStore.instance
-                                          .recentActivityFor(_drafts[index].provider),
-                                      webhookController: _drafts[index].webhookController,
-                                      apiKeyController: _drafts[index].apiKeyController,
-                                      mappingControllers: _drafts[index].mappingControllers,
-                                      isTesting: _testingProviders.contains(_drafts[index].provider),
-                                      isRetrying: _retryingProviders.contains(_drafts[index].provider),
+                                          .recentActivityFor(
+                                            _drafts[index].provider,
+                                          ),
+                                      webhookController:
+                                          _drafts[index].webhookController,
+                                      apiKeyController:
+                                          _drafts[index].apiKeyController,
+                                      mappingControllers:
+                                          _drafts[index].mappingControllers,
+                                      isTesting: _testingProviders.contains(
+                                        _drafts[index].provider,
+                                      ),
+                                      isRetrying: _retryingProviders.contains(
+                                        _drafts[index].provider,
+                                      ),
                                       onConfigure: () => _configure(index),
-                                      onTestConnection: () => _testConnection(index),
+                                      onTestConnection: () =>
+                                          _testConnection(index),
                                       onRetryFailed: () => _retryFailed(index),
-                                      onClearActivity: () => _clearActivity(index),
-                                      onAutoSyncChanged: (value) => _toggleSync(index, value),
+                                      onClearActivity: () =>
+                                          _clearActivity(index),
+                                      onAutoSyncChanged: (value) =>
+                                          _toggleSync(index, value),
                                     ),
                                     if (index < _drafts.length - 1)
                                       const SizedBox(height: 14),
@@ -260,27 +285,27 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
                     ),
                   ),
                 ),
-    if (isSyncing)
-      Positioned.fill(
-        child: Container(
-          color: Colors.black.withValues(alpha: 0.1),
-          child: Center(
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const [
-                    CircularProgressIndicator(),
-                    SizedBox(height: 16),
-                    Text('Syncing with CRM...'),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+                if (isSyncing)
+                  Positioned.fill(
+                    child: Container(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      child: Center(
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: const [
+                                CircularProgressIndicator(),
+                                SizedBox(height: 16),
+                                Text('Syncing with CRM...'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
               ],
             );
           },
@@ -338,7 +363,9 @@ class _CrmCard extends StatelessWidget {
     final statusColor = switch (lastStatus) {
       'success' => Theme.of(context).colorScheme.secondary,
       'failed' => Theme.of(context).colorScheme.error,
-      _ => Theme.of(context).textTheme.bodySmall?.color ?? Theme.of(context).colorScheme.onSurfaceVariant,
+      _ =>
+        Theme.of(context).textTheme.bodySmall?.color ??
+            Theme.of(context).colorScheme.onSurfaceVariant,
     };
     final statusText = switch (lastStatus) {
       'success' => 'Last sync successful',
@@ -356,7 +383,6 @@ class _CrmCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
         border: Border.all(color: Theme.of(context).dividerColor),
         borderRadius: BorderRadius.circular(18),
       ),
@@ -364,20 +390,30 @@ class _CrmCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Container(width: 36, height: 36, decoration: BoxDecoration(color: accent, borderRadius: BorderRadius.circular(10))),
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: accent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(name, style: TextStyle(fontWeight: FontWeight.w700, color: Theme.of(context).colorScheme.onSurface)),
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                     const SizedBox(height: 2),
                     Text(
                       statusText,
-                      style: TextStyle(
-                        color: statusColor,
-                        fontSize: 12,
-                      ),
+                      style: TextStyle(color: statusColor, fontSize: 12),
                     ),
                     if (statusMeta.isNotEmpty)
                       Padding(
@@ -410,9 +446,21 @@ class _CrmCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Auto-Sync Leads', style: TextStyle(fontWeight: FontWeight.w600, color: Theme.of(context).colorScheme.onSurface)),
+                    Text(
+                      'Auto-Sync Leads',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
+                    ),
                     const SizedBox(height: 2),
-                    Text('Push new leads automatically', style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color, fontSize: 12)),
+                    Text(
+                      'Push new leads automatically',
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.bodySmall?.color,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -469,12 +517,15 @@ class _CrmCard extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 10),
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
               decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Text(
                 lastMessage,
-                style: TextStyle(fontSize: 12, color: Theme.of(context).textTheme.bodySmall?.color),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Theme.of(context).textTheme.bodySmall?.color,
+                ),
               ),
             ),
           Wrap(
@@ -490,7 +541,9 @@ class _CrmCard extends StatelessWidget {
                 child: Text(isTesting ? 'Testing...' : 'Test Sync'),
               ),
               OutlinedButton(
-                onPressed: isRetrying || pendingCount == 0 ? null : onRetryFailed,
+                onPressed: isRetrying || pendingCount == 0
+                    ? null
+                    : onRetryFailed,
                 child: Text(isRetrying ? 'Retrying...' : 'Retry Failed'),
               ),
             ],
@@ -503,7 +556,9 @@ class _CrmCard extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.w600),
             ),
             subtitle: Text(
-              activity.isEmpty ? 'No recent events yet' : '${activity.length} recent events',
+              activity.isEmpty
+                  ? 'No recent events yet'
+                  : '${activity.length} recent events',
               style: const TextStyle(fontSize: 12),
             ),
             trailing: activity.isEmpty
@@ -608,8 +663,8 @@ class _IntegrationDraft {
       accent: target.provider == CrmProvider.apiNation
           ? const Color(0xFFE8EEFF)
           : target.provider == CrmProvider.boldTrail
-              ? const Color(0xFFE8F5E9)
-              : const Color(0xFFFFEEE8),
+          ? const Color(0xFFE8F5E9)
+          : const Color(0xFFFFEEE8),
       autoSync: target.autoSync,
       lastStatus: target.lastStatus,
       lastMessage: target.lastMessage,
@@ -651,7 +706,8 @@ class _IntegrationDraft {
       apiKey: apiKeyController.text.trim(),
       fieldMappings: {
         for (final field in _fieldMappings)
-          field.key: (mappingControllers[field.key]?.text.trim().isNotEmpty ?? false)
+          field.key:
+              (mappingControllers[field.key]?.text.trim().isNotEmpty ?? false)
               ? mappingControllers[field.key]!.text.trim()
               : field.key,
       },

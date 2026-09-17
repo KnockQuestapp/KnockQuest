@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../sample_data.dart';
 import '../../state/lead_store.dart';
-import '../../services/supabase_service.dart';
 
 class BusinessAnalyticsPage extends StatefulWidget {
   const BusinessAnalyticsPage({super.key});
@@ -12,46 +11,38 @@ class BusinessAnalyticsPage extends StatefulWidget {
 
 class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
   String _period = 'This Month';
-  Map<String, dynamic>? _globalMetrics;
 
-  @override
-  void initState() {
-    super.initState();
-    _loadGlobalMetrics();
+  List<LeadRecord> _visibleLeads(List<LeadRecord> leads) {
+    if (_period == 'All Time') return leads;
+    final now = DateTime.now();
+    return leads.where((lead) {
+      final date = lead.lastContactDate;
+      if (_period == 'This Year') return date.year == now.year;
+      return date.year == now.year && date.month == now.month;
+    }).toList();
   }
 
-  Future<void> _loadGlobalMetrics() async {
-    final metrics = await SupabaseService.instance.fetchGlobalMetrics();
-    setState(() {
-      _globalMetrics = metrics;
-    });
-  }
-
-  Map<String, String> _calculateMetrics() {
-    if (_period == 'All Time' && _globalMetrics != null) {
-      return {
-        'gci': r'$' + (_globalMetrics!['total_gci'] as double).toStringAsFixed(2),
-        'count': '${_globalMetrics!['total_leads']} leads',
-        'rate': '${(_globalMetrics!['conversion_rate'] as double).toStringAsFixed(1)}%',
-      };
-    }
-
-    final leads = LeadStore.instance.leads.value;
-
-    // Sum up estimated value
-    double totalGci = 0;
+  double _estimatedValue(List<LeadRecord> leads) {
+    double total = 0;
     for (final lead in leads) {
       final valueString = lead.estimatedValue.replaceAll(RegExp(r'[$,]'), '');
-      totalGci += double.tryParse(valueString) ?? 0;
+      total += double.tryParse(valueString) ?? 0;
     }
+    return total;
+  }
 
-    final closedLeads = leads.where((l) => l.status == LeadStatus.closed).length;
+  Map<String, String> _calculateMetrics(List<LeadRecord> leads) {
+    final total = _estimatedValue(leads);
+
+    final closedLeads = leads
+        .where((l) => l.status == LeadStatus.closed)
+        .length;
     final conversionRate = leads.isEmpty
         ? 0.0
         : (closedLeads / leads.length) * 100;
 
     return {
-      'gci': r'$' + totalGci.toStringAsFixed(2),
+      'value': r'$' + total.toStringAsFixed(2),
       'count': '${leads.length} leads',
       'rate': '${conversionRate.toStringAsFixed(1)}%',
     };
@@ -68,7 +59,8 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
             child: ValueListenableBuilder<List<LeadRecord>>(
               valueListenable: LeadStore.instance.leads,
               builder: (context, leads, _) {
-                final metrics = _calculateMetrics();
+                final visibleLeads = _visibleLeads(leads);
+                final metrics = _calculateMetrics(visibleLeads);
 
                 return SingleChildScrollView(
                   padding: const EdgeInsets.all(16),
@@ -117,29 +109,46 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(18),
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [Theme.of(context).colorScheme.primary, Theme.of(context).colorScheme.secondary]),
+                          gradient: LinearGradient(
+                            colors: [
+                              Theme.of(context).colorScheme.primary,
+                              Theme.of(context).colorScheme.secondary,
+                            ],
+                          ),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Column(
                           children: [
                             Text(
-                              'Total GCI Performance',
+                              'Estimated Pipeline Value',
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 224),
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimary.withValues(alpha: 0.88),
                                 fontSize: 12,
                               ),
                             ),
                             const SizedBox(height: 14),
                             Align(
                               alignment: Alignment.centerLeft,
-                              child: Text(metrics['gci']!, style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontSize: 42, fontWeight: FontWeight.w700)),
+                              child: Text(
+                                metrics['value']!,
+                                style: TextStyle(
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimary,
+                                  fontSize: 42,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
                             ),
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                'GCI $_period',
+                                'Last Contact: $_period',
                                 style: TextStyle(
-                                  color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 224),
+                                  color: Theme.of(context).colorScheme.onPrimary
+                                      .withValues(alpha: 0.88),
                                 ),
                               ),
                             ),
@@ -147,8 +156,14 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                _AnalyticsSmall(metrics['count']!, 'Total Leads'),
-                                _AnalyticsSmall(metrics['rate']!, 'Conversion Rate'),
+                                _AnalyticsSmall(
+                                  metrics['count']!,
+                                  'Total Leads',
+                                ),
+                                _AnalyticsSmall(
+                                  metrics['rate']!,
+                                  'Conversion Rate',
+                                ),
                               ],
                             ),
                           ],
@@ -159,7 +174,9 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(18),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Theme.of(context).dividerColor),
+                          border: Border.all(
+                            color: Theme.of(context).dividerColor,
+                          ),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: Column(
@@ -181,17 +198,32 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
                                   alignment: Alignment.center,
                                   children: [
                                     CircularProgressIndicator(
-                                      value: leads.isEmpty ? 0 : (leads.where((l) => l.status == LeadStatus.closed).length / leads.length),
+                                      value: visibleLeads.isEmpty
+                                          ? 0
+                                          : (visibleLeads
+                                                    .where(
+                                                      (l) =>
+                                                          l.status ==
+                                                          LeadStatus.closed,
+                                                    )
+                                                    .length /
+                                                visibleLeads.length),
                                       strokeWidth: 28,
-                                      valueColor: AlwaysStoppedAnimation(Theme.of(context).colorScheme.primary),
-                                      backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                                      valueColor: AlwaysStoppedAnimation(
+                                        Theme.of(context).colorScheme.primary,
+                                      ),
+                                      backgroundColor: Theme.of(
+                                        context,
+                                      ).colorScheme.surfaceContainerHighest,
                                     ),
                                     SizedBox(
                                       width: 92,
                                       height: 92,
                                       child: DecoratedBox(
                                         decoration: BoxDecoration(
-                                          color: Theme.of(context).scaffoldBackgroundColor,
+                                          color: Theme.of(
+                                            context,
+                                          ).scaffoldBackgroundColor,
                                           shape: BoxShape.circle,
                                         ),
                                       ),
@@ -201,8 +233,18 @@ class _BusinessAnalyticsPageState extends State<BusinessAnalyticsPage> {
                               ),
                             ),
                             const SizedBox(height: 20),
-                            _LegendRow(Theme.of(context).colorScheme.primary, 'Closed', metrics['gci']!, '${leads.where((l) => l.status == LeadStatus.closed).length} leads'),
-                            _LegendRow(Theme.of(context).colorScheme.secondary, 'Active', '\$0.00', '${leads.where((l) => l.status != LeadStatus.closed).length} leads'),
+                            _LegendRow(
+                              Theme.of(context).colorScheme.primary,
+                              'Closed',
+                              '\$${_estimatedValue(visibleLeads.where((l) => l.status == LeadStatus.closed).toList()).toStringAsFixed(2)}',
+                              '${visibleLeads.where((l) => l.status == LeadStatus.closed).length} leads',
+                            ),
+                            _LegendRow(
+                              Theme.of(context).colorScheme.secondary,
+                              'Active',
+                              '\$${_estimatedValue(visibleLeads.where((l) => l.status != LeadStatus.closed).toList()).toStringAsFixed(2)}',
+                              '${visibleLeads.where((l) => l.status != LeadStatus.closed).length} leads',
+                            ),
                           ],
                         ),
                       ),
@@ -239,9 +281,7 @@ class _FilterChip extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: TextStyle(
-            color: Theme.of(context).textTheme.bodySmall?.color,
-          ),
+          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
         ),
       ),
     );
@@ -269,7 +309,9 @@ class _AnalyticsSmall extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 199),
+            color: Theme.of(
+              context,
+            ).colorScheme.onPrimary.withValues(alpha: 0.78),
             fontSize: 12,
           ),
         ),
@@ -292,12 +334,18 @@ class _LegendRow extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
         children: [
-          Container(width: 8, height: 8, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+          Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
               source,
-              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+              style: TextStyle(
+                color: Theme.of(context).textTheme.bodySmall?.color,
+              ),
             ),
           ),
           Column(

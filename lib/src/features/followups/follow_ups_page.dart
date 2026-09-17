@@ -48,12 +48,19 @@ class _FollowUpsPageState extends State<FollowUpsPage> {
                             const SizedBox(height: 6),
                             Text(
                               'Stay on top of your leads',
-                              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                              style: TextStyle(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.color,
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.calendar_month_outlined)),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(Icons.calendar_month_outlined),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 14),
@@ -68,7 +75,13 @@ class _FollowUpsPageState extends State<FollowUpsPage> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  const Text('Overdue', style: TextStyle(color: Color(0xFFFF6633), fontWeight: FontWeight.w700)),
+                  const Text(
+                    'Overdue',
+                    style: TextStyle(
+                      color: Color(0xFFFF6633),
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                   const SizedBox(height: 10),
                   Expanded(
                     child: ValueListenableBuilder<List<FollowUpRecord>>(
@@ -110,7 +123,9 @@ class _DayChip extends StatelessWidget {
       width: 48,
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surface,
+        color: selected
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.surface,
         border: Border.all(color: Theme.of(context).dividerColor),
         borderRadius: BorderRadius.circular(12),
       ),
@@ -171,21 +186,21 @@ class _FollowUpCard extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                  child: Text(
-                    item.name,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      child: Text(
+                        item.name,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-                Text(
-                  item.when,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.error,
-                    fontSize: 12,
-                  ),
-                ),
+                    Text(
+                      item.when,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 4),
@@ -202,7 +217,9 @@ class _FollowUpCard extends StatelessWidget {
                   style: TextStyle(
                     color: Theme.of(context).textTheme.bodySmall?.color,
                     fontSize: 12,
-                    decoration: item.completed ? TextDecoration.lineThrough : null,
+                    decoration: item.completed
+                        ? TextDecoration.lineThrough
+                        : null,
                   ),
                 ),
               ],
@@ -212,7 +229,9 @@ class _FollowUpCard extends StatelessWidget {
             onPressed: item.completed ? null : onComplete,
             icon: Icon(
               item.completed ? Icons.check_circle : Icons.task_alt_outlined,
-              color: item.completed ? Theme.of(context).colorScheme.secondary : null,
+              color: item.completed
+                  ? Theme.of(context).colorScheme.secondary
+                  : null,
             ),
           ),
         ],

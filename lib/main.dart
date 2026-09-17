@@ -25,7 +25,10 @@ void main() {
   runZonedGuarded(
     () async {
       await SupabaseService.instance.init();
-      await LocalStorageService.instance.init();
+      const localDataDir = String.fromEnvironment('LOCAL_DATA_DIR');
+      await LocalStorageService.instance.init(
+        path: localDataDir.isEmpty ? null : localDataDir,
+      );
       await AuthStore.instance.init();
       LeadStore.instance.init();
       runApp(const KnockQuestApp());

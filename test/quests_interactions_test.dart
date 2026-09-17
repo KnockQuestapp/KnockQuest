@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:knockquest/src/knockquest_app.dart';
-import 'package:knockquest/src/services/local_storage_service.dart';
+import 'test_storage.dart';
 import 'package:knockquest/src/state/lead_store.dart';
 
 void main() {
   setUp(() async {
-    await LocalStorageService.instance.init();
+    await initTestStorage();
     LeadStore.instance.reset();
   });
 
@@ -16,7 +16,10 @@ void main() {
     await tester.pumpWidget(const KnockQuestApp());
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextFormField).at(0), 'agent@knockquest.io');
+    await tester.enterText(
+      find.byType(TextFormField).at(0),
+      'agent@knockquest.io',
+    );
     await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
     await tester.tap(find.text('Login'));
     await tester.pumpAndSettle();

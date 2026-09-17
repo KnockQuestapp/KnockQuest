@@ -48,9 +48,9 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Login error: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Login error: $e')));
       }
     } finally {
       if (mounted) {
@@ -60,10 +60,10 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
   }
 
   void _forgotPassword() {
-    final email = _emailController.text.trim();
-    final suffix = email.isEmpty ? '' : ' for $email';
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Password reset link sent$suffix.')),
+      const SnackBar(
+        content: Text('Password reset is unavailable in local testing mode.'),
+      ),
     );
   }
 
@@ -129,6 +129,12 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: const Color(0xFF7E8CA0),
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Local testing mode · Use test credentials only',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 26),
                   Form(
@@ -206,9 +212,7 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                   const SizedBox(height: 6),
                   TextButton(
                     onPressed: _forgotPassword,
-                    style: TextButton.styleFrom(
-                      foregroundColor: primaryBlue,
-                    ),
+                    style: TextButton.styleFrom(foregroundColor: primaryBlue),
                     child: const Text('Forgot Password?'),
                   ),
                   const SizedBox(height: 2),
@@ -219,7 +223,10 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: Text(
                           'or',
-                          style: TextStyle(color: const Color(0xFF7E8CA0), fontSize: 16),
+                          style: TextStyle(
+                            color: const Color(0xFF7E8CA0),
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                       const Expanded(child: Divider()),
@@ -227,18 +234,7 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                   ),
                   const SizedBox(height: 14),
                   OutlinedButton(
-                    onPressed: () async {
-                      final navigator = Navigator.of(context);
-                      final success = await AuthStore.instance.signIn(
-                        'google_user@example.com',
-                        'mock_password',
-                      );
-                      if (success && mounted) {
-                        navigator.pushReplacementNamed(
-                          AppRoutes.dashboard,
-                        );
-                      }
-                    },
+                    onPressed: null,
                     style: OutlinedButton.styleFrom(
                       minimumSize: const Size.fromHeight(48),
                       side: BorderSide(color: Theme.of(context).dividerColor),
@@ -246,7 +242,7 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                         borderRadius: BorderRadius.circular(14),
                       ),
                     ),
-                    child: const Text('Continue with Google'),
+                    child: const Text('Google sign-in (not configured)'),
                   ),
                   const SizedBox(height: 20),
                   Wrap(
@@ -269,18 +265,47 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                           final success = await showDialog<bool>(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text('Create Account'),
+                              title: const Text(
+                                'Create Account',
+                                style: TextStyle(
+                                  color: Color(0xFF7E8CA0),
+                                  fontSize: 23,
+                                ),
+                              ),
                               content: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  TextField(controller: nameController, decoration: const InputDecoration(labelText: 'Full Name')),
-                                  TextField(controller: emailController, decoration: const InputDecoration(labelText: 'Email')),
-                                  TextField(controller: passwordController, obscureText: true, decoration: const InputDecoration(labelText: 'Password')),
+                                  TextField(
+                                    controller: nameController,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Full Name',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: emailController,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Email',
+                                    ),
+                                  ),
+                                  TextField(
+                                    controller: passwordController,
+                                    obscureText: true,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Password',
+                                    ),
+                                  ),
                                 ],
                               ),
                               actions: [
-                                TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-                                ElevatedButton(onPressed: () => Navigator.pop(context, true), child: const Text('Sign Up')),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, false),
+                                  child: const Text('Cancel'),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () => Navigator.pop(context, true),
+                                  child: const Text('Sign Up'),
+                                ),
                               ],
                             ),
                           );
@@ -291,10 +316,20 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                               passwordController.text.trim(),
                               nameController.text.trim(),
                             );
-                            if (result && mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Account created! Please login.')));
-                            } else if (mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Registration failed.')));
+                            if (result && context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    'Account created! Please login.',
+                                  ),
+                                ),
+                              );
+                            } else if (context.mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Registration failed.'),
+                                ),
+                              );
                             }
                           }
                         },
@@ -388,7 +423,11 @@ class _InputShell extends StatelessWidget {
       decoration: InputDecoration(
         isDense: true,
         hintText: hint,
-        prefixIcon: Icon(icon, size: 18, color: Theme.of(context).textTheme.bodySmall?.color),
+        prefixIcon: Icon(
+          icon,
+          size: 18,
+          color: Theme.of(context).textTheme.bodySmall?.color,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
           borderSide: BorderSide(color: Theme.of(context).dividerColor),

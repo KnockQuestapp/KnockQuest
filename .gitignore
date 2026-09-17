@@ -21,6 +21,7 @@ key.properties
 migrate_working_dir/
 
 # Dependencies & Environments
+.toolchains/
 node_modules/
 venv/
 .venv/

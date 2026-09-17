@@ -156,7 +156,11 @@ class CrmSyncService {
 
       for (final target in activeTargets) {
         try {
-          final payload = _buildLeadPayload(event: event, lead: lead, target: target);
+          final payload = _buildLeadPayload(
+            event: event,
+            lead: lead,
+            target: target,
+          );
           final result = await _postEventPayload(
             target: target,
             payload: payload,
@@ -194,7 +198,11 @@ class CrmSyncService {
             );
           }
         } catch (error) {
-          final payload = _buildLeadPayload(event: event, lead: lead, target: target);
+          final payload = _buildLeadPayload(
+            event: event,
+            lead: lead,
+            target: target,
+          );
           await CrmSyncStore.instance.enqueueRetry(
             provider: target.provider,
             payload: payload,

@@ -54,7 +54,9 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
     final now = DateTime.now();
     final month = _monthAbbr(now.month);
     final day = now.day.toString().padLeft(2, '0');
-    final hour12 = now.hour == 0 ? 12 : (now.hour > 12 ? now.hour - 12 : now.hour);
+    final hour12 = now.hour == 0
+        ? 12
+        : (now.hour > 12 ? now.hour - 12 : now.hour);
     final minute = now.minute.toString().padLeft(2, '0');
     final ampm = now.hour >= 12 ? 'PM' : 'AM';
     final timestamp = '$hour12:$minute $ampm';
@@ -77,7 +79,9 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
       lastContactDate: now,
     );
 
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   void _addFollowUp() {
@@ -131,9 +135,13 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                     setState(() {
                       _leadStatus = status;
                     });
-                    LeadStore.instance.updateLatestLead(status: LeadStatus.fromLabel(status));
+                    LeadStore.instance.updateLatestLead(
+                      status: LeadStatus.fromLabel(status),
+                    );
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Lead status changed to $status.')),
+                      SnackBar(
+                        content: Text('Lead status changed to $status.'),
+                      ),
                     );
                   },
                 ),
@@ -172,7 +180,10 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                 children: [
                   Row(
                     children: [
-                      IconButton(onPressed: () => Navigator.pop(context), icon: const Icon(Icons.arrow_back)),
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back),
+                      ),
                       Expanded(
                         child: Column(
                           children: [
@@ -180,14 +191,16 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                               lead.address,
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
-                              color: Theme.of(context).colorScheme.onSurface,
+                                color: Theme.of(context).colorScheme.onSurface,
                               ),
                             ),
                             const SizedBox(height: 4),
                             Text(
                               '${lead.name} - $_leadStatus',
                               style: TextStyle(
-                                color: Theme.of(context).textTheme.bodySmall?.color,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.color,
                                 fontSize: 12,
                               ),
                             ),
@@ -195,8 +208,16 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(color: Theme.of(context).colorScheme.surfaceContainerHighest, borderRadius: BorderRadius.circular(999)),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.surfaceContainerHighest,
+                          borderRadius: BorderRadius.circular(999),
+                        ),
                         child: Text(
                           'Visit #4',
                           style: TextStyle(
@@ -220,13 +241,50 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                     spacing: 8,
                     runSpacing: 8,
                     children: [
-                      _OutcomeTag('No Answer', selected: _selectedOutcome == 'No Answer', onTap: () => setState(() => _selectedOutcome = 'No Answer')),
-                      _OutcomeTag('Spoke To Owner', selected: _selectedOutcome == 'Spoke To Owner', onTap: () => setState(() => _selectedOutcome = 'Spoke To Owner')),
-                      _OutcomeTag('Interested', selected: _selectedOutcome == 'Interested', onTap: () => setState(() => _selectedOutcome = 'Interested')),
-                      _OutcomeTag('Not Interested', selected: _selectedOutcome == 'Not Interested', onTap: () => setState(() => _selectedOutcome = 'Not Interested')),
-                      _OutcomeTag('Follow Up Later', selected: _selectedOutcome == 'Follow Up Later', onTap: () => setState(() => _selectedOutcome = 'Follow Up Later')),
-                      _OutcomeTag('Appointment Set', selected: _selectedOutcome == 'Appointment Set', onTap: () => setState(() => _selectedOutcome = 'Appointment Set')),
-                      _OutcomeTag('Do Not Solicit', selected: _selectedOutcome == 'Do Not Solicit', onTap: () => setState(() => _selectedOutcome = 'Do Not Solicit')),
+                      _OutcomeTag(
+                        'No Answer',
+                        selected: _selectedOutcome == 'No Answer',
+                        onTap: () =>
+                            setState(() => _selectedOutcome = 'No Answer'),
+                      ),
+                      _OutcomeTag(
+                        'Spoke To Owner',
+                        selected: _selectedOutcome == 'Spoke To Owner',
+                        onTap: () =>
+                            setState(() => _selectedOutcome = 'Spoke To Owner'),
+                      ),
+                      _OutcomeTag(
+                        'Interested',
+                        selected: _selectedOutcome == 'Interested',
+                        onTap: () =>
+                            setState(() => _selectedOutcome = 'Interested'),
+                      ),
+                      _OutcomeTag(
+                        'Not Interested',
+                        selected: _selectedOutcome == 'Not Interested',
+                        onTap: () =>
+                            setState(() => _selectedOutcome = 'Not Interested'),
+                      ),
+                      _OutcomeTag(
+                        'Follow Up Later',
+                        selected: _selectedOutcome == 'Follow Up Later',
+                        onTap: () => setState(
+                          () => _selectedOutcome = 'Follow Up Later',
+                        ),
+                      ),
+                      _OutcomeTag(
+                        'Appointment Set',
+                        selected: _selectedOutcome == 'Appointment Set',
+                        onTap: () => setState(
+                          () => _selectedOutcome = 'Appointment Set',
+                        ),
+                      ),
+                      _OutcomeTag(
+                        'Do Not Solicit',
+                        selected: _selectedOutcome == 'Do Not Solicit',
+                        onTap: () =>
+                            setState(() => _selectedOutcome = 'Do Not Solicit'),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 16),
@@ -242,10 +300,16 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                     controller: _notesController,
                     decoration: InputDecoration(
                       hintText: 'Enter details about the conversation...',
-                      prefixIcon: Icon(Icons.mail_outline, size: 18, color: Theme.of(context).textTheme.bodySmall?.color),
+                      prefixIcon: Icon(
+                        Icons.mail_outline,
+                        size: 18,
+                        color: Theme.of(context).textTheme.bodySmall?.color,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Theme.of(context).dividerColor),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).dividerColor,
+                        ),
                       ),
                     ),
                   ),
@@ -256,15 +320,22 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                         child: ElevatedButton(
                           onPressed: _logVisit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
-                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
+                            foregroundColor: Theme.of(
+                              context,
+                            ).colorScheme.onPrimary,
                           ),
                           child: const Text('Log Visit'),
                         ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
-                        child: OutlinedButton(onPressed: _addFollowUp, child: const Text('Add Follow Up')),
+                        child: OutlinedButton(
+                          onPressed: _addFollowUp,
+                          child: const Text('Add Follow Up'),
+                        ),
                       ),
                     ],
                   ),
@@ -273,7 +344,8 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                     children: [
                       Text(
                         'Visit History',
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(
                               fontWeight: FontWeight.w700,
                               color: Theme.of(context).colorScheme.onSurface,
                             ),
@@ -281,10 +353,9 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                       const Spacer(),
                       Text(
                         'Total: ${_history.length}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                       ),
                     ],
                   ),
@@ -307,9 +378,27 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                   const SizedBox(height: 12),
                   Row(
                     children: [
-                      Expanded(child: ElevatedButton(onPressed: _viewOnMap, style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.secondaryContainer, foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer), child: const Text('View on Map'))),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: _viewOnMap,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.secondaryContainer,
+                            foregroundColor: Theme.of(
+                              context,
+                            ).colorScheme.onSecondaryContainer,
+                          ),
+                          child: const Text('View on Map'),
+                        ),
+                      ),
                       const SizedBox(width: 10),
-                      Expanded(child: TextButton(onPressed: _changeStatus, child: const Text('Change Status'))),
+                      Expanded(
+                        child: TextButton(
+                          onPressed: _changeStatus,
+                          child: const Text('Change Status'),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -372,14 +461,18 @@ class _OutcomeTag extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-            color: selected ? Theme.of(context).colorScheme.primary : Theme.of(context).colorScheme.surfaceContainerHighest,
+          color: selected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(999),
         ),
         child: Text(
           text,
           style: TextStyle(
             fontSize: 12,
-            color: selected ? Theme.of(context).colorScheme.onPrimary : Theme.of(context).colorScheme.onSurface,
+            color: selected
+                ? Theme.of(context).colorScheme.onPrimary
+                : Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ),
@@ -412,7 +505,11 @@ class _VisitHistoryTile extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
               ),
-              Container(width: 2, height: 72, color: Theme.of(context).dividerColor),
+              Container(
+                width: 2,
+                height: 72,
+                color: Theme.of(context).dividerColor,
+              ),
             ],
           ),
           const SizedBox(width: 12),
@@ -426,17 +523,17 @@ class _VisitHistoryTile extends StatelessWidget {
                       child: Text(
                         title,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                              color: Theme.of(context).colorScheme.onSurface,
-                            ),
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                       ),
                     ),
                     Text(
                       date,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurfaceVariant,
-                            fontSize: 12,
-                          ),
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                 ),
@@ -444,17 +541,17 @@ class _VisitHistoryTile extends StatelessWidget {
                 Text(
                   meta,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        fontSize: 12,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                    fontSize: 12,
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Text(
                   details,
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface,
-                        fontSize: 12,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 12,
+                  ),
                 ),
               ],
             ),

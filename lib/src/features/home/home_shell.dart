@@ -12,7 +12,7 @@ class HomeShell extends StatefulWidget {
 }
 
 class _HomeShellState extends State<HomeShell> {
-  int _selectedIndex = 0;
+  final int _selectedIndex = 0;
 
   static const _pages = [MapPage(), QuestsPage()];
 

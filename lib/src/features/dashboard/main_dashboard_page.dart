@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../app_routes.dart';
 import '../../integrations/crm_sync_store.dart';
 import '../../sample_data.dart';
 import '../../state/lead_store.dart';
+import '../../state/auth_store.dart';
 
 class MainDashboardPage extends StatefulWidget {
   const MainDashboardPage({
@@ -20,28 +22,10 @@ class MainDashboardPage extends StatefulWidget {
 }
 
 class _MainDashboardPageState extends State<MainDashboardPage> {
-  Map<String, dynamic> _globalMetrics = {};
-  bool _isLoadingMetrics = true;
-
   @override
   void initState() {
     super.initState();
     CrmSyncStore.instance.ensureLoaded();
-    _loadMetrics();
-  }
-
-  Future<void> _loadMetrics() async {
-    final metrics = {
-      'total_gci': 1250000,
-      'total_leads': 42,
-      'conversion_rate': 3.5,
-    };
-    if (mounted) {
-      setState(() {
-        _globalMetrics = metrics;
-        _isLoadingMetrics = false;
-      });
-    }
   }
 
   Future<void> _openAddLead() async {
@@ -93,7 +77,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Good Morning, Sarah',
+                              'Welcome, ${AuthStore.instance.currentUser.value?.name ?? 'Agent'}',
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w700,
@@ -101,11 +85,13 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                               ),
                             ),
                             Text(
-                              'Monday, June 12',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                              DateFormat('EEEE, MMMM d').format(DateTime.now()),
+                              style: Theme.of(context).textTheme.bodySmall
+                                  ?.copyWith(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onSurfaceVariant,
+                                  ),
                             ),
                           ],
                         ),
@@ -115,19 +101,26 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                           IconButton(
                             onPressed: widget.onThemeToggle,
                             style: IconButton.styleFrom(
-                              backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-                              foregroundColor: Theme.of(context).colorScheme.onSurface,
+                              backgroundColor: Theme.of(
+                                context,
+                              ).colorScheme.surfaceContainerHighest,
+                              foregroundColor: Theme.of(
+                                context,
+                              ).colorScheme.onSurface,
                               padding: const EdgeInsets.all(10),
                             ),
                             icon: Icon(
-                              widget.isDarkMode ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
+                              widget.isDarkMode
+                                  ? Icons.light_mode_outlined
+                                  : Icons.dark_mode_outlined,
                             ),
                           ),
                           const SizedBox(width: 8),
                           CircleAvatar(
                             radius: 18,
-                            backgroundColor:
-                                Theme.of(context).colorScheme.surface,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.surface,
                             child: IconButton(
                               onPressed: () {},
                               icon: const Icon(Icons.notifications_none),
@@ -163,7 +156,9 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                         Expanded(
                           child: _QuickAction(
                             icon: Icons.calendar_today_outlined,
-                            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.surfaceContainerHighest,
                             label: 'Follow Ups',
                             onTap: () => Navigator.pushNamed(
                               context,
@@ -186,19 +181,15 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                     ),
                   const SizedBox(height: 20),
                   _CrmReadinessBanner(
-                    onOpenIntegrations: () => Navigator.pushNamed(
-                      context,
-                      AppRoutes.integrations,
-                    ),
+                    onOpenIntegrations: () =>
+                        Navigator.pushNamed(context, AppRoutes.integrations),
                   ),
                   const SizedBox(height: 16),
                   _SectionTitle('Sales Performance'),
                   const SizedBox(height: 12),
-                  ValueListenableBuilder<Map<String, dynamic>>(
-                    valueListenable: ValueNotifier(_globalMetrics), // Temporary mock since we don't have a notifier for metrics
-                    builder: (context, metrics, _) {
-                      return _MetricGrid(metrics: _globalMetrics);
-                    },
+                  ValueListenableBuilder<List<LeadRecord>>(
+                    valueListenable: LeadStore.instance.leads,
+                    builder: (context, leads, _) => _MetricGrid(leads: leads),
                   ),
                   const SizedBox(height: 20),
                   _SectionTitle('Lead Pipeline'),
@@ -252,10 +243,8 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                     children: [
                       Expanded(
                         child: OutlinedButton(
-                          onPressed: () => Navigator.pushNamed(
-                            context,
-                            AppRoutes.quests,
-                          ),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, AppRoutes.quests),
                           child: const Text('Quests'),
                         ),
                       ),
@@ -341,7 +330,8 @@ class _CrmReadinessBanner extends StatelessWidget {
               titleColor = const Color(0xFF1E7A47);
               icon = Icons.check_circle_outline;
               title = 'CRM sync is healthy';
-              subtitle = '${activeTargets.length} integration(s) actively syncing leads.';
+              subtitle =
+                  '${activeTargets.length} integration(s) actively syncing leads.';
             }
 
             return Container(
@@ -412,7 +402,9 @@ class _QuickAction extends StatelessWidget {
       if (bg == colorScheme.primary) return colorScheme.onPrimary;
       if (bg == colorScheme.secondary) return colorScheme.onSecondary;
       if (bg == colorScheme.tertiary) return colorScheme.onTertiary;
-      if (bg == colorScheme.surfaceContainerHighest) return colorScheme.onSurface;
+      if (bg == colorScheme.surfaceContainerHighest) {
+        return colorScheme.onSurface;
+      }
       return colorScheme.onPrimary;
     }
 
@@ -455,26 +447,41 @@ class _SectionTitle extends StatelessWidget {
 }
 
 class _MetricGrid extends StatelessWidget {
-  final Map<String, dynamic> metrics;
-  const _MetricGrid({required this.metrics});
+  final List<LeadRecord> leads;
+  const _MetricGrid({required this.leads});
 
   @override
   Widget build(BuildContext context) {
-    final totalGci = metrics['total_gci']?.toStringAsFixed(0) ?? '0';
-    final totalLeads = metrics['total_leads']?.toString() ?? '0';
-    final convRate = metrics['conversion_rate']?.toStringAsFixed(1) ?? '0.0';
+    final pipelineValue = leads.fold<double>(0, (total, lead) {
+      final raw = lead.estimatedValue.replaceAll(RegExp(r'[^0-9.]'), '');
+      return total + (double.tryParse(raw) ?? 0);
+    });
+    final closedCount = leads
+        .where((lead) => lead.status == LeadStatus.closed)
+        .length;
+    final conversionRate = leads.isEmpty
+        ? 0.0
+        : closedCount / leads.length * 100;
 
     return GridView.count(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       crossAxisCount: 2,
-                      childAspectRatio: 1.55,
+      childAspectRatio: 1.55,
       mainAxisSpacing: 12,
       crossAxisSpacing: 12,
       children: [
-        _MetricCard('\$$totalGci', 'Total GCI', Icons.attach_money_outlined),
-        _MetricCard(totalLeads, 'Total Leads', Icons.people_outline),
-        _MetricCard('$convRate%', 'Conv. Rate', Icons.trending_up),
+        _MetricCard(
+          NumberFormat.compactCurrency(symbol: '\$').format(pipelineValue),
+          'Est. Pipeline',
+          Icons.attach_money_outlined,
+        ),
+        _MetricCard('${leads.length}', 'Total Leads', Icons.people_outline),
+        _MetricCard(
+          '${conversionRate.toStringAsFixed(1)}%',
+          'Conv. Rate',
+          Icons.trending_up,
+        ),
         _MetricCard('N/A', 'Avg / Deal', Icons.stacked_bar_chart_outlined),
       ],
     );
@@ -522,7 +529,11 @@ class _PipelineGrid extends StatelessWidget {
         _MetricCard('$totalLeads', 'Total Leads', Icons.groups_2_outlined),
         _MetricCard('$activeLeads', 'Active Leads', Icons.bolt_outlined),
         _MetricCard('$prospects', 'Prospects', Icons.star_outline),
-        _MetricCard('$followUpsDue', 'Follow Ups Due Today', Icons.task_alt_outlined),
+        _MetricCard(
+          '$followUpsDue',
+          'Follow Ups Due Today',
+          Icons.task_alt_outlined,
+        ),
       ],
     );
   }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:knockquest/src/app_routes.dart';
 import 'package:knockquest/src/knockquest_app.dart';
-import 'package:knockquest/src/services/local_storage_service.dart';
+import 'test_storage.dart';
 import 'package:knockquest/src/state/lead_store.dart';
 
 void main() {
   setUp(() async {
-    await LocalStorageService.instance.init();
+    await initTestStorage();
     LeadStore.instance.reset();
   });
 
@@ -17,14 +17,17 @@ void main() {
     await tester.pumpWidget(const KnockQuestApp());
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextFormField).at(0), 'agent@knockquest.io');
+    await tester.enterText(
+      find.byType(TextFormField).at(0),
+      'agent@knockquest.io',
+    );
     await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
     await tester.tap(find.text('Login'));
     await tester.pumpAndSettle();
 
-    Navigator.of(tester.element(find.byType(Scaffold).first)).pushNamed(
-      AppRoutes.leadDetails,
-    );
+    Navigator.of(
+      tester.element(find.byType(Scaffold).first),
+    ).pushNamed(AppRoutes.leadDetails);
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Log Visit'));
@@ -33,7 +36,10 @@ void main() {
     await tester.tap(find.text('Interested'));
     await tester.pumpAndSettle();
 
-    await tester.enterText(find.byType(TextField).first, 'Requested a callback next week');
+    await tester.enterText(
+      find.byType(TextField).first,
+      'Requested a callback next week',
+    );
 
     final beforeTotal = find.textContaining('Total:');
     expect(beforeTotal, findsOneWidget);
@@ -43,13 +49,17 @@ void main() {
 
     expect(find.textContaining('Visit logged: Interested'), findsOneWidget);
 
-    final followUpCountBefore = LeadStore.instance.followUpsNotifier.value.length;
+    final followUpCountBefore =
+        LeadStore.instance.followUpsNotifier.value.length;
 
     await tester.ensureVisible(find.text('Add Follow Up'));
     await tester.tap(find.text('Add Follow Up'));
     await tester.pumpAndSettle();
 
-    expect(LeadStore.instance.followUpsNotifier.value.length, followUpCountBefore + 1);
+    expect(
+      LeadStore.instance.followUpsNotifier.value.length,
+      followUpCountBefore + 1,
+    );
 
     await tester.pump(const Duration(seconds: 9));
     await tester.pumpAndSettle();
@@ -72,9 +82,9 @@ void main() {
 
     expect(find.text('Lead status changed to Warm Lead.'), findsOneWidget);
 
-    Navigator.of(tester.element(find.byType(Scaffold).first)).pushNamed(
-      AppRoutes.interactiveMap,
-    );
+    Navigator.of(
+      tester.element(find.byType(Scaffold).first),
+    ).pushNamed(AppRoutes.interactiveMap);
     await tester.pumpAndSettle();
 
     expect(find.text('Save Boundary'), findsOneWidget);

@@ -12,14 +12,17 @@ class LeadStore {
 
   static final LeadStore instance = LeadStore._();
 
-  final ValueNotifier<List<LeadRecord>> leads =
-      ValueNotifier<List<LeadRecord>>([sampleLead]);
+  final ValueNotifier<List<LeadRecord>> leads = ValueNotifier<List<LeadRecord>>(
+    [sampleLead],
+  );
   final ValueNotifier<List<FollowUpRecord>> followUpsNotifier =
       ValueNotifier<List<FollowUpRecord>>(List<FollowUpRecord>.from(followUps));
   final ValueNotifier<List<QuestRecord>> questsNotifier =
       ValueNotifier<List<QuestRecord>>(List<QuestRecord>.from(quests));
   final ValueNotifier<List<TerritoryRecord>> territoriesNotifier =
-      ValueNotifier<List<TerritoryRecord>>(List<TerritoryRecord>.from(territories));
+      ValueNotifier<List<TerritoryRecord>>(
+        List<TerritoryRecord>.from(territories),
+      );
 
   bool _initialized = false;
 
@@ -64,11 +67,14 @@ class LeadStore {
     unawaited(CrmSyncService.instance.syncLeadCreated(lead));
   }
 
-  LeadRecord get latestLead => leads.value.isEmpty ? sampleLead : leads.value.last;
+  LeadRecord get latestLead =>
+      leads.value.isEmpty ? sampleLead : leads.value.last;
 
   void addFollowUp(FollowUpRecord followUp) {
     followUpsNotifier.value = [...followUpsNotifier.value, followUp];
-    unawaited(LocalStorageService.instance.saveFollowUps(followUpsNotifier.value));
+    unawaited(
+      LocalStorageService.instance.saveFollowUps(followUpsNotifier.value),
+    );
   }
 
   void markFollowUpCompleted(int index) {
@@ -79,7 +85,9 @@ class LeadStore {
     final current = [...followUpsNotifier.value];
     current[index] = current[index].copyWith(completed: true);
     followUpsNotifier.value = current;
-    unawaited(LocalStorageService.instance.saveFollowUps(followUpsNotifier.value));
+    unawaited(
+      LocalStorageService.instance.saveFollowUps(followUpsNotifier.value),
+    );
   }
 
   void addQuest(QuestRecord quest) {
@@ -93,7 +101,10 @@ class LeadStore {
     }
 
     final current = [...questsNotifier.value];
-    current[index] = current[index].copyWith(completed: true, status: 'Completed');
+    current[index] = current[index].copyWith(
+      completed: true,
+      status: 'Completed',
+    );
     questsNotifier.value = current;
     unawaited(LocalStorageService.instance.saveQuests(questsNotifier.value));
   }
@@ -121,7 +132,9 @@ class LeadStore {
 
   void addTerritory(TerritoryRecord territory) {
     territoriesNotifier.value = [...territoriesNotifier.value, territory];
-    unawaited(LocalStorageService.instance.saveTerritories(territoriesNotifier.value));
+    unawaited(
+      LocalStorageService.instance.saveTerritories(territoriesNotifier.value),
+    );
   }
 
   void updateTerritory(int index, TerritoryRecord territory) {
@@ -132,7 +145,9 @@ class LeadStore {
     final current = [...territoriesNotifier.value];
     current[index] = territory;
     territoriesNotifier.value = current;
-    unawaited(LocalStorageService.instance.saveTerritories(territoriesNotifier.value));
+    unawaited(
+      LocalStorageService.instance.saveTerritories(territoriesNotifier.value),
+    );
   }
 
   void deleteTerritory(int index) {
@@ -142,7 +157,9 @@ class LeadStore {
 
     final current = [...territoriesNotifier.value]..removeAt(index);
     territoriesNotifier.value = current;
-    unawaited(LocalStorageService.instance.saveTerritories(territoriesNotifier.value));
+    unawaited(
+      LocalStorageService.instance.saveTerritories(territoriesNotifier.value),
+    );
   }
 
   void updateLatestLead({
@@ -175,8 +192,12 @@ class LeadStore {
     questsNotifier.value = List<QuestRecord>.from(quests);
     territoriesNotifier.value = List<TerritoryRecord>.from(territories);
     unawaited(LocalStorageService.instance.saveLeads(leads.value));
-    unawaited(LocalStorageService.instance.saveFollowUps(followUpsNotifier.value));
+    unawaited(
+      LocalStorageService.instance.saveFollowUps(followUpsNotifier.value),
+    );
     unawaited(LocalStorageService.instance.saveQuests(questsNotifier.value));
-    unawaited(LocalStorageService.instance.saveTerritories(territoriesNotifier.value));
+    unawaited(
+      LocalStorageService.instance.saveTerritories(territoriesNotifier.value),
+    );
   }
 }

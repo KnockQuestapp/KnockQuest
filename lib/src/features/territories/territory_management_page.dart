@@ -7,7 +7,8 @@ class TerritoryManagementPage extends StatefulWidget {
   const TerritoryManagementPage({super.key});
 
   @override
-  State<TerritoryManagementPage> createState() => _TerritoryManagementPageState();
+  State<TerritoryManagementPage> createState() =>
+      _TerritoryManagementPageState();
 }
 
 class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
@@ -43,16 +44,21 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
           decoration: const InputDecoration(labelText: 'Territory Name'),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
           ElevatedButton(
             onPressed: () {
               if (controller.text.trim().isNotEmpty) {
-                LeadStore.instance.addTerritory(TerritoryRecord(
-                  name: controller.text.trim(),
-                  gci: '\$0 GCI',
-                  leads: '0 Leads',
-                  change: '0%',
-                ));
+                LeadStore.instance.addTerritory(
+                  TerritoryRecord(
+                    name: controller.text.trim(),
+                    gci: '\$0 GCI',
+                    leads: '0 Leads',
+                    change: '0%',
+                  ),
+                );
                 Navigator.pop(context);
               }
             },
@@ -64,7 +70,9 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
   }
 
   void _deleteTerritory(int index) {
-    final territory = _getFilteredTerritories(LeadStore.instance.territoriesNotifier.value)[index];
+    final territory = _getFilteredTerritories(
+      LeadStore.instance.territoriesNotifier.value,
+    )[index];
     final all = LeadStore.instance.territoriesNotifier.value;
     final realIndex = all.indexOf(territory);
     if (realIndex >= 0) {
@@ -106,7 +114,11 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                             const SizedBox(height: 6),
                             Text(
                               'Manage and track field performance',
-                              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                              style: TextStyle(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.color,
+                              ),
                             ),
                           ],
                         ),
@@ -117,8 +129,15 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                         child: Container(
                           width: 38,
                           height: 38,
-                          decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, shape: BoxShape.circle),
-                          child: Icon(Icons.add_location_alt_outlined, color: Theme.of(context).colorScheme.onPrimary, size: 20),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.add_location_alt_outlined,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ],
@@ -132,10 +151,18 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                           onChanged: (_) => setState(() {}),
                           decoration: InputDecoration(
                             hintText: 'Search territories...',
-                            prefixIcon: Icon(Icons.search, color: Theme.of(context).textTheme.bodySmall?.color, size: 18),
+                            prefixIcon: Icon(
+                              Icons.search,
+                              color: Theme.of(
+                                context,
+                              ).textTheme.bodySmall?.color,
+                              size: 18,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(14),
-                              borderSide: BorderSide(color: Theme.of(context).dividerColor),
+                              borderSide: BorderSide(
+                                color: Theme.of(context).dividerColor,
+                              ),
                             ),
                           ),
                         ),
@@ -147,7 +174,12 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                         child: Container(
                           width: 38,
                           height: 38,
-                          decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), shape: BoxShape.circle),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Theme.of(context).dividerColor,
+                            ),
+                            shape: BoxShape.circle,
+                          ),
                           child: Icon(
                             _sortByGci ? Icons.tune : Icons.sort,
                             size: 18,
@@ -160,53 +192,83 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                   InkWell(
                     onTap: () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Boundary editor opened.')),
+                        const SnackBar(
+                          content: Text('Boundary editor opened.'),
+                        ),
                       );
                     },
                     borderRadius: BorderRadius.circular(18),
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(color: Theme.of(context).colorScheme.primary, borderRadius: BorderRadius.circular(18)),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(18),
+                      ),
                       child: Row(
-                      children: [
-                        CircleAvatar(backgroundColor: Theme.of(context).colorScheme.secondary, child: Icon(Icons.draw_outlined, color: Theme.of(context).colorScheme.onSecondary)),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Draw New Boundary',
-                                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary, fontWeight: FontWeight.w700),
-                              ),
-                              const SizedBox(height: 4),
-                              Text(
-                                'Define custom areas on the map',
-                                style: TextStyle(color: Theme.of(context).colorScheme.onPrimary.withValues(alpha: 217), fontSize: 12),
-                              ),
-                            ],
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.secondary,
+                            child: Icon(
+                              Icons.draw_outlined,
+                              color: Theme.of(context).colorScheme.onSecondary,
+                            ),
                           ),
-                        ),
-                        Icon(Icons.chevron_right, color: Theme.of(context).colorScheme.onPrimary),
-                      ],
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Draw New Boundary',
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  'Define custom areas on the map',
+                                  style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onPrimary
+                                        .withValues(alpha: 0.85),
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Icon(
+                            Icons.chevron_right,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
                   ),
                   const SizedBox(height: 18),
                   Row(
                     children: [
                       Text(
-                    'Active Territories',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
+                        'Active Territories',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
+                      ),
                       const Spacer(),
                       Text(
                         _sortByGci ? 'Sort by GCI' : 'Sort by Name',
-                        style: TextStyle(color: Theme.of(context).colorScheme.primary, fontSize: 12),
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
@@ -215,12 +277,18 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                     child: ValueListenableBuilder<List<TerritoryRecord>>(
                       valueListenable: LeadStore.instance.territoriesNotifier,
                       builder: (context, territories, _) {
-                        final displayedTerritories = _getFilteredTerritories(territories);
+                        final displayedTerritories = _getFilteredTerritories(
+                          territories,
+                        );
                         if (displayedTerritories.isEmpty) {
                           return Center(
                             child: Text(
                               'No territories match your search.',
-                              style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                              style: TextStyle(
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodySmall?.color,
+                              ),
                             ),
                           );
                         }
@@ -232,24 +300,41 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                               padding: const EdgeInsets.only(bottom: 12),
                               child: Container(
                                 padding: const EdgeInsets.all(16),
-                                decoration: BoxDecoration(border: Border.all(color: Theme.of(context).dividerColor), borderRadius: BorderRadius.circular(18)),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Theme.of(context).dividerColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
                                 child: Column(
                                   children: [
                                     Row(
                                       children: [
-                                        Container(width: 14, height: 14, color: Theme.of(context).colorScheme.primary),
+                                        Container(
+                                          width: 14,
+                                          height: 14,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
+                                        ),
                                         const Spacer(),
                                         Text(
                                           territory.change,
                                           style: TextStyle(
-                                            color: Theme.of(context).colorScheme.secondary,
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.secondary,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                         const SizedBox(width: 8),
                                         IconButton(
-                                          onPressed: () => _deleteTerritory(index),
-                                          icon: const Icon(Icons.delete_outline, size: 18),
+                                          onPressed: () =>
+                                              _deleteTerritory(index),
+                                          icon: const Icon(
+                                            Icons.delete_outline,
+                                            size: 18,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -259,7 +344,9 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                                       style: TextStyle(
                                         fontSize: 22,
                                         fontWeight: FontWeight.w700,
-                                        color: Theme.of(context).colorScheme.onSurface,
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onSurface,
                                       ),
                                     ),
                                     const SizedBox(height: 8),
@@ -267,12 +354,20 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                                       children: [
                                         Text(
                                           territory.gci,
-                                          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).textTheme.bodySmall?.color,
+                                          ),
                                         ),
                                         const Spacer(),
                                         Text(
                                           territory.leads,
-                                          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).textTheme.bodySmall?.color,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -282,7 +377,9 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                                       child: Text(
                                         'View Map',
                                         style: TextStyle(
-                                          color: Theme.of(context).colorScheme.primary,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
                                           fontWeight: FontWeight.w600,
                                         ),
                                       ),

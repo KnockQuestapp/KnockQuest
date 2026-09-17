@@ -11,24 +11,15 @@ class NotificationService {
   }
 
   void showSuccess(String message) {
-    _showSnackBar(
-      message,
-      backgroundColor: Colors.green,
-    );
+    _showSnackBar(message, backgroundColor: Colors.green);
   }
 
   void showError(String message) {
-    _showSnackBar(
-      message,
-      backgroundColor: Colors.red,
-    );
+    _showSnackBar(message, backgroundColor: Colors.red);
   }
 
   void showInfo(String message) {
-    _showSnackBar(
-      message,
-      backgroundColor: Colors.blue,
-    );
+    _showSnackBar(message, backgroundColor: Colors.blue);
   }
 
   void _showSnackBar(String message, {required Color backgroundColor}) {

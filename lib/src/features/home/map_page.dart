@@ -12,14 +12,13 @@ class MapPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (AppConfig.mapProvider == MapProvider.google) {
-      return _GoogleMapsPlannedView(apiKeyConfigured: AppConfig.googleMapsApiKey.isNotEmpty);
+      return _GoogleMapsPlannedView(
+        apiKeyConfigured: AppConfig.googleMapsApiKey.isNotEmpty,
+      );
     }
 
     return FlutterMap(
-      options: MapOptions(
-        initialCenter: _defaultCenter,
-        initialZoom: 13,
-      ),
+      options: MapOptions(initialCenter: _defaultCenter, initialZoom: 13),
       children: [
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',

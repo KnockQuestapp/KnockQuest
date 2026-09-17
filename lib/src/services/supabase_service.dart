@@ -30,7 +30,11 @@ class SupabaseService {
 
   // --- Authentication ---
 
-  Future<AuthResponse> signUp(String email, String password, {String? name}) async {
+  Future<AuthResponse> signUp(
+    String email,
+    String password, {
+    String? name,
+  }) async {
     return await _client.auth.signUp(
       email: email,
       password: password,
@@ -83,11 +87,7 @@ class SupabaseService {
 
   Future<Map<String, dynamic>> fetchGlobalMetrics() async {
     if (!SupabaseConfig.isConfigured) {
-      return {
-        'total_gci': 0.0,
-        'total_leads': 0,
-        'conversion_rate': 0.0,
-      };
+      return {'total_gci': 0.0, 'total_leads': 0, 'conversion_rate': 0.0};
     }
 
     try {
@@ -108,7 +108,9 @@ class SupabaseService {
       return {
         'total_gci': totalGci,
         'total_leads': leads.length,
-        'conversion_rate': leads.isEmpty ? 0.0 : (closedLeads / leads.length) * 100,
+        'conversion_rate': leads.isEmpty
+            ? 0.0
+            : (closedLeads / leads.length) * 100,
       };
     } catch (e) {
       debugPrint('Error fetching global metrics: $e');

@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../services/supabase_service.dart';
 import '../services/local_storage_service.dart';
 
 class AuthUser {
@@ -27,7 +28,7 @@ class AuthStore {
 
   Future<void> init() async {
     final userData = LocalStorageService.instance.loadUser();
-    if (userData != null) {
+    if (userData != null && userData['session_active'] == true) {
       currentUser.value = AuthUser(
         id: userData['id'] as String,
         email: userData['email'] as String,
@@ -39,28 +40,20 @@ class AuthStore {
   Future<bool> signIn(String email, String password) async {
     try {
       final userData = LocalStorageService.instance.loadUser();
-      if (userData != null && 
-          userData['email'] == email && 
+      if (userData != null &&
+          userData['email'] == email &&
           userData['password'] == password) {
-        
         currentUser.value = AuthUser(
           id: userData['id'] as String,
           email: userData['email'] as String,
           name: userData['name'] as String,
         );
-        return true;
-      }
-      
-      // For MVP ease: allow any login if password is 'password'
-      if (password == 'password') {
-        final user = AuthUser(id: 'local_1', email: email, name: 'Local User');
-        currentUser.value = user;
-        await LocalStorageService.instance.saveUser({
-          'id': user.id,
-          'email': user.email,
-          'name': user.name,
-          'password': password,
-        });
+        unawaited(
+          LocalStorageService.instance.saveUser({
+            ...userData,
+            'session_active': true,
+          }),
+        );
         return true;
       }
     } catch (e) {
@@ -76,15 +69,14 @@ class AuthStore {
         email: email,
         name: name,
       );
-      
+
       await LocalStorageService.instance.saveUser({
         'id': user.id,
         'email': user.email,
         'name': user.name,
         'password': password,
+        'session_active': false,
       });
-      
-      currentUser.value = user;
       return true;
     } catch (e) {
       debugPrint('Sign up error: $e');
@@ -93,7 +85,13 @@ class AuthStore {
   }
 
   Future<void> signOut() async {
-    await LocalStorageService.instance.clearUser();
+    final userData = LocalStorageService.instance.loadUser();
+    if (userData != null) {
+      await LocalStorageService.instance.saveUser({
+        ...userData,
+        'session_active': false,
+      });
+    }
     currentUser.value = null;
   }
 }

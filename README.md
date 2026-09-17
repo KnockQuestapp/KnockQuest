@@ -4,11 +4,31 @@ KnockQuest is the source-controlled Flutter application maintained and delivered
 
 ## Tech Stack
 
-- Flutter stable 3.44.8
-- Dart 3.12.2
+- Flutter stable (local SDK: 3.47.4)
+- Dart 3.13.3 with the local SDK
 - Targets: Android, iOS, Web, Windows, Linux, macOS
 
 ## Quick Start
+
+On this development machine, use the project-local Flutter SDK at
+`.toolchains/flutter`. Its SDK, Pub cache, Gradle cache, and Windows test data
+stay under `D:\dev\KnockQuest` and are excluded from Git.
+
+```powershell
+.\scripts\local_flutter.ps1 check
+.\scripts\local_flutter.ps1 web
+```
+
+For Windows desktop testing, first enable Windows Developer Mode so Flutter can
+create plugin symlinks, then run `.\scripts\local_flutter.ps1 windows`. The
+Android test APK can be built with `.\scripts\local_flutter.ps1 android`; its
+Android SDK and JDK also live under `.toolchains` on D:.
+
+The app currently supports local testing accounts. Register an account on the
+login screen, then sign in with those credentials. Use test credentials only;
+the local account store is not a production authentication system. Cloud authentication, Google
+sign-in, password reset email, and billing require service configuration before
+production testing.
 
 1. Install Flutter SDK (stable channel).
 2. In the project root, run:
