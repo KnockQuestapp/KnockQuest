@@ -75,7 +75,7 @@ class LeadDetailsPage extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                     decoration: BoxDecoration(color: Theme.of(context).colorScheme.secondaryContainer, borderRadius: BorderRadius.circular(999)),
                                     child: Text(
-                                      lead.status,
+                                      lead.status.label,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(color: Theme.of(context).colorScheme.onSecondaryContainer, fontSize: 11),
