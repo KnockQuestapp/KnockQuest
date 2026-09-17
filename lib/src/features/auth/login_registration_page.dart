@@ -213,13 +213,16 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                   ),
                   const SizedBox(height: 2),
                   Row(
-                    children: const [
-                      Expanded(child: Divider()),
+                    children: [
+                      const Expanded(child: Divider()),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
-                        child: Text('or'),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Text(
+                          'or',
+                          style: TextStyle(color: const Color(0xFF7E8CA0), fontSize: 16),
+                        ),
                       ),
-                      Expanded(child: Divider()),
+                      const Expanded(child: Divider()),
                     ],
                   ),
                   const SizedBox(height: 14),
@@ -249,7 +252,13 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      const Text("Don't have an account? "),
+                      Text(
+                        "Don't have an account? ",
+                        style: TextStyle(
+                          color: const Color(0xFF7E8CA0),
+                          fontSize: 16,
+                        ),
+                      ),
                       InkWell(
                         onTap: () async {
                           // Show a simple registration dialog
