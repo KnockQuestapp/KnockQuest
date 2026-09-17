@@ -31,7 +31,11 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
   }
 
   Future<void> _loadMetrics() async {
-    final metrics = await SupabaseService.instance.fetchGlobalMetrics();
+    final metrics = {
+      'total_gci': 1250000,
+      'total_leads': 42,
+      'conversion_rate': 3.5,
+    };
     if (mounted) {
       setState(() {
         _globalMetrics = metrics;
@@ -190,7 +194,12 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                   const SizedBox(height: 16),
                   _SectionTitle('Sales Performance'),
                   const SizedBox(height: 12),
-                  const _MetricGrid(),
+                  ValueListenableBuilder<Map<String, dynamic>>(
+                    valueListenable: ValueNotifier(_globalMetrics), // Temporary mock since we don't have a notifier for metrics
+                    builder: (context, metrics, _) {
+                      return _MetricGrid(metrics: _globalMetrics);
+                    },
+                  ),
                   const SizedBox(height: 20),
                   _SectionTitle('Lead Pipeline'),
                   const SizedBox(height: 12),

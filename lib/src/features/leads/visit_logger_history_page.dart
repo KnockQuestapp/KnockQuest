@@ -42,7 +42,7 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
   @override
   void initState() {
     super.initState();
-    _leadStatus = LeadStore.instance.latestLead.status;
+    _leadStatus = LeadStore.instance.latestLead.status.label;
   }
 
   void _logVisit() {
@@ -131,7 +131,7 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                     setState(() {
                       _leadStatus = status;
                     });
-                    LeadStore.instance.updateLatestLead(status: status);
+                    LeadStore.instance.updateLatestLead(status: LeadStatus.fromLabel(status));
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Lead status changed to $status.')),
                     );
