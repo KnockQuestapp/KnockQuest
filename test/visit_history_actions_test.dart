@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:knockquest/src/app_routes.dart';
 import 'package:knockquest/src/knockquest_app.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'test_storage.dart';
 import 'package:knockquest/src/state/lead_store.dart';
 
 void main() {
   setUp(() async {
+    SharedPreferences.setMockInitialValues({});
     await initTestStorage();
     LeadStore.instance.reset();
   });
@@ -48,6 +50,13 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.textContaining('Visit logged: Interested'), findsOneWidget);
+
+    Navigator.of(tester.element(find.byType(Scaffold).first)).pop();
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Log Visit'));
+    await tester.pumpAndSettle();
+    expect(find.text('Requested a callback next week'), findsOneWidget);
+    expect(find.text('Total: 1'), findsOneWidget);
 
     final followUpCountBefore =
         LeadStore.instance.followUpsNotifier.value.length;

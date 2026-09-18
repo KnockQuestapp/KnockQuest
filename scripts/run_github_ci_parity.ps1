@@ -31,7 +31,7 @@ Write-Host "[2/6] GitHub-exclusive guardrails" -ForegroundColor Green
 Assert-LastExitCode -Step "GitHub-exclusive guardrails"
 
 Write-Host "[3/6] dart format check" -ForegroundColor Green
-dart format --output=none --set-exit-if-changed .
+dart format --output=none --set-exit-if-changed lib test
 Assert-LastExitCode -Step "dart format check"
 
 Write-Host "[4/6] flutter analyze" -ForegroundColor Green

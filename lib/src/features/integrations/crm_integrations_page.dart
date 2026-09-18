@@ -209,7 +209,7 @@ class _CrmIntegrationsPageState extends State<CrmIntegrationsPage> {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            'Sync leads to API Nation or Zapier via secure webhooks.',
+                            'Sync leads to API Nation, or send them to BoldTrail through a Zapier webhook.',
                             style: TextStyle(
                               color: Theme.of(
                                 context,
@@ -384,7 +384,7 @@ class _CrmCard extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).dividerColor),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(26),
       ),
       child: Column(
         children: [
@@ -440,6 +440,16 @@ class _CrmCard extends StatelessWidget {
             ],
           ),
           const Divider(height: 28),
+          if (name == 'Zapier') ...[
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'For BoldTrail: create a Zap with Webhooks by Zapier → Catch Hook, then add kvCORE/BoldTrail → Create Contact. Paste the Catch Hook URL below, map the contact fields in Zapier, and run Test Sync.',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            ),
+            const SizedBox(height: 12),
+          ],
           Row(
             children: [
               Expanded(
@@ -470,6 +480,7 @@ class _CrmCard extends StatelessWidget {
           const SizedBox(height: 12),
           TextField(
             controller: webhookController,
+            obscureText: true,
             decoration: const InputDecoration(
               labelText: 'Webhook URL',
               hintText: 'https://hooks.zapier.com/... or API Nation endpoint',
@@ -599,7 +610,7 @@ class _CrmCard extends StatelessWidget {
                         '${item.event} - ${item.leadName}',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: const Color(0xFF1F2937),
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -607,7 +618,7 @@ class _CrmCard extends StatelessWidget {
                         item.message,
                         style: TextStyle(
                           fontSize: 12,
-                          color: Theme.of(context).textTheme.bodySmall?.color,
+                          color: const Color(0xFF334155),
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -615,7 +626,7 @@ class _CrmCard extends StatelessWidget {
                         item.createdAt.toLocal().toString().split('.').first,
                         style: TextStyle(
                           fontSize: 11,
-                          color: Theme.of(context).textTheme.bodySmall?.color,
+                          color: const Color(0xFF334155),
                         ),
                       ),
                     ],

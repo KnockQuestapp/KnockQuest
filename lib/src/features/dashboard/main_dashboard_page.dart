@@ -50,15 +50,16 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
     }
   }
 
+  Future<void> _signOut() async {
+    await AuthStore.instance.signOut();
+    if (!mounted) return;
+    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (_) => false);
+  }
+
   @override
   Widget build(BuildContext context) {
     final isMobileViewport = MediaQuery.sizeOf(context).width < 720;
-    final contentPadding = EdgeInsets.fromLTRB(
-      16,
-      16,
-      16,
-      isMobileViewport ? 128 : 16,
-    );
+    final contentPadding = EdgeInsets.fromLTRB(16, 16, 16, 128);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
@@ -66,7 +67,7 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
           padding: contentPadding,
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 430),
+              constraints: const BoxConstraints(maxWidth: 760),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -77,11 +78,12 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Welcome, ${AuthStore.instance.currentUser.value?.name ?? 'Agent'}',
+                              'KNOCKQUEST / FIELD HQ',
                               style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w700,
-                                color: Theme.of(context).colorScheme.onSurface,
+                                fontSize: 11,
+                                letterSpacing: 2.4,
+                                fontWeight: FontWeight.w900,
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                             Text(
@@ -116,21 +118,23 @@ class _MainDashboardPageState extends State<MainDashboardPage> {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          CircleAvatar(
-                            radius: 18,
-                            backgroundColor: Theme.of(
-                              context,
-                            ).colorScheme.surface,
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.notifications_none),
-                            ),
+                          IconButton(
+                            tooltip: 'Sign out',
+                            onPressed: _signOut,
+                            icon: const Icon(Icons.logout),
                           ),
                         ],
                       ),
                     ],
                   ),
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 22),
+                  _DashboardHero(
+                    name: AuthStore.instance.currentUser.value?.name ?? 'Agent',
+                    onAddLead: _openAddLead,
+                    onOpenMap: () =>
+                        Navigator.pushNamed(context, AppRoutes.interactiveMap),
+                  ),
+                  const SizedBox(height: 22),
                   if (!isMobileViewport)
                     Row(
                       children: [
@@ -370,6 +374,9 @@ class _CrmReadinessBanner extends StatelessWidget {
                   ),
                   TextButton(
                     onPressed: onOpenIntegrations,
+                    style: TextButton.styleFrom(
+                      foregroundColor: const Color(0xFF1E40AF),
+                    ),
                     child: const Text('Manage'),
                   ),
                 ],
@@ -378,6 +385,135 @@ class _CrmReadinessBanner extends StatelessWidget {
           },
         );
       },
+    );
+  }
+}
+
+class _DashboardHero extends StatelessWidget {
+  const _DashboardHero({
+    required this.name,
+    required this.onAddLead,
+    required this.onOpenMap,
+  });
+
+  final String name;
+  final VoidCallback onAddLead;
+  final VoidCallback onOpenMap;
+
+  @override
+  Widget build(BuildContext context) {
+    final firstName = name.trim().split(' ').first;
+    return Container(
+      width: double.infinity,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [Color(0xFF214BE0), Color(0xFF172C85), Color(0xFF101D53)],
+        ),
+        borderRadius: BorderRadius.circular(32),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            right: -36,
+            top: -64,
+            child: Container(
+              width: 230,
+              height: 230,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white.withValues(alpha: .18),
+                  width: 28,
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            right: 36,
+            bottom: -70,
+            child: Icon(
+              Icons.location_on_rounded,
+              size: 210,
+              color: const Color(0xFF9FEADD).withValues(alpha: .14),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(28),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 7,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: .16),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: const Text(
+                    '✦  YOUR NEXT MOVE STARTS HERE',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      letterSpacing: 1.5,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 25),
+                Text(
+                  'Hey, $firstName.\nOwn your area.',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 42,
+                    height: 1.02,
+                    letterSpacing: -1.8,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const SizedBox(height: 13),
+                const Text(
+                  'Every door is a new opportunity. Let’s get moving.',
+                  style: TextStyle(
+                    color: Color(0xFFE1E8FF),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 25),
+                Wrap(
+                  spacing: 10,
+                  runSpacing: 10,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: onAddLead,
+                      icon: const Icon(Icons.add_rounded),
+                      label: const Text('Add a lead'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFDDF9F1),
+                        foregroundColor: const Color(0xFF092C39),
+                      ),
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: onOpenMap,
+                      icon: const Icon(Icons.map_outlined),
+                      label: const Text('Explore map'),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        side: const BorderSide(color: Color(0xFF9FB5FC)),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -439,7 +575,9 @@ class _SectionTitle extends StatelessWidget {
     return Text(
       text,
       style: TextStyle(
-        fontWeight: FontWeight.w700,
+        fontSize: 22,
+        letterSpacing: -.5,
+        fontWeight: FontWeight.w900,
         color: Theme.of(context).colorScheme.onSurface,
       ),
     );
@@ -466,8 +604,8 @@ class _MetricGrid extends StatelessWidget {
     return GridView.count(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      crossAxisCount: 2,
-      childAspectRatio: 1.55,
+      crossAxisCount: MediaQuery.sizeOf(context).width >= 720 ? 4 : 2,
+      childAspectRatio: 1.0,
       mainAxisSpacing: 12,
       crossAxisSpacing: 12,
       children: [
@@ -489,6 +627,9 @@ class _MetricGrid extends StatelessWidget {
 }
 
 String _formatCompactNumber(String raw) {
+  if (raw.contains('\$') || raw.contains('%') || raw.endsWith('K')) {
+    return raw;
+  }
   // remove non-numeric except decimal
   final cleaned = raw.replaceAll(RegExp('[^0-9.]'), '');
   if (cleaned.isEmpty) return raw;
@@ -521,8 +662,8 @@ class _PipelineGrid extends StatelessWidget {
     return GridView.count(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      crossAxisCount: 2,
-      childAspectRatio: 1.15,
+      crossAxisCount: MediaQuery.sizeOf(context).width >= 720 ? 4 : 2,
+      childAspectRatio: 1.0,
       mainAxisSpacing: 12,
       crossAxisSpacing: 12,
       children: [
@@ -549,22 +690,36 @@ class _MetricCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         border: Border.all(color: Theme.of(context).dividerColor),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(26),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Icon(icon, color: Theme.of(context).colorScheme.secondary, size: 18),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Theme.of(
+                context,
+              ).colorScheme.secondary.withValues(alpha: .16),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(
+              icon,
+              color: Theme.of(context).colorScheme.secondary,
+              size: 18,
+            ),
+          ),
           const SizedBox(height: 10),
           Text(
             _formatCompactNumber(value),
             style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
+              fontSize: 27,
+              fontWeight: FontWeight.w900,
               color: Theme.of(context).colorScheme.onSurface,
             ),
           ),

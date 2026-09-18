@@ -1,6 +1,8 @@
 param(
-  [ValidateSet('check', 'web', 'windows', 'android', 'doctor')]
-  [string]$Task = 'check'
+  [ValidateSet('check', 'web', 'windows', 'android', 'android-release', 'doctor')]
+  [string]$Task = 'check',
+  [string]$SupabaseUrl = $env:SUPABASE_URL,
+  [string]$SupabasePublishableKey = $env:SUPABASE_PUBLISHABLE_KEY
 )
 
 $ErrorActionPreference = 'Stop'
@@ -49,7 +51,26 @@ switch ($Task) {
     }
     & $flutter config --android-sdk $env:ANDROID_HOME | Out-Null
     & $flutter config --jdk-dir $env:JAVA_HOME | Out-Null
-    & $flutter build apk --debug --flavor staging --dart-define=APP_FLAVOR=staging
+    $dartDefines = @('--dart-define=APP_FLAVOR=staging')
+    if ($SupabaseUrl -and $SupabasePublishableKey) {
+      $dartDefines += "--dart-define=SUPABASE_URL=$SupabaseUrl"
+      $dartDefines += "--dart-define=SUPABASE_PUBLISHABLE_KEY=$SupabasePublishableKey"
+    }
+    & $flutter build apk --debug --flavor staging @dartDefines
+  }
+  'android-release' {
+    if (-not (Test-Path (Join-Path $env:ANDROID_HOME 'platforms\android-36'))) {
+      throw "Android SDK packages are missing at $env:ANDROID_HOME"
+    }
+    & $flutter config --android-sdk $env:ANDROID_HOME | Out-Null
+    & $flutter config --jdk-dir $env:JAVA_HOME | Out-Null
+    if (-not ($SupabaseUrl -and $SupabasePublishableKey)) {
+      throw 'Set SupabaseUrl and SupabasePublishableKey for a downloadable test APK.'
+    }
+    & $flutter build apk --release --flavor staging `
+      '--dart-define=APP_FLAVOR=staging' `
+      "--dart-define=SUPABASE_URL=$SupabaseUrl" `
+      "--dart-define=SUPABASE_PUBLISHABLE_KEY=$SupabasePublishableKey"
   }
   'doctor' { & $flutter doctor -v }
 }

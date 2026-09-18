@@ -21,40 +21,80 @@ stay under `D:\dev\KnockQuest` and are excluded from Git.
 
 For Windows desktop testing, first enable Windows Developer Mode so Flutter can
 create plugin symlinks, then run `.\scripts\local_flutter.ps1 windows`. The
-Android test APK can be built with `.\scripts\local_flutter.ps1 android`; its
+Android debug APK can be built with `.\scripts\local_flutter.ps1 android`; its
 Android SDK and JDK also live under `.toolchains` on D:.
 
-The app currently supports local testing accounts. Register an account on the
-login screen, then sign in with those credentials. Use test credentials only;
-the local account store is not a production authentication system. Cloud authentication, Google
-sign-in, password reset email, and billing require service configuration before
-production testing.
+The app supports local testing accounts and Supabase Google sign-in. Register a
+local account on the login screen, then sign in with those credentials. Use test
+credentials only; the local account store is not a production authentication
+system. Password reset email and billing still require service configuration.
 
-1. Install Flutter SDK (stable channel).
-2. In the project root, run:
+## Google sign-in setup
 
-	```powershell
-	flutter pub get
-	flutter run -d windows
-	```
+1. In Supabase, open the KnockQuest project. Under **Project Settings → API Keys**,
+   copy the project URL and **publishable** key. Do not use a service role or secret key.
+2. Under **Authentication → URL Configuration**, set the Site URL to the web
+   address used for testing and add the web address and
+   `io.knockquest.app://login-callback/` to the redirect allow list. The local
+   browser preview currently uses `http://127.0.0.1:8769`; use the actual port
+   if you start the preview elsewhere.
+3. In Google Cloud, create a Web OAuth client. Add the testing web origin under
+   authorized JavaScript origins and the Supabase callback
+   `https://<project-ref>.supabase.co/auth/v1/callback` under authorized redirect
+   URIs. Configure the consent screen and add test users if the app is in test mode.
+4. In Supabase **Authentication → Sign In / Providers → Google**, enable Google
+   and enter the Google client ID and secret. Keep the secret in Supabase only.
+5. Launch with the public app values as Dart defines:
 
-3. For web testing:
+   ```powershell
+   .\.toolchains\flutter\bin\flutter.bat run -d chrome --web-port 8769 --dart-define=SUPABASE_URL=https://<project-ref>.supabase.co --dart-define=SUPABASE_PUBLISHABLE_KEY=<publishable-key>
+   ```
 
-	```powershell
-	flutter run -d chrome
-	```
+   For an Android test build, use
+   `.\scripts\local_flutter.ps1 android -SupabaseUrl https://<project-ref>.supabase.co -SupabasePublishableKey <publishable-key>`.
+   The Android manifest includes the app callback link.
+   The `.env.example` file documents variables but is not automatically loaded
+   by Flutter.
+
+## BoldTrail via Zapier
+
+1. In Zapier, create a Zap with **Webhooks by Zapier → Catch Hook** as the trigger.
+   Copy the generated Catch Hook URL. This URL can accept lead data, so keep it
+   private and out of screenshots or demo videos.
+2. In KnockQuest **CRM & Integrations → Zapier**, paste that URL, save the
+   configuration, and press **Test Sync**. In Zapier, inspect the received test
+   event and its `mappedLead` fields.
+3. Add the **kvCORE/BoldTrail → Create Contact (Post)** action in Zapier. Connect
+   the appropriate BoldTrail account and map first name, last name, email,
+   phone, and address from `mappedLead`. Test the action with a disposable
+   contact before publishing the Zap.
+4. Turn on the Zap and enable **Auto-Sync Leads** in KnockQuest. New and updated
+   leads then send webhook events. The app records delivery status and queues
+   failed events for retry. A successful webhook response confirms Zapier
+   received the event; check Zap history and BoldTrail to confirm contact creation.
+
+Zapier's Webhooks trigger may require a paid Zapier plan. Check the plan shown
+in the account before creating or upgrading anything.
+
+For local browser testing, build with
+`--dart-define=CRM_WEBHOOK_PROXY_URL=/crm-hook`, then serve `build/web` with
+`python scripts/serve_web_with_crm_proxy.py --port 8769`. The script binds only
+to localhost and relays only Zapier Catch Hook requests; it is a development
+relay. A hosted web release needs its own authenticated server-side relay or
+edge function because browsers cannot reliably POST directly to Zapier hooks
+across origins. The Android app sends directly to the configured hook.
 
 ## Android Setup
 
-`flutter doctor -v` reports Android SDK as missing until Android Studio and the SDK are installed.
+The Android SDK and JDK are installed under `.toolchains` on D:. To check the
+toolchain or build the staging APK, run:
 
-1. Install Android Studio.
-2. Complete first-run Android SDK setup.
-3. If needed, configure SDK path:
+```powershell
+.\scripts\local_flutter.ps1 doctor
+.\scripts\local_flutter.ps1 android
+```
 
-	```powershell
-	flutter config --android-sdk "C:\Users\Administrator\AppData\Local\Android\Sdk"
-	```
+The APK is written to `build\app\outputs\flutter-apk\app-staging-debug.apk`.
 
 ## Build Flavors
 
@@ -140,9 +180,10 @@ Two workflows now cover verification and release artifact generation:
 	- cancels superseded runs on the same branch
 
 - `.github/workflows/release_web_artifact.yml` (`release-web-artifact`)
-	- triggers manually (`workflow_dispatch`) or on version tags (`v*`)
+	- triggers on pushes to `clean-final`, manually (`workflow_dispatch`), or on version tags (`v*`)
 	- builds release web and Android artifacts with `APP_FLAVOR` set from workflow input
 	- uploads `build/web` and `app-<flavor>-release.apk` as downloadable GitHub Actions artifacts
+	- requires the repository variables `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` (both public client configuration)
 
 - `.github/workflows/deploy_pages.yml` (`deploy-pages`)
 	- triggers on pushes to `main` and manual runs
@@ -155,9 +196,11 @@ Live app URL:
 
 ### Manual Release Artifact Run
 
-1. Open GitHub Actions and run `release-web-artifact`.
-2. Select `staging` or `production` flavor.
-3. Download the uploaded `knockquest-web-*` and `knockquest-android-*` artifacts from the completed run.
+1. Open GitHub Actions and run `release-web-artifact` on `clean-final`, or push a verified change to that branch.
+2. Select `staging` or `production` flavor for a manual run. Branch and tag runs use `staging`.
+3. Wait for the run to succeed. Sign in to GitHub, then download `knockquest-android-*` from the run's **Artifacts** section. GitHub downloads a ZIP; extract the APK before installing it.
+
+For a direct APK download on a phone, use the latest test APK attached to the repository's [GitHub Releases](https://github.com/KnockQuestapp/KnockQuest/releases). Build that staging APK locally with `.\scripts\local_flutter.ps1 android-release -SupabaseUrl <project-url> -SupabasePublishableKey <public-key>`; the script keeps its toolchain and Gradle cache on D:. The test APK is signed with a debug key and is not a Play Store release.
 
 ### Environment And Secret Contract
 

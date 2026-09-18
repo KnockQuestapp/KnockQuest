@@ -1,4 +1,8 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app_routes.dart';
 import '../../state/lead_store.dart';
@@ -15,22 +19,12 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
   final TextEditingController _notesController = TextEditingController();
   String _selectedOutcome = 'Spoke To Owner';
   String _leadStatus = 'Active Lead';
-  final List<_VisitEntry> _history = [
-    const _VisitEntry(
-      title: 'Appointment Set',
-      date: 'Oct 24, 2023',
-      meta: 'Alex Rivera • 2:15 PM',
-      details:
-          'Owner is interested in a valuation. Set appointment for next Tuesday at 5 PM.',
-    ),
-    const _VisitEntry(
-      title: 'Spoke To Owner',
-      date: 'Oct 20, 2023',
-      meta: 'Alex Rivera • 11:05 AM',
-      details:
-          'Had a good chat about the neighborhood market. They are not ready to sell today but might be in the next 6 months.',
-    ),
-  ];
+  List<_VisitEntry> _history = [];
+
+  String get _historyKey {
+    final lead = LeadStore.instance.latestLead;
+    return 'knockquest_visits_${jsonEncode([lead.name, lead.address])}';
+  }
 
   static const _statusOptions = [
     'Active Lead',
@@ -43,6 +37,41 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
   void initState() {
     super.initState();
     _leadStatus = LeadStore.instance.latestLead.status.label;
+    unawaited(_loadHistory());
+  }
+
+  Future<void> _loadHistory() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final stored = prefs.getString(_historyKey);
+      if (stored == null || !mounted) return;
+      final entries = (jsonDecode(stored) as List<dynamic>)
+          .map((entry) => _VisitEntry.fromMap(entry as Map<String, dynamic>))
+          .toList();
+      setState(() => _history = entries);
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Visit history could not be loaded.')),
+        );
+      }
+    }
+  }
+
+  Future<void> _saveHistory() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(
+        _historyKey,
+        jsonEncode(_history.map((entry) => entry.toMap()).toList()),
+      );
+    } catch (_) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Visit could not be saved locally.')),
+        );
+      }
+    }
   }
 
   void _logVisit() {
@@ -72,6 +101,7 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
         ),
       );
     });
+    unawaited(_saveHistory());
 
     LeadStore.instance.updateLatestLead(
       outcome: _selectedOutcome,
@@ -219,7 +249,7 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                           borderRadius: BorderRadius.circular(999),
                         ),
                         child: Text(
-                          'Visit #4',
+                          'Visit #${_history.length + 1}',
                           style: TextStyle(
                             color: Theme.of(context).textTheme.bodySmall?.color,
                             fontSize: 12,
@@ -360,21 +390,27 @@ class _VisitLoggerHistoryPageState extends State<VisitLoggerHistoryPage> {
                     ],
                   ),
                   const SizedBox(height: 14),
-                  SizedBox(
-                    height: 240,
-                    child: ListView.builder(
-                      itemCount: _history.length,
-                      itemBuilder: (context, index) {
-                        final item = _history[index];
-                        return _VisitHistoryTile(
-                          item.title,
-                          item.date,
-                          item.meta,
-                          item.details,
-                        );
-                      },
+                  if (_history.isEmpty)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Text('No visits logged yet.'),
+                    )
+                  else
+                    SizedBox(
+                      height: 240,
+                      child: ListView.builder(
+                        itemCount: _history.length,
+                        itemBuilder: (context, index) {
+                          final item = _history[index];
+                          return _VisitHistoryTile(
+                            item.title,
+                            item.date,
+                            item.meta,
+                            item.details,
+                          );
+                        },
+                      ),
                     ),
-                  ),
                   const SizedBox(height: 12),
                   Row(
                     children: [
@@ -423,6 +459,20 @@ class _VisitEntry {
   final String date;
   final String meta;
   final String details;
+
+  factory _VisitEntry.fromMap(Map<String, dynamic> map) => _VisitEntry(
+    title: map['title'] as String,
+    date: map['date'] as String,
+    meta: map['meta'] as String,
+    details: map['details'] as String,
+  );
+
+  Map<String, String> toMap() => {
+    'title': title,
+    'date': date,
+    'meta': meta,
+    'details': details,
+  };
 }
 
 String _monthAbbr(int month) {

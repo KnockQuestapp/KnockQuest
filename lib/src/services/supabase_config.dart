@@ -1,9 +1,11 @@
 class SupabaseConfig {
-  /// Replace these with real values from your Supabase project settings.
-  static const String url = 'https://your-project-id.supabase.co';
-  static const String anonKey = 'your-anon-key';
+  /// Public client settings injected with Flutter --dart-define.
+  static const String url = String.fromEnvironment('SUPABASE_URL');
+  static const String anonKey = String.fromEnvironment(
+    'SUPABASE_PUBLISHABLE_KEY',
+  );
+  static const String mobileRedirect = 'io.knockquest.app://login-callback/';
 
   static bool get isConfigured =>
-      url != 'https://your-project-id.supabase.co' &&
-      anonKey != 'your-anon-key';
+      Uri.tryParse(url)?.hasAuthority == true && anonKey.isNotEmpty;
 }

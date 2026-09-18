@@ -31,7 +31,8 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
   final ValueNotifier<String> _currentRoute = ValueNotifier<String>(
     AppRoutes.login,
   );
-  ThemeMode _themeMode = ThemeMode.light;
+  final ValueNotifier<bool> _popupOpen = ValueNotifier<bool>(false);
+  ThemeMode _themeMode = ThemeMode.dark;
   static const String _kThemeModeKey = 'knockquest_theme_mode';
 
   late final NavigatorObserver _routeObserver = _RouteTrackingObserver(
@@ -40,11 +41,13 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
         _currentRoute.value = routeName;
       }
     },
+    onPopupChanged: (isOpen) => _popupOpen.value = isOpen,
   );
 
   @override
   void dispose() {
     _currentRoute.dispose();
+    _popupOpen.dispose();
     super.dispose();
   }
 
@@ -92,60 +95,156 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
   }
 
   ThemeData _buildLightTheme() {
-    return ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1D5BD7)),
-      useMaterial3: true,
-      scaffoldBackgroundColor: Colors.white,
-      textTheme: const TextTheme(
-        bodyLarge: TextStyle(color: Color(0xFF7E8CA0)),
-        bodySmall: TextStyle(color: Color(0xFF7E8CA0)),
+    final colorScheme = ColorScheme.fromSeed(seedColor: const Color(0xFF1D5BD7))
+        .copyWith(
+          primary: const Color(0xFF2459E8),
+          secondary: const Color(0xFF0F887B),
+          surface: const Color(0xFFFFFFFF),
+          surfaceContainerHighest: const Color(0xFFE7EDFF),
+          onSurface: const Color(0xFF101B3D),
+          onSurfaceVariant: const Color(0xFF4B5B7B),
+        );
+    final base = ThemeData.from(colorScheme: colorScheme, useMaterial3: true);
+    return base.copyWith(
+      scaffoldBackgroundColor: const Color(0xFFF4F7FF),
+      cardTheme: CardThemeData(
+        color: colorScheme.surface,
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: const Color(0xFFF4F7FF),
+        foregroundColor: colorScheme.onSurface,
+        elevation: 0,
+      ),
+      dividerColor: const Color(0xFFDCE4F7),
+      textTheme: base.textTheme
+          .apply(
+            bodyColor: colorScheme.onSurface,
+            displayColor: colorScheme.onSurface,
+          )
+          .copyWith(
+            bodyLarge: base.textTheme.bodyLarge?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+        hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+        filled: true,
+        fillColor: colorScheme.surface,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 18,
+          vertical: 17,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: const BorderSide(color: Color(0xFFDCE4F7)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: const BorderSide(color: Color(0xFFDCE4F7)),
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          foregroundColor: colorScheme.onPrimary,
+          backgroundColor: colorScheme.primary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(999),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
+          foregroundColor: colorScheme.onSurface,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(999),
           ),
           side: const BorderSide(color: Color(0xFFD9E1EC)),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
         ),
       ),
     );
   }
 
   ThemeData _buildDarkTheme() {
-    return ThemeData.dark(useMaterial3: true).copyWith(
-      colorScheme: ColorScheme.fromSeed(
-        seedColor: const Color(0xFF1D5BD7),
-        brightness: Brightness.dark,
+    final colorScheme =
+        ColorScheme.fromSeed(
+          seedColor: const Color(0xFF1D5BD7),
+          brightness: Brightness.dark,
+        ).copyWith(
+          primary: const Color(0xFF8FAAFF),
+          onPrimary: const Color(0xFF07143B),
+          secondary: const Color(0xFF7BE4D1),
+          onSecondary: const Color(0xFF07342F),
+          tertiary: const Color(0xFFB8C8FF),
+          surface: const Color(0xFF162447),
+          surfaceContainerHighest: const Color(0xFF26385C),
+          onSurface: const Color(0xFFF6F8FF),
+          onSurfaceVariant: const Color(0xFFC0CBE4),
+        );
+    final base = ThemeData.from(colorScheme: colorScheme, useMaterial3: true);
+    return base.copyWith(
+      scaffoldBackgroundColor: const Color(0xFF0A1532),
+      cardTheme: CardThemeData(
+        color: colorScheme.surface,
+        elevation: 0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
       ),
-      scaffoldBackgroundColor: const Color(0xFF0F172A),
-      textTheme: const TextTheme(
-        bodyLarge: TextStyle(color: Color(0xFF7E8CA0)),
-        bodySmall: TextStyle(color: Color(0xFFCBD5E1)),
+      appBarTheme: AppBarTheme(
+        backgroundColor: const Color(0xFF0A1532),
+        foregroundColor: colorScheme.onSurface,
+        elevation: 0,
+      ),
+      dividerColor: const Color(0xFF344568),
+      textTheme: base.textTheme
+          .apply(
+            bodyColor: colorScheme.onSurface,
+            displayColor: colorScheme.onSurface,
+          )
+          .copyWith(
+            bodyLarge: base.textTheme.bodyLarge?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+        hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+        filled: true,
+        fillColor: colorScheme.surface,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 18,
+          vertical: 17,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: const BorderSide(color: Color(0xFF344568)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: const BorderSide(color: Color(0xFF344568)),
+        ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          foregroundColor: colorScheme.onPrimary,
+          backgroundColor: colorScheme.primary,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(999),
           ),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
+          foregroundColor: colorScheme.onSurface,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(999),
           ),
-          side: const BorderSide(color: Color(0xFF334155)),
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          side: const BorderSide(color: Color(0xFF465A83)),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
         ),
       ),
     );
@@ -175,101 +274,130 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
             return ValueListenableBuilder<String>(
               valueListenable: _currentRoute,
               builder: (context, routeName, _) {
-                if (routeName != AppRoutes.dashboard) {
+                if (routeName != AppRoutes.dashboard &&
+                    routeName != AppRoutes.interactiveMap) {
                   return child;
                 }
 
-                return Container(
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned.fill(child: child),
-                      Positioned(
-                        left: 12,
-                        right: 12,
-                        bottom: 12,
-                        child: SafeArea(
-                          child: Center(
-                            child: ConstrainedBox(
-                              constraints: const BoxConstraints(maxWidth: 720),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 8,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(
-                                    context,
-                                  ).colorScheme.surface.withValues(alpha: 0.96),
-                                  borderRadius: BorderRadius.circular(18),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Theme.of(
-                                        context,
-                                      ).shadowColor.withValues(alpha: 0.14),
-                                      blurRadius: 14,
-                                      offset: const Offset(0, 5),
+                return ValueListenableBuilder<bool>(
+                  valueListenable: _popupOpen,
+                  builder: (context, popupOpen, _) {
+                    if (popupOpen) return child;
+                    return Container(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: Stack(
+                        children: <Widget>[
+                          Positioned.fill(child: child),
+                          Positioned(
+                            left: 12,
+                            right: 12,
+                            bottom: 12,
+                            child: SafeArea(
+                              child: Center(
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 720,
+                                  ),
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 8,
                                     ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: <Widget>[
-                                    _MobileNavButton(
-                                      tooltip: 'Dashboard',
-                                      icon: Icons.dashboard_outlined,
-                                      label: 'Dashboard',
-                                      backgroundColor: const Color(0xFF0F9D58),
-                                      onPressed: () => _navigatorKey
-                                          .currentState
-                                          ?.pushNamed(AppRoutes.dashboard),
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .surface
+                                          .withValues(alpha: 0.96),
+                                      borderRadius: BorderRadius.circular(18),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Theme.of(
+                                            context,
+                                          ).shadowColor.withValues(alpha: 0.14),
+                                          blurRadius: 14,
+                                          offset: const Offset(0, 5),
+                                        ),
+                                      ],
                                     ),
-                                    _MobileNavButton(
-                                      tooltip: 'Add lead',
-                                      icon: Icons.person_add_alt_1,
-                                      label: 'Add Lead',
-                                      backgroundColor: const Color(0xFF1D5BD7),
-                                      onPressed: () => _navigatorKey
-                                          .currentState
-                                          ?.pushNamed(AppRoutes.addLead),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: <Widget>[
+                                        _MobileNavButton(
+                                          tooltip: 'Dashboard',
+                                          icon: Icons.dashboard_outlined,
+                                          label: 'Dashboard',
+                                          backgroundColor: const Color(
+                                            0xFF0F9D58,
+                                          ),
+                                          onPressed:
+                                              routeName == AppRoutes.dashboard
+                                              ? null
+                                              : () => _navigatorKey.currentState
+                                                    ?.pushNamed(
+                                                      AppRoutes.dashboard,
+                                                    ),
+                                        ),
+                                        _MobileNavButton(
+                                          tooltip: 'Add lead',
+                                          icon: Icons.person_add_alt_1,
+                                          label: 'Add Lead',
+                                          backgroundColor: const Color(
+                                            0xFF1D5BD7,
+                                          ),
+                                          onPressed: () => _navigatorKey
+                                              .currentState
+                                              ?.pushNamed(AppRoutes.addLead),
+                                        ),
+                                        _MobileNavButton(
+                                          tooltip: 'Open map',
+                                          icon: Icons.map_outlined,
+                                          label: 'Map',
+                                          backgroundColor: const Color(
+                                            0xFF13B7D8,
+                                          ),
+                                          onPressed:
+                                              routeName ==
+                                                  AppRoutes.interactiveMap
+                                              ? null
+                                              : () => _navigatorKey.currentState
+                                                    ?.pushNamed(
+                                                      AppRoutes.interactiveMap,
+                                                    ),
+                                        ),
+                                        _MobileNavButton(
+                                          tooltip: 'Follow ups',
+                                          icon: Icons.calendar_today_outlined,
+                                          label: 'Follow Ups',
+                                          backgroundColor: const Color(
+                                            0xFF52627C,
+                                          ),
+                                          onPressed: () => _navigatorKey
+                                              .currentState
+                                              ?.pushNamed(AppRoutes.followUps),
+                                        ),
+                                        _MobileNavButton(
+                                          tooltip: 'Export',
+                                          icon: Icons.ios_share_outlined,
+                                          label: 'Export',
+                                          backgroundColor: const Color(
+                                            0xFF35C784,
+                                          ),
+                                          onPressed: () => _navigatorKey
+                                              .currentState
+                                              ?.pushNamed(AppRoutes.analytics),
+                                        ),
+                                      ],
                                     ),
-                                    _MobileNavButton(
-                                      tooltip: 'Open map',
-                                      icon: Icons.map_outlined,
-                                      label: 'Map',
-                                      backgroundColor: const Color(0xFF13B7D8),
-                                      onPressed: () => _navigatorKey
-                                          .currentState
-                                          ?.pushNamed(AppRoutes.interactiveMap),
-                                    ),
-                                    _MobileNavButton(
-                                      tooltip: 'Follow ups',
-                                      icon: Icons.calendar_today_outlined,
-                                      label: 'Follow Ups',
-                                      backgroundColor: const Color(0xFF52627C),
-                                      onPressed: () => _navigatorKey
-                                          .currentState
-                                          ?.pushNamed(AppRoutes.followUps),
-                                    ),
-                                    _MobileNavButton(
-                                      tooltip: 'Export',
-                                      icon: Icons.ios_share_outlined,
-                                      label: 'Export',
-                                      backgroundColor: const Color(0xFF35C784),
-                                      onPressed: () => _navigatorKey
-                                          .currentState
-                                          ?.pushNamed(AppRoutes.analytics),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 );
               },
             );
@@ -305,12 +433,17 @@ class _KnockQuestAppState extends State<KnockQuestApp> {
 }
 
 class _RouteTrackingObserver extends NavigatorObserver {
-  _RouteTrackingObserver({required this.onRouteChanged});
+  _RouteTrackingObserver({
+    required this.onRouteChanged,
+    required this.onPopupChanged,
+  });
 
   final ValueChanged<String?> onRouteChanged;
+  final ValueChanged<bool> onPopupChanged;
 
   void _notify(Route<dynamic>? route) {
     onRouteChanged(route?.settings.name);
+    onPopupChanged(route is PopupRoute);
   }
 
   @override

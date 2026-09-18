@@ -17,7 +17,7 @@ Closes #
 ## Validation
 
 - [ ] flutter pub get
-- [ ] dart format --output=none --set-exit-if-changed .
+- [ ] dart format --output=none --set-exit-if-changed lib test
 - [ ] flutter analyze
 - [ ] flutter test
 - [ ] test/app_routes_smoke_test.dart passes

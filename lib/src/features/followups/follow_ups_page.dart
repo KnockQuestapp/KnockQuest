@@ -57,10 +57,6 @@ class _FollowUpsPageState extends State<FollowUpsPage> {
                           ],
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.calendar_month_outlined),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 14),
@@ -168,12 +164,13 @@ class _FollowUpCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 14),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
         border: Border.all(
           color: item.completed
               ? Theme.of(context).colorScheme.secondaryContainer
               : Theme.of(context).colorScheme.errorContainer,
         ),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(26),
       ),
       child: Row(
         children: [

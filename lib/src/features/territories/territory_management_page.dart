@@ -197,13 +197,13 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                         ),
                       );
                     },
-                    borderRadius: BorderRadius.circular(18),
+                    borderRadius: BorderRadius.circular(26),
                     child: Container(
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primary,
-                        borderRadius: BorderRadius.circular(18),
+                        borderRadius: BorderRadius.circular(26),
                       ),
                       child: Row(
                         children: [
@@ -301,10 +301,11 @@ class _TerritoryManagementPageState extends State<TerritoryManagementPage> {
                               child: Container(
                                 padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.surface,
                                   border: Border.all(
                                     color: Theme.of(context).dividerColor,
                                   ),
-                                  borderRadius: BorderRadius.circular(18),
+                                  borderRadius: BorderRadius.circular(26),
                                 ),
                                 child: Column(
                                   children: [

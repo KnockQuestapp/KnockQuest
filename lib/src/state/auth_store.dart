@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../services/local_storage_service.dart';
+import '../services/supabase_service.dart';
 
 class AuthUser {
   final String id;
@@ -25,6 +26,7 @@ class AuthStore {
   static final AuthStore instance = AuthStore._();
 
   final ValueNotifier<AuthUser?> currentUser = ValueNotifier<AuthUser?>(null);
+  StreamSubscription<AuthState>? _googleAuthSubscription;
 
   Future<void> init() async {
     final userData = LocalStorageService.instance.loadUser();
@@ -35,7 +37,23 @@ class AuthStore {
         name: userData['name'] as String,
       );
     }
+    final googleUser = SupabaseService.instance.authenticatedUser;
+    if (googleUser != null) {
+      currentUser.value = AuthUser.fromSupabase(googleUser);
+    }
+    _googleAuthSubscription ??= SupabaseService.instance.authStateChanges
+        ?.listen((state) {
+          final user = state.session?.user;
+          if (user != null) {
+            currentUser.value = AuthUser.fromSupabase(user);
+          } else if (currentUser.value?.id.startsWith('local_') == false) {
+            currentUser.value = null;
+          }
+        });
   }
+
+  Future<bool> signInWithGoogle() =>
+      SupabaseService.instance.signInWithGoogle();
 
   Future<bool> signIn(String email, String password) async {
     try {
@@ -85,6 +103,9 @@ class AuthStore {
   }
 
   Future<void> signOut() async {
+    if (currentUser.value?.id.startsWith('local_') == false) {
+      await SupabaseService.instance.signOut();
+    }
     final userData = LocalStorageService.instance.loadUser();
     if (userData != null) {
       await LocalStorageService.instance.saveUser({

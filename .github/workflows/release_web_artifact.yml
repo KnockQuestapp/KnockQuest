@@ -12,6 +12,8 @@ on:
           - staging
           - production
   push:
+    branches:
+      - clean-final
     tags:
       - v*
 
@@ -44,8 +46,16 @@ jobs:
           if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
             echo "value=${{ github.event.inputs.flavor }}" >> "$GITHUB_OUTPUT"
           else
-            echo "value=production" >> "$GITHUB_OUTPUT"
+            echo "value=staging" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Check public app configuration
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          test -n "$SUPABASE_URL" || { echo 'Set repository variable SUPABASE_URL'; exit 1; }
+          test -n "$SUPABASE_PUBLISHABLE_KEY" || { echo 'Set repository variable SUPABASE_PUBLISHABLE_KEY'; exit 1; }
 
       - name: Install dependencies
         run: flutter pub get
@@ -57,10 +67,16 @@ jobs:
         run: flutter test
 
       - name: Build web artifact
-        run: flutter build web --release --dart-define=APP_FLAVOR=${{ steps.flavor.outputs.value }}
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+        run: flutter build web --release --dart-define=APP_FLAVOR=${{ steps.flavor.outputs.value }} --dart-define=SUPABASE_URL="$SUPABASE_URL" --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY"
 
       - name: Build android artifact
-        run: flutter build apk --release --flavor ${{ steps.flavor.outputs.value }} --dart-define=APP_FLAVOR=${{ steps.flavor.outputs.value }}
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+        run: flutter build apk --release --flavor ${{ steps.flavor.outputs.value }} --dart-define=APP_FLAVOR=${{ steps.flavor.outputs.value }} --dart-define=SUPABASE_URL="$SUPABASE_URL" --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY"
 
       - name: Upload web artifact
         uses: actions/upload-artifact@v4

@@ -32,11 +32,16 @@ class CrmSyncService {
         return 'Webhook URL is required before running a test.';
       }
 
-      final result = await _postLeadEvent(
-        target: target,
-        event: 'integration.test',
-        lead: sampleLead,
-      );
+      _SyncPostResult result;
+      try {
+        result = await _postLeadEvent(
+          target: target,
+          event: 'integration.test',
+          lead: sampleLead,
+        );
+      } catch (error) {
+        result = _SyncPostResult(false, 'Connection failed: $error');
+      }
       await CrmSyncStore.instance.markSyncResult(
         provider: provider,
         success: result.success,
@@ -254,7 +259,7 @@ class CrmSyncService {
       'notes': lead.notes,
       'latitude': lead.latitude,
       'longitude': lead.longitude,
-      'status': lead.status,
+      'status': lead.status.label,
       'outcome': lead.outcome,
       'estimatedValue': lead.estimatedValue,
       'lastContactDate': lead.lastContactDate.toIso8601String(),
@@ -296,6 +301,24 @@ class CrmSyncService {
     final uri = Uri.tryParse(target.webhookUrl.trim());
     if (uri == null || !uri.hasScheme) {
       return const _SyncPostResult(false, 'Invalid webhook URL.');
+    }
+
+    const proxyPath = String.fromEnvironment('CRM_WEBHOOK_PROXY_URL');
+    if (kIsWeb && proxyPath.isNotEmpty) {
+      final proxyUri = Uri.base.resolve(proxyPath);
+      final response = await http
+          .post(
+            proxyUri,
+            headers: const {'Content-Type': 'application/json'},
+            body: jsonEncode({
+              'webhookUrl': target.webhookUrl.trim(),
+              'payload': payload,
+            }),
+          )
+          .timeout(const Duration(seconds: 15));
+      return response.statusCode >= 200 && response.statusCode < 300
+          ? _SyncPostResult(true, 'Connected (${response.statusCode})')
+          : _SyncPostResult(false, 'Sync failed (${response.statusCode}).');
     }
 
     final headers = <String, String>{

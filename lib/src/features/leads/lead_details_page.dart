@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../app_routes.dart';
+import '../../sample_data.dart';
 import '../../state/lead_store.dart';
 
 class LeadDetailsPage extends StatelessWidget {
@@ -8,231 +9,254 @@ class LeadDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lead = LeadStore.instance.latestLead;
+    return ValueListenableBuilder<List<LeadRecord>>(
+      valueListenable: LeadStore.instance.leads,
+      builder: (context, leads, child) {
+        final lead = LeadStore.instance.latestLead;
+        final isSampleLead =
+            lead.name == sampleLead.name && lead.address == sampleLead.address;
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SafeArea(
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 430),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+        return Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          body: SafeArea(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 430),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(Icons.arrow_back),
-                      ),
-                      const Expanded(
-                        child: Text(
-                          'Lead Details',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.edit),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-                  Row(
-                    children: [
-                      Container(
-                        width: 52,
-                        height: 52,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'JD',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Theme.of(
-                                context,
-                              ).colorScheme.onPrimaryContainer,
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(Icons.arrow_back),
+                          ),
+                          const Expanded(
+                            child: Text(
+                              'Lead Details',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontWeight: FontWeight.w700),
                             ),
                           ),
-                        ),
+                          const SizedBox(width: 48),
+                        ],
                       ),
-                      const SizedBox(width: 14),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    lead.name,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.w700,
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.onSurface,
-                                    ),
-                                  ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Container(
+                            width: 52,
+                            height: 52,
+                            decoration: BoxDecoration(
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.primaryContainer,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '${lead.firstName.isEmpty ? '' : lead.firstName[0]}${lead.lastName.isEmpty ? '' : lead.lastName[0]}'
+                                    .toUpperCase(),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: Theme.of(
+                                    context,
+                                  ).colorScheme.onPrimaryContainer,
                                 ),
-                                const SizedBox(width: 8),
-                                Flexible(
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 4,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.secondaryContainer,
-                                      borderRadius: BorderRadius.circular(999),
-                                    ),
-                                    child: Text(
-                                      lead.status.label,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: Theme.of(
-                                          context,
-                                        ).colorScheme.onSecondaryContainer,
-                                        fontSize: 11,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 14),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Text(
+                                        lead.name,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.w700,
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.onSurface,
+                                        ),
                                       ),
                                     ),
+                                    const SizedBox(width: 8),
+                                    Flexible(
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 8,
+                                          vertical: 4,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.secondaryContainer,
+                                          borderRadius: BorderRadius.circular(
+                                            999,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          lead.status.label,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: Theme.of(
+                                              context,
+                                            ).colorScheme.onSecondaryContainer,
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  lead.address,
+                                  style: TextStyle(
+                                    color: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall?.color,
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 4),
-                            Text(
-                              lead.address,
-                              style: TextStyle(
-                                color: Theme.of(
-                                  context,
-                                ).textTheme.bodySmall?.color,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 18),
-                  Text(
-                    'Building Units',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Wrap(
-                    spacing: 8,
-                    children: const [
-                      _UnitChip('101'),
-                      _UnitChip('102', selected: true),
-                      _UnitChip('103'),
-                      _UnitChip('201'),
-                      _UnitChip('202'),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () => Navigator.pushNamed(
-                            context,
-                            AppRoutes.visitHistory,
                           ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(
-                              context,
-                            ).colorScheme.primary,
-                            foregroundColor: Theme.of(
-                              context,
-                            ).colorScheme.onPrimary,
-                          ),
-                          child: const Text('Log Visit'),
-                        ),
+                        ],
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: OutlinedButton(
-                          onPressed: () =>
-                              Navigator.pushNamed(context, AppRoutes.followUps),
-                          child: const Text('Follow Up'),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 18),
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(18),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).dividerColor),
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Center(
-                          child: Text(
-                            'Property Info',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF7E8CA0),
-                            ),
+                      const SizedBox(height: 18),
+                      if (isSampleLead) ...[
+                        Text(
+                          'Building Units',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
-                        const SizedBox(height: 18),
-                        Row(
-                          children: const [
-                            Expanded(
-                              child: _InfoPair(
-                                'Building Type',
-                                'Condo / Apartment',
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Expanded(
-                              child: _InfoPair('Ownership', 'Owner Occupied'),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 26),
-                        Row(
+                        const SizedBox(height: 10),
+                        const Wrap(
+                          spacing: 8,
                           children: [
-                            Expanded(
-                              child: _InfoPair('Lead Source', lead.outcome),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: _InfoPair(
-                                'Est. Value',
-                                lead.estimatedValue,
+                            _UnitChip('101'),
+                            _UnitChip('102', selected: true),
+                            _UnitChip('103'),
+                            _UnitChip('201'),
+                            _UnitChip('202'),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () => Navigator.pushNamed(
+                                context,
+                                AppRoutes.visitHistory,
                               ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.primary,
+                                foregroundColor: Theme.of(
+                                  context,
+                                ).colorScheme.onPrimary,
+                              ),
+                              child: const Text('Log Visit'),
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: OutlinedButton(
+                              onPressed: () => Navigator.pushNamed(
+                                context,
+                                AppRoutes.followUps,
+                              ),
+                              child: const Text('Follow Up'),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 18),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          border: Border.all(
+                            color: Theme.of(context).dividerColor,
+                          ),
+                          borderRadius: BorderRadius.circular(26),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Center(
+                              child: Text(
+                                'Property Info',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF7E8CA0),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 18),
+                            if (isSampleLead) ...[
+                              const Row(
+                                children: [
+                                  Expanded(
+                                    child: _InfoPair(
+                                      'Building Type',
+                                      'Condo / Apartment',
+                                    ),
+                                  ),
+                                  SizedBox(width: 16),
+                                  Expanded(
+                                    child: _InfoPair(
+                                      'Ownership',
+                                      'Owner Occupied',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 26),
+                            ],
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _InfoPair('Lead Source', lead.outcome),
+                                ),
+                                const SizedBox(width: 16),
+                                Expanded(
+                                  child: _InfoPair(
+                                    'Est. Value',
+                                    lead.estimatedValue.isEmpty
+                                        ? 'Not set'
+                                        : lead.estimatedValue,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

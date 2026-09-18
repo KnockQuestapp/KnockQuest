@@ -23,8 +23,12 @@ void main() {
   ) async {
     await tester.pumpWidget(const KnockQuestApp());
 
+    expect(
+      tester.widget<MaterialApp>(find.byType(MaterialApp)).themeMode,
+      ThemeMode.dark,
+    );
     expect(find.text('KnockQuest'), findsOneWidget);
-    expect(find.text('Google sign-in (not configured)'), findsOneWidget);
+    expect(find.text('Continue with Google'), findsOneWidget);
 
     await tester.enterText(
       find.byType(TextFormField).at(0),
@@ -34,7 +38,7 @@ void main() {
     await tester.tap(find.text('Login'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Welcome, Test Agent'), findsOneWidget);
+    expect(find.textContaining('Own your area.'), findsOneWidget);
     expect(find.text('Add Lead'), findsWidgets);
   });
 }

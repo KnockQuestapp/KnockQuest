@@ -10,20 +10,18 @@ import 'src/state/auth_store.dart';
 import 'src/state/lead_store.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  FlutterError.onError = (details) {
-    FlutterError.presentError(details);
-    log(
-      details.exceptionAsString(),
-      name: 'knockquest.flutter_error',
-      error: details.exception,
-      stackTrace: details.stack,
-    );
-  };
-
   runZonedGuarded(
     () async {
+      WidgetsFlutterBinding.ensureInitialized();
+      FlutterError.onError = (details) {
+        FlutterError.presentError(details);
+        log(
+          details.exceptionAsString(),
+          name: 'knockquest.flutter_error',
+          error: details.exception,
+          stackTrace: details.stack,
+        );
+      };
       await SupabaseService.instance.init();
       const localDataDir = String.fromEnvironment('LOCAL_DATA_DIR');
       await LocalStorageService.instance.init(

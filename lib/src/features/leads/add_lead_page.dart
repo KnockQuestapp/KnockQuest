@@ -91,6 +91,7 @@ class _AddLeadPageState extends State<AddLeadPage> {
         longitude: payload['longitude'] as double,
         lastContactDate: lastContactDate,
         followUpDate: followUpDate,
+        estimatedValue: '',
       ),
     );
 

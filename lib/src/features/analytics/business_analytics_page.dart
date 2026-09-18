@@ -275,13 +275,17 @@ class _FilterChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
-          color: selected ? const Color(0xFFEFF3F9) : Colors.transparent,
-          border: Border.all(color: const Color(0xFFE1E8F0)),
+          color: selected ? const Color(0xFF1D5BD7) : Colors.transparent,
+          border: Border.all(color: Theme.of(context).colorScheme.outline),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Text(
           text,
-          style: TextStyle(color: Theme.of(context).textTheme.bodySmall?.color),
+          style: TextStyle(
+            color: selected
+                ? Colors.white
+                : Theme.of(context).colorScheme.onSurface,
+          ),
         ),
       ),
     );

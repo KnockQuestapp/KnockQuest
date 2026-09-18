@@ -14,9 +14,10 @@ class SupabaseService {
     if (_initialized) return;
 
     if (!SupabaseConfig.isConfigured) {
-      // We use a dummy client or just skip initialization if not configured.
-      // For the purpose of this MVP, we'll proceed but operations will fail.
-      debugPrint('Supabase not configured. Please update supabase_config.dart');
+      debugPrint(
+        'Supabase is not configured; local testing remains available.',
+      );
+      return;
     }
 
     await Supabase.initialize(
@@ -41,6 +42,19 @@ class SupabaseService {
       data: name != null ? {'full_name': name} : null,
     );
   }
+
+  Future<bool> signInWithGoogle() async {
+    if (!SupabaseConfig.isConfigured || !_initialized) return false;
+    return _client.auth.signInWithOAuth(
+      OAuthProvider.google,
+      redirectTo: kIsWeb ? Uri.base.origin : SupabaseConfig.mobileRedirect,
+    );
+  }
+
+  Stream<AuthState>? get authStateChanges =>
+      _initialized ? _client.auth.onAuthStateChange : null;
+
+  User? get authenticatedUser => _initialized ? _client.auth.currentUser : null;
 
   Future<AuthResponse> signIn(String email, String password) async {
     return await _client.auth.signInWithPassword(

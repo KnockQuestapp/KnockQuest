@@ -143,7 +143,7 @@ class _PlanCard extends StatelessWidget {
               ? Theme.of(context).colorScheme.primary
               : Theme.of(context).dividerColor,
         ),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(26),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
