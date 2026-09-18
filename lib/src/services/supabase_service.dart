@@ -48,9 +48,9 @@ class SupabaseService {
     return _client.auth.signInWithOAuth(
       OAuthProvider.google,
       redirectTo: kIsWeb
-          ? (Uri.base.path == '/'
-                ? Uri.base.origin
-                : Uri.base.replace(fragment: '', query: '').toString())
+          ? (Uri.base.host == 'knockquestapp.github.io'
+                ? 'https://knockquestapp.github.io/KnockQuest/'
+                : Uri.base.origin)
           : SupabaseConfig.mobileRedirect,
     );
   }
