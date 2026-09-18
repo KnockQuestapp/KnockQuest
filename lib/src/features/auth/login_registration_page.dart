@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../app_routes.dart';
 import '../../state/auth_store.dart';
@@ -11,6 +13,10 @@ class LoginRegistrationPage extends StatefulWidget {
 }
 
 class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
+  static final Uri _androidApkUrl = Uri.parse(
+    'https://github.com/KnockQuestapp/KnockQuest/releases/download/'
+    'v0.1.0-test.1/KnockQuest-staging-0.1.0-test.1.apk',
+  );
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -99,6 +105,17 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _downloadAndroidApk() async {
+    if (await launchUrl(_androidApkUrl, mode: LaunchMode.externalApplication)) {
+      return;
+    }
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Could not open the APK download.')),
+      );
     }
   }
 
@@ -307,6 +324,30 @@ class _LoginRegistrationPageState extends State<LoginRegistrationPage> {
                       ),
                       child: const Text('Continue with Google'),
                     ),
+                    if (kIsWeb) ...[
+                      const SizedBox(height: 12),
+                      FilledButton.icon(
+                        onPressed: _downloadAndroidApk,
+                        icon: const Icon(Icons.android_rounded),
+                        label: const Text('Download Android APK'),
+                        style: FilledButton.styleFrom(
+                          minimumSize: const Size.fromHeight(48),
+                          backgroundColor: colorScheme.secondary,
+                          foregroundColor: colorScheme.onSecondary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        'Test build · Android 7.0+ · 55 MB',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 20),
                     Wrap(
                       alignment: WrapAlignment.center,

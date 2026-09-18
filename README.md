@@ -202,6 +202,8 @@ Live app URL:
 
 For a direct APK download on a phone, use the latest test APK attached to the repository's [GitHub Releases](https://github.com/KnockQuestapp/KnockQuest/releases). Build that staging APK locally with `.\scripts\local_flutter.ps1 android-release -SupabaseUrl <project-url> -SupabasePublishableKey <public-key>`; the script keeps its toolchain and Gradle cache on D:. The test APK is signed with a debug key and is not a Play Store release.
 
+The [live web demo](https://knockquestapp.github.io/KnockQuest/) also offers a **Download Android APK** button on its login screen. It links directly to the current staging test release; update the link in `login_registration_page.dart` when publishing a new APK release.
+
 ### Environment And Secret Contract
 
 Current build path is configured to run with dart defines and `.env.example` placeholders.
