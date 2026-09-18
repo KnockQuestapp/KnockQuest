@@ -186,8 +186,8 @@ Two workflows now cover verification and release artifact generation:
 	- requires the repository variables `SUPABASE_URL` and `SUPABASE_PUBLISHABLE_KEY` (both public client configuration)
 
 - `.github/workflows/deploy_pages.yml` (`deploy-pages`)
-	- triggers on pushes to `main` and manual runs
-	- builds Flutter web with repository base href for Pages
+	- triggers on pushes to `clean-final` and manual runs
+	- checks the app, then builds Flutter web with the public Supabase settings and repository base href
 	- publishes the app to GitHub Pages
 
 Live app URL:

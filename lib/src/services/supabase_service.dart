@@ -47,7 +47,11 @@ class SupabaseService {
     if (!SupabaseConfig.isConfigured || !_initialized) return false;
     return _client.auth.signInWithOAuth(
       OAuthProvider.google,
-      redirectTo: kIsWeb ? Uri.base.origin : SupabaseConfig.mobileRedirect,
+      redirectTo: kIsWeb
+          ? (Uri.base.path == '/'
+                ? Uri.base.origin
+                : Uri.base.replace(fragment: '', query: '').toString())
+          : SupabaseConfig.mobileRedirect,
     );
   }
 

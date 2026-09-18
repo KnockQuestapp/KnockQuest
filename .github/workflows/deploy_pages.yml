@@ -3,7 +3,7 @@ name: deploy-pages
 on:
   push:
     branches:
-      - main
+      - clean-final
   workflow_dispatch:
 
 permissions:
@@ -31,8 +31,24 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Analyze and test
+        run: |
+          flutter analyze
+          flutter test
+
+      - name: Check public app configuration
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          test -n "$SUPABASE_URL" || { echo 'Set repository variable SUPABASE_URL'; exit 1; }
+          test -n "$SUPABASE_PUBLISHABLE_KEY" || { echo 'Set repository variable SUPABASE_PUBLISHABLE_KEY'; exit 1; }
+
       - name: Build web for GitHub Pages
-        run: flutter build web --release --base-href /${{ github.event.repository.name }}/
+        env:
+          SUPABASE_URL: ${{ vars.SUPABASE_URL }}
+          SUPABASE_PUBLISHABLE_KEY: ${{ vars.SUPABASE_PUBLISHABLE_KEY }}
+        run: flutter build web --release --base-href /${{ github.event.repository.name }}/ --dart-define=APP_FLAVOR=staging --dart-define=SUPABASE_URL="$SUPABASE_URL" --dart-define=SUPABASE_PUBLISHABLE_KEY="$SUPABASE_PUBLISHABLE_KEY"
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
