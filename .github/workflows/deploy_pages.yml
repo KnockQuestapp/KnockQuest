@@ -27,7 +27,7 @@ jobs:
       - name: Reject source artifacts
         shell: bash
         run: |
-          if find site -type f \( -name '*.map' -o -name '*.dart' -o -name '*.yaml' -o -name '*.lock' \) | grep -q .; then
+          if find site -type f \( -name '*.map' -o -name '*.dart' -o -name '*.yaml' -o -name '*.lock' -o -name '*.symbols' -o -name '.last_build_id' \) | grep -q .; then
             echo 'Deployment contains a source artifact.' >&2
             exit 1
           fi
