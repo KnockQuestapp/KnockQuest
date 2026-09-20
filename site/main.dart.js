@@ -101738,12 +101738,12 @@ I(a){A.b42()
 return B.Mm}}
 A.agL.prototype={
 $1(a){var s=v.G.document.createElement("iframe")
-s.src="leaflet_map.html?v=20260920-leaflet-layout-fixed"
+s.src="google_real_estate_map.html?v=20260920-google-real-estate-map"
 s.style.border="0"
 s.style.width="100%"
 s.style.height="100%"
 s.style.display="block"
-s.setAttribute("title","KnockQuest Leaflet property map")
+s.setAttribute("title","KnockQuest Google real estate map")
 s.setAttribute("allow","geolocation")
 return s},
 $S:257}
