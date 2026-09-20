@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>KnockQuest Leaflet Property Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQnwwxU9kLr5n1uBDu0mI60O7/30B6M=" crossorigin="" />
+  <link href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet@0.1.3/leaflet-maplibre-gl.js"></script>
+  <style>
+    html, body, #map { height: 100%; width: 100%; margin: 0; background: #101820; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .leaflet-control-attribution { background: rgba(10, 16, 22, .82) !important; color: #dce7f5 !important; font-size: 10px; }
+    .leaflet-control-attribution a { color: #a8f0c7 !important; }
+    .topbar { position: absolute; z-index: 1000; top: 10px; left: 10px; right: 10px; display: flex; gap: 8px; align-items: center; }
+    .search { flex: 1; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,.16); background: rgba(10,16,24,.92); color: #f6f8ff; padding: 0 14px; font-size: 14px; outline: none; box-shadow: 0 12px 28px rgba(0,0,0,.22); }
+    .btn { height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 12px; background: rgba(18,28,40,.92); color: #f6f8ff; padding: 0 12px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 24px rgba(0,0,0,.22); }
+    .btn.active, .btn:hover { background: #35c784; color: #062d22; }
+    .status { position: absolute; z-index: 1000; left: 14px; top: 62px; color: #e7ecf8; font-size: 13px; font-weight: 800; text-shadow: 0 1px 5px #000; }
+    .tools { position: absolute; z-index: 1000; right: 12px; top: 118px; display: grid; gap: 9px; }
+    .ranges { position: absolute; z-index: 1000; left: 12px; top: 92px; display: flex; gap: 8px; }
+    .pill { border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: rgba(15,24,34,.9); color: #f6f8ff; padding: 8px 10px; font-size: 12px; font-weight: 800; cursor: pointer; }
+    .pill.active { background: #35c784; color: #062d22; }
+    .badge { position: absolute; z-index: 1000; left: 12px; bottom: 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.15); background: rgba(8,14,20,.86); color: #e7ecf8; padding: 8px 12px; font-size: 12px; font-weight: 900; box-shadow: 0 12px 30px rgba(0,0,0,.25); }
+    .value-marker { color: #e7f8e6; background: #4b8c57; border: 1px solid #326f43; border-radius: 3px; font-size: 11px; font-weight: 900; padding: 2px 5px; box-shadow: 0 2px 8px rgba(0,0,0,.35); white-space: nowrap; }
+    .value-marker::after { content: ''; position: absolute; left: 50%; transform: translateX(-50%); bottom: -6px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid #4b8c57; }
+    .lead-popup { min-width: 180px; color: #0f172a; }
+    .lead-popup strong { display:block; font-size: 14px; margin-bottom: 4px; }
+    .toast { position: absolute; z-index: 2000; left: 50%; top: 50%; transform: translate(-50%, -50%); min-width: 240px; max-width: 86%; border-radius: 18px; background: rgba(7,18,15,.96); color: #f6f8ff; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 20px 70px rgba(0,0,0,.45); padding: 18px 20px; font-weight: 850; text-align: center; opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="topbar">
+    <input id="search" class="search" placeholder="City, Postal Code, Address..." />
+    <button id="locate" class="btn">Current</button>
+    <button id="reset" class="btn">Reset</button>
+  </div>
+  <div id="status" class="status">Loading properties...</div>
+  <div class="ranges">
+    <button class="pill" data-radius="100">100m</button>
+    <button class="pill active" data-radius="250">250m</button>
+    <button class="pill" data-radius="500">500m</button>
+    <button class="pill" data-radius="1000">1km</button>
+  </div>
+  <div class="tools">
+    <button class="btn active" data-tool="circle">Circle</button>
+    <button class="btn" data-tool="polygon">Polygon</button>
+    <button class="btn" data-tool="route">Route</button>
+    <button id="undo" class="btn">Undo</button>
+    <button id="clear" class="btn">Clear</button>
+    <button id="save" class="btn">Save</button>
+  </div>
+  <div class="badge">Leaflet + OpenFreeMap • free/no API key</div>
+  <div id="toast" class="toast"></div>
+  <script>
+    const center = [40.7580, -73.9855];
+    const properties = [
+      {name:'Jane Doe', address:'123 Main Street', city:'Metro City', postal:'10001', status:'Warm Lead', value:1250000, lat:40.7580, lng:-73.9855},
+      {name:'Marcus Holloway', address:'482 Oak St', city:'Metro City', postal:'10001', status:'Interested', value:1080000, lat:40.7612, lng:-73.9822},
+      {name:'Sarah Jenkins', address:'1290 Bayview Ave', city:'Metro City', postal:'10002', status:'Hot Lead', value:1380000, lat:40.7548, lng:-73.9880},
+      {name:'David Chen', address:'18 River Park Road', city:'Metro City', postal:'10003', status:'Appointment Set', value:929000, lat:40.7526, lng:-73.9804},
+      {name:'Nadia Brooks', address:'74 Maple Court', city:'Metro City', postal:'10004', status:'Prospect', value:1700000, lat:40.7645, lng:-73.9915},
+      {name:'Evan Miller', address:'230 Garden Lane', city:'Metro City', postal:'10005', status:'Closed', value:1550000, lat:40.7501, lng:-73.9759}
+    ];
+
+    const map = L.map('map', { zoomControl: true, preferCanvas: true }).setView(center, 15);
+    L.maplibreGL({ style: 'https://tiles.openfreemap.org/styles/liberty', attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap' }).addTo(map);
+
+    const propertyLayer = L.layerGroup().addTo(map);
+    const drawingLayer = L.layerGroup().addTo(map);
+    let selectedRadius = 250;
+    let selectedTool = 'circle';
+    let draftPoints = [];
+    let draftShape = null;
+
+    function money(value) { return value >= 1000000 ? (value / 1000000).toFixed(value >= 2000000 ? 1 : 2) + 'm' : Math.round(value / 1000) + 'k'; }
+    function toast(message) { const el = document.getElementById('toast'); el.textContent = message; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 1800); }
+    function matches(p, q) { q = q.trim().toLowerCase(); return !q || [p.name,p.address,p.city,p.postal,p.status].some(v => v.toLowerCase().includes(q)); }
+
+    function propertyIcon(label) {
+      return L.divIcon({ className: '', html: `<div class="value-marker">${label}</div>`, iconSize: [44, 22], iconAnchor: [22, 22] });
+    }
+
+    function drawProperties() {
+      const q = document.getElementById('search').value;
+      propertyLayer.clearLayers();
+      const visible = properties.filter(p => matches(p, q));
+      visible.forEach((p, idx) => {
+        const marker = L.marker([p.lat, p.lng], { icon: propertyIcon(money(p.value)) }).addTo(propertyLayer);
+        marker.bindPopup(`<div class="lead-popup"><strong>${p.name}</strong>${p.address}<br>${p.city} ${p.postal}<br><b>${money(p.value)}</b> · ${p.status}</div>`);
+        const parcel = L.rectangle([[p.lat - .00055, p.lng - .00075], [p.lat + .00055, p.lng + .00075]], {
+          color: idx % 2 ? '#5fa36a' : '#6b7280', weight: 1, fillColor: '#26313a', fillOpacity: .28
+        }).addTo(propertyLayer);
+        parcel.bindTooltip(`${p.address} • ${money(p.value)}`, {sticky: true});
+      });
+      // nearby comparable values for real-estate density
+      visible.forEach((p, idx) => {
+        [[.0012,.0011],[-.0011,.0014],[.0015,-.001],[-.0014,-.0012]].forEach((d, i) => {
+          const value = p.value + ((idx + i) % 5 - 2) * 85000;
+          L.marker([p.lat + d[0], p.lng + d[1]], { icon: propertyIcon(money(value)) }).addTo(propertyLayer);
+        });
+      });
+      document.getElementById('status').textContent = `${visible.length} properties nearby`;
+    }
+
+    function redrawDraft() {
+      if (draftShape) drawingLayer.removeLayer(draftShape);
+      if (!draftPoints.length) { draftShape = null; return; }
+      if (selectedTool === 'circle') draftShape = L.circle(draftPoints[0], { radius: selectedRadius, color:'#35c784', fillColor:'#35c784', fillOpacity:.22, weight:3 });
+      if (selectedTool === 'polygon') draftShape = L.polygon(draftPoints, { color:'#35c784', fillColor:'#35c784', fillOpacity:.22, weight:3 });
+      if (selectedTool === 'route') draftShape = L.polyline(draftPoints, { color:'#35c784', weight:4 });
+      draftShape.addTo(drawingLayer);
+    }
+
+    map.on('click', (event) => {
+      if (selectedTool === 'circle') draftPoints = [event.latlng]; else draftPoints.push(event.latlng);
+      redrawDraft();
+    });
+
+    document.getElementById('search').addEventListener('input', drawProperties);
+    document.getElementById('reset').onclick = () => { document.getElementById('search').value=''; drawProperties(); map.setView(center, 15); toast('Map reset.'); };
+    document.getElementById('locate').onclick = () => {
+      if (!navigator.geolocation) return toast('Location is unavailable in this browser.');
+      navigator.geolocation.getCurrentPosition(pos => { map.setView([pos.coords.latitude, pos.coords.longitude], 16); toast('Centered on current location.'); }, () => toast('Location permission unavailable.'));
+    };
+    document.querySelectorAll('[data-radius]').forEach(btn => btn.onclick = () => { document.querySelectorAll('[data-radius]').forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedRadius = Number(btn.dataset.radius); redrawDraft(); });
+    document.querySelectorAll('[data-tool]').forEach(btn => btn.onclick = () => { document.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedTool = btn.dataset.tool; draftPoints = []; redrawDraft(); });
+    document.getElementById('undo').onclick = () => { draftPoints.pop(); redrawDraft(); };
+    document.getElementById('clear').onclick = () => { draftPoints = []; redrawDraft(); toast('Draft cleared.'); };
+    document.getElementById('save').onclick = () => { if (!draftPoints.length) return toast('Tap the map first.'); toast(`${selectedTool[0].toUpperCase() + selectedTool.slice(1)} boundary saved.`); draftPoints = []; redrawDraft(); };
+
+    drawProperties();
+  </script>
+</body>
+</html>
