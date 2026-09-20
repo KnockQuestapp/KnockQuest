@@ -14,7 +14,7 @@
     .search { flex: 1; height: 44px; border-radius: 12px; border: 1px solid rgba(255,255,255,.16); background: rgba(10,16,24,.92); color: #f6f8ff; padding: 0 14px; font-size: 14px; outline: none; box-shadow: 0 12px 28px rgba(0,0,0,.22); }
     .btn { height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 12px; background: rgba(18,28,40,.92); color: #f6f8ff; padding: 0 12px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 24px rgba(0,0,0,.22); }
     .btn.active, .btn:hover { background: #35c784; color: #062d22; }
-    .status { position: absolute; z-index: 1000; left: 14px; top: 62px; color: #e7ecf8; font-size: 13px; font-weight: 800; text-shadow: 0 1px 5px #000; }
+    .status { position: absolute; z-index: 1000; left: 14px; top: 62px; color: #f6f8ff; background: rgba(10,16,24,.78); border-radius: 999px; padding: 5px 10px; font-size: 13px; font-weight: 800; text-shadow: 0 1px 5px #000; }
     .ranges { position: absolute; z-index: 1000; left: 12px; top: 92px; display: flex; gap: 8px; }
     .pill { border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: rgba(15,24,34,.9); color: #f6f8ff; padding: 8px 10px; font-size: 12px; font-weight: 800; cursor: pointer; }
     .pill.active { background: #35c784; color: #062d22; }
@@ -75,13 +75,12 @@
       zoomDelta: 1,
       preferCanvas: false
     }).setView(center, 15);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      subdomains: 'abcd',
-      maxZoom: 20,
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 19,
       updateWhenZooming: false,
       updateWhenIdle: true,
       keepBuffer: 6,
-      attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+      attribution: 'Tiles &copy; Esri'
     }).addTo(map);
     map.createPane('propertyPane');
     map.getPane('propertyPane').style.zIndex = 900;
