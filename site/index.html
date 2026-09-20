@@ -41,6 +41,33 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
-  <script src="flutter_bootstrap.js" async></script>
+  <script>
+    (async function loadKnockQuest() {
+      const cleanupKey = 'knockquest-cache-cleaned-v20260920-property-map';
+      try {
+        if ('caches' in window) {
+          const names = await caches.keys();
+          await Promise.all(names.map((name) => caches.delete(name)));
+        }
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          if (registrations.length > 0) {
+            await Promise.all(registrations.map((registration) => registration.unregister()));
+            if (!sessionStorage.getItem(cleanupKey)) {
+              sessionStorage.setItem(cleanupKey, '1');
+              window.location.reload();
+              return;
+            }
+          }
+        }
+      } catch (error) {
+        console.warn('KnockQuest cache cleanup skipped:', error);
+      }
+      const script = document.createElement('script');
+      script.src = 'flutter_bootstrap.js?v=20260920-property-map';
+      script.async = true;
+      document.body.appendChild(script);
+    })();
+  </script>
 </body>
 </html>
