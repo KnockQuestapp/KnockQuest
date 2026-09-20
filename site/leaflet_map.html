@@ -18,15 +18,23 @@
     .btn { height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 12px; background: rgba(18,28,40,.92); color: #f6f8ff; padding: 0 12px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 24px rgba(0,0,0,.22); }
     .btn.active, .btn:hover { background: #35c784; color: #062d22; }
     .status { position: absolute; z-index: 1000; left: 14px; top: 62px; color: #e7ecf8; font-size: 13px; font-weight: 800; text-shadow: 0 1px 5px #000; }
-    .tools { position: absolute; z-index: 1000; right: 12px; top: 118px; display: grid; gap: 9px; }
     .ranges { position: absolute; z-index: 1000; left: 12px; top: 92px; display: flex; gap: 8px; }
     .pill { border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: rgba(15,24,34,.9); color: #f6f8ff; padding: 8px 10px; font-size: 12px; font-weight: 800; cursor: pointer; }
     .pill.active { background: #35c784; color: #062d22; }
     .badge { position: absolute; z-index: 1000; left: 12px; bottom: 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.15); background: rgba(8,14,20,.86); color: #e7ecf8; padding: 8px 12px; font-size: 12px; font-weight: 900; box-shadow: 0 12px 30px rgba(0,0,0,.25); }
-    .value-marker { color: #e7f8e6; background: #4b8c57; border: 1px solid #326f43; border-radius: 3px; font-size: 11px; font-weight: 900; padding: 2px 5px; box-shadow: 0 2px 8px rgba(0,0,0,.35); white-space: nowrap; }
-    .value-marker::after { content: ''; position: absolute; left: 50%; transform: translateX(-50%); bottom: -6px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid #4b8c57; }
-    .lead-popup { min-width: 180px; color: #0f172a; }
-    .lead-popup strong { display:block; font-size: 14px; margin-bottom: 4px; }
+    .property-icon { position: relative; width: 42px; height: 42px; border-radius: 50% 50% 50% 10px; transform: rotate(-45deg); background: linear-gradient(135deg, #35c784, #159461); border: 2px solid #e7f8e6; box-shadow: 0 8px 18px rgba(0,0,0,.38); }
+    .property-icon::before { content: '⌂'; position: absolute; inset: 7px; display: grid; place-items: center; border-radius: 50%; background: rgba(6,45,34,.82); color: #f6f8ff; font-size: 18px; font-weight: 900; transform: rotate(45deg); }
+    .property-icon.almost { background: linear-gradient(135deg, #facc15, #ca8a04); }
+    .property-icon.almost::before { background: rgba(92, 65, 4, .86); }
+    .property-icon.unavailable { background: linear-gradient(135deg, #ff5a5f, #b91c1c); }
+    .property-icon.unavailable::before { background: rgba(69, 10, 10, .86); }
+    .comp-marker { color: #e7f8e6; background: #4b8c57; border: 1px solid #326f43; border-radius: 3px; font-size: 11px; font-weight: 900; padding: 2px 5px; box-shadow: 0 2px 8px rgba(0,0,0,.35); white-space: nowrap; }
+    .comp-marker::after { content: ''; position: absolute; left: 50%; transform: translateX(-50%); bottom: -6px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid #4b8c57; }
+    .lead-popup { min-width: 235px; color: #0f172a; line-height: 1.35; }
+    .lead-popup strong { display:block; font-size: 15px; margin-bottom: 6px; color: #062d22; }
+    .detail-row { display:flex; justify-content:space-between; gap:12px; padding:3px 0; border-bottom:1px solid #e5e7eb; }
+    .detail-row span:first-child { color:#64748b; font-weight:700; }
+    .detail-row span:last-child { color:#0f172a; font-weight:800; text-align:right; }
     .toast { position: absolute; z-index: 2000; left: 50%; top: 50%; transform: translate(-50%, -50%); min-width: 240px; max-width: 86%; border-radius: 18px; background: rgba(7,18,15,.96); color: #f6f8ff; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 20px 70px rgba(0,0,0,.45); padding: 18px 20px; font-weight: 850; text-align: center; opacity: 0; pointer-events: none; transition: opacity .18s ease; }
     .toast.show { opacity: 1; }
   </style>
@@ -45,43 +53,34 @@
     <button class="pill" data-radius="500">500m</button>
     <button class="pill" data-radius="1000">1km</button>
   </div>
-  <div class="tools">
-    <button class="btn active" data-tool="circle">Circle</button>
-    <button class="btn" data-tool="polygon">Polygon</button>
-    <button class="btn" data-tool="route">Route</button>
-    <button id="undo" class="btn">Undo</button>
-    <button id="clear" class="btn">Clear</button>
-    <button id="save" class="btn">Save</button>
-  </div>
-  <div class="badge">Leaflet + OpenFreeMap • free/no API key</div>
+  <div class="badge">Green: Available • Yellow: Almost Closing • Red: No Longer Available</div>
   <div id="toast" class="toast"></div>
   <script>
     const center = [40.7580, -73.9855];
     const properties = [
-      {name:'Jane Doe', address:'123 Main Street', city:'Metro City', postal:'10001', status:'Warm Lead', value:1250000, lat:40.7580, lng:-73.9855},
-      {name:'Marcus Holloway', address:'482 Oak St', city:'Metro City', postal:'10001', status:'Interested', value:1080000, lat:40.7612, lng:-73.9822},
-      {name:'Sarah Jenkins', address:'1290 Bayview Ave', city:'Metro City', postal:'10002', status:'Hot Lead', value:1380000, lat:40.7548, lng:-73.9880},
-      {name:'David Chen', address:'18 River Park Road', city:'Metro City', postal:'10003', status:'Appointment Set', value:929000, lat:40.7526, lng:-73.9804},
-      {name:'Nadia Brooks', address:'74 Maple Court', city:'Metro City', postal:'10004', status:'Prospect', value:1700000, lat:40.7645, lng:-73.9915},
-      {name:'Evan Miller', address:'230 Garden Lane', city:'Metro City', postal:'10005', status:'Closed', value:1550000, lat:40.7501, lng:-73.9759}
+      {name:'Jane Doe', owner:'Jane Doe', agent:'Ralph Johnpierre', address:'123 Main Street', city:'Metro City', postal:'10001', status:'Available', beds:4, baths:3, sqft:2180, value:1250000, lat:40.7580, lng:-73.9855},
+      {name:'Marcus Holloway', owner:'Marcus Holloway', agent:'Ingrid Morales', address:'482 Oak St', city:'Metro City', postal:'10001', status:'Almost Closing', beds:3, baths:2, sqft:1840, value:1080000, lat:40.7612, lng:-73.9822},
+      {name:'Sarah Jenkins', owner:'Sarah Jenkins', agent:'Ralph Johnpierre', address:'1290 Bayview Ave', city:'Metro City', postal:'10002', status:'Almost Closing', beds:5, baths:4, sqft:2740, value:1380000, lat:40.7548, lng:-73.9880},
+      {name:'David Chen', owner:'David Chen', agent:'KnockQuest Demo Agent', address:'18 River Park Road', city:'Metro City', postal:'10003', status:'Almost Closing', beds:3, baths:2, sqft:1660, value:929000, lat:40.7526, lng:-73.9804},
+      {name:'Nadia Brooks', owner:'Nadia Brooks', agent:'Ingrid Morales', address:'74 Maple Court', city:'Metro City', postal:'10004', status:'Available', beds:5, baths:3, sqft:3120, value:1700000, lat:40.7645, lng:-73.9915},
+      {name:'Evan Miller', owner:'Evan Miller', agent:'Ralph Johnpierre', address:'230 Garden Lane', city:'Metro City', postal:'10005', status:'No Longer Available', beds:4, baths:3, sqft:2410, value:1550000, lat:40.7501, lng:-73.9759}
     ];
 
     const map = L.map('map', { zoomControl: true, preferCanvas: true }).setView(center, 15);
     L.maplibreGL({ style: 'https://tiles.openfreemap.org/styles/liberty', attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap' }).addTo(map);
 
     const propertyLayer = L.layerGroup().addTo(map);
-    const drawingLayer = L.layerGroup().addTo(map);
-    let selectedRadius = 250;
-    let selectedTool = 'circle';
-    let draftPoints = [];
-    let draftShape = null;
 
     function money(value) { return value >= 1000000 ? (value / 1000000).toFixed(value >= 2000000 ? 1 : 2) + 'm' : Math.round(value / 1000) + 'k'; }
     function toast(message) { const el = document.getElementById('toast'); el.textContent = message; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 1800); }
     function matches(p, q) { q = q.trim().toLowerCase(); return !q || [p.name,p.address,p.city,p.postal,p.status].some(v => v.toLowerCase().includes(q)); }
 
-    function propertyIcon(label) {
-      return L.divIcon({ className: '', html: `<div class="value-marker">${label}</div>`, iconSize: [44, 22], iconAnchor: [22, 22] });
+    function propertyIcon(property) {
+      const state = property.status.toLowerCase().includes('almost') ? 'almost' : property.status.toLowerCase().includes('no longer') ? 'unavailable' : 'available';
+      return L.divIcon({ className: '', html: `<div class="property-icon ${state}" title="${property.address} - ${property.status}"></div>`, iconSize: [42, 42], iconAnchor: [21, 42], popupAnchor: [0, -40] });
+    }
+    function compIcon(label) {
+      return L.divIcon({ className: '', html: `<div class="comp-marker">${label}</div>`, iconSize: [44, 22], iconAnchor: [22, 22] });
     }
 
     function drawProperties() {
@@ -89,8 +88,8 @@
       propertyLayer.clearLayers();
       const visible = properties.filter(p => matches(p, q));
       visible.forEach((p, idx) => {
-        const marker = L.marker([p.lat, p.lng], { icon: propertyIcon(money(p.value)) }).addTo(propertyLayer);
-        marker.bindPopup(`<div class="lead-popup"><strong>${p.name}</strong>${p.address}<br>${p.city} ${p.postal}<br><b>${money(p.value)}</b> · ${p.status}</div>`);
+        const marker = L.marker([p.lat, p.lng], { icon: propertyIcon(p) }).addTo(propertyLayer);
+        marker.bindPopup(`<div class="lead-popup"><strong>${p.address}</strong><div class="detail-row"><span>Value</span><span>${money(p.value)}</span></div><div class="detail-row"><span>Owner</span><span>${p.owner}</span></div><div class="detail-row"><span>Agent</span><span>${p.agent}</span></div><div class="detail-row"><span>Status</span><span>${p.status}</span></div><div class="detail-row"><span>Specs</span><span>${p.beds} bd · ${p.baths} ba · ${p.sqft.toLocaleString()} sqft</span></div><div class="detail-row"><span>Area</span><span>${p.city} ${p.postal}</span></div></div>`);
         const parcel = L.rectangle([[p.lat - .00055, p.lng - .00075], [p.lat + .00055, p.lng + .00075]], {
           color: idx % 2 ? '#5fa36a' : '#6b7280', weight: 1, fillColor: '#26313a', fillOpacity: .28
         }).addTo(propertyLayer);
@@ -100,25 +99,13 @@
       visible.forEach((p, idx) => {
         [[.0012,.0011],[-.0011,.0014],[.0015,-.001],[-.0014,-.0012]].forEach((d, i) => {
           const value = p.value + ((idx + i) % 5 - 2) * 85000;
-          L.marker([p.lat + d[0], p.lng + d[1]], { icon: propertyIcon(money(value)) }).addTo(propertyLayer);
+          L.marker([p.lat + d[0], p.lng + d[1]], { icon: compIcon(money(value)) }).addTo(propertyLayer);
         });
       });
       document.getElementById('status').textContent = `${visible.length} properties nearby`;
     }
 
-    function redrawDraft() {
-      if (draftShape) drawingLayer.removeLayer(draftShape);
-      if (!draftPoints.length) { draftShape = null; return; }
-      if (selectedTool === 'circle') draftShape = L.circle(draftPoints[0], { radius: selectedRadius, color:'#35c784', fillColor:'#35c784', fillOpacity:.22, weight:3 });
-      if (selectedTool === 'polygon') draftShape = L.polygon(draftPoints, { color:'#35c784', fillColor:'#35c784', fillOpacity:.22, weight:3 });
-      if (selectedTool === 'route') draftShape = L.polyline(draftPoints, { color:'#35c784', weight:4 });
-      draftShape.addTo(drawingLayer);
-    }
-
-    map.on('click', (event) => {
-      if (selectedTool === 'circle') draftPoints = [event.latlng]; else draftPoints.push(event.latlng);
-      redrawDraft();
-    });
+    map.on('click', () => {});
 
     document.getElementById('search').addEventListener('input', drawProperties);
     document.getElementById('reset').onclick = () => { document.getElementById('search').value=''; drawProperties(); map.setView(center, 15); toast('Map reset.'); };
@@ -126,11 +113,7 @@
       if (!navigator.geolocation) return toast('Location is unavailable in this browser.');
       navigator.geolocation.getCurrentPosition(pos => { map.setView([pos.coords.latitude, pos.coords.longitude], 16); toast('Centered on current location.'); }, () => toast('Location permission unavailable.'));
     };
-    document.querySelectorAll('[data-radius]').forEach(btn => btn.onclick = () => { document.querySelectorAll('[data-radius]').forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedRadius = Number(btn.dataset.radius); redrawDraft(); });
-    document.querySelectorAll('[data-tool]').forEach(btn => btn.onclick = () => { document.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedTool = btn.dataset.tool; draftPoints = []; redrawDraft(); });
-    document.getElementById('undo').onclick = () => { draftPoints.pop(); redrawDraft(); };
-    document.getElementById('clear').onclick = () => { draftPoints = []; redrawDraft(); toast('Draft cleared.'); };
-    document.getElementById('save').onclick = () => { if (!draftPoints.length) return toast('Tap the map first.'); toast(`${selectedTool[0].toUpperCase() + selectedTool.slice(1)} boundary saved.`); draftPoints = []; redrawDraft(); };
+    document.querySelectorAll('[data-radius]').forEach(btn => btn.onclick = () => { document.querySelectorAll('[data-radius]').forEach(b => b.classList.remove('active')); btn.classList.add('active'); toast(`Showing properties within ${btn.textContent}.`); });
 
     drawProperties();
   </script>
