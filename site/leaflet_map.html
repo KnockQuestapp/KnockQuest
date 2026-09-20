@@ -68,6 +68,9 @@
 
     const map = L.map('map', { zoomControl: true, preferCanvas: true }).setView(center, 15);
     L.maplibreGL({ style: 'https://tiles.openfreemap.org/styles/liberty', attribution: 'OpenFreeMap © OpenMapTiles Data from OpenStreetMap' }).addTo(map);
+    map.createPane('propertyPane');
+    map.getPane('propertyPane').style.zIndex = 900;
+    map.getPane('propertyPane').style.pointerEvents = 'auto';
 
     const propertyLayer = L.layerGroup().addTo(map);
 
@@ -88,7 +91,7 @@
       propertyLayer.clearLayers();
       const visible = properties.filter(p => matches(p, q));
       visible.forEach((p, idx) => {
-        const marker = L.marker([p.lat, p.lng], { icon: propertyIcon(p) }).addTo(propertyLayer);
+        const marker = L.marker([p.lat, p.lng], { icon: propertyIcon(p), pane: 'propertyPane', keyboard: true }).addTo(propertyLayer);
         marker.bindPopup(`<div class="lead-popup"><strong>${p.address}</strong><div class="detail-row"><span>Value</span><span>${money(p.value)}</span></div><div class="detail-row"><span>Owner</span><span>${p.owner}</span></div><div class="detail-row"><span>Agent</span><span>${p.agent}</span></div><div class="detail-row"><span>Status</span><span>${p.status}</span></div><div class="detail-row"><span>Specs</span><span>${p.beds} bd · ${p.baths} ba · ${p.sqft.toLocaleString()} sqft</span></div><div class="detail-row"><span>Area</span><span>${p.city} ${p.postal}</span></div></div>`);
         const parcel = L.rectangle([[p.lat - .00055, p.lng - .00075], [p.lat + .00055, p.lng + .00075]], {
           color: idx % 2 ? '#5fa36a' : '#6b7280', weight: 1, fillColor: '#26313a', fillOpacity: .28
@@ -99,7 +102,7 @@
       visible.forEach((p, idx) => {
         [[.0012,.0011],[-.0011,.0014],[.0015,-.001],[-.0014,-.0012]].forEach((d, i) => {
           const value = p.value + ((idx + i) % 5 - 2) * 85000;
-          L.marker([p.lat + d[0], p.lng + d[1]], { icon: compIcon(money(value)) }).addTo(propertyLayer);
+          L.marker([p.lat + d[0], p.lng + d[1]], { icon: compIcon(money(value)), pane: 'propertyPane', interactive: false }).addTo(propertyLayer);
         });
       });
       document.getElementById('status').textContent = `${visible.length} properties nearby`;
