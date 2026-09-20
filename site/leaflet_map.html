@@ -19,12 +19,12 @@
     .pill { border: 1px solid rgba(255,255,255,.14); border-radius: 999px; background: rgba(15,24,34,.9); color: #f6f8ff; padding: 8px 10px; font-size: 12px; font-weight: 800; cursor: pointer; }
     .pill.active { background: #35c784; color: #062d22; }
     .badge { position: absolute; z-index: 1000; left: 12px; bottom: 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.15); background: rgba(8,14,20,.86); color: #e7ecf8; padding: 8px 12px; font-size: 12px; font-weight: 900; box-shadow: 0 12px 30px rgba(0,0,0,.25); }
-    .property-icon { position: relative; width: 42px; height: 42px; border-radius: 50% 50% 50% 10px; transform: rotate(-45deg); background: linear-gradient(135deg, #35c784, #159461); border: 2px solid #e7f8e6; box-shadow: 0 8px 18px rgba(0,0,0,.38); }
-    .property-icon::before { content: '⌂'; position: absolute; inset: 7px; display: grid; place-items: center; border-radius: 50%; background: rgba(6,45,34,.82); color: #f6f8ff; font-size: 18px; font-weight: 900; transform: rotate(45deg); }
-    .property-icon.almost { background: linear-gradient(135deg, #facc15, #ca8a04); }
-    .property-icon.almost::before { background: rgba(92, 65, 4, .86); }
-    .property-icon.unavailable { background: linear-gradient(135deg, #ff5a5f, #b91c1c); }
-    .property-icon.unavailable::before { background: rgba(69, 10, 10, .86); }
+    .property-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; border: 2px solid #e7f8e6; background: #22c55e; box-shadow: 0 10px 24px rgba(0,0,0,.48); }
+    .property-icon svg { width: 27px; height: 27px; display: block; fill: #f6f8ff; filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
+    .property-icon.available { background: linear-gradient(135deg, #35c784, #159461); }
+    .property-icon.almost { background: linear-gradient(135deg, #facc15, #ca8a04); border-color: #fff7cc; }
+    .property-icon.unavailable { background: linear-gradient(135deg, #ff5a5f, #b91c1c); border-color: #ffe4e6; }
+    .leaflet-marker-icon, .leaflet-marker-shadow { will-change: transform; }
     .comp-marker { color: #e7f8e6; background: #4b8c57; border: 1px solid #326f43; border-radius: 3px; font-size: 11px; font-weight: 900; padding: 2px 5px; box-shadow: 0 2px 8px rgba(0,0,0,.35); white-space: nowrap; }
     .comp-marker::after { content: ''; position: absolute; left: 50%; transform: translateX(-50%); bottom: -6px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid #4b8c57; }
     .lead-popup { min-width: 235px; color: #0f172a; line-height: 1.35; }
@@ -65,22 +65,23 @@
 
     const map = L.map('map', {
       zoomControl: true,
-      zoomAnimation: true,
-      fadeAnimation: true,
-      markerZoomAnimation: true,
+      zoomAnimation: false,
+      fadeAnimation: false,
+      markerZoomAnimation: false,
       inertia: true,
-      wheelDebounceTime: 16,
-      wheelPxPerZoomLevel: 96,
-      zoomSnap: 0.25,
-      zoomDelta: 0.5,
+      wheelDebounceTime: 40,
+      wheelPxPerZoomLevel: 120,
+      zoomSnap: 1,
+      zoomDelta: 1,
       preferCanvas: false
     }).setView(center, 15);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      updateWhenZooming: true,
-      updateWhenIdle: false,
-      keepBuffer: 4,
-      attribution: '&copy; OpenStreetMap contributors'
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      subdomains: 'abcd',
+      maxZoom: 20,
+      updateWhenZooming: false,
+      updateWhenIdle: true,
+      keepBuffer: 6,
+      attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
     }).addTo(map);
     map.createPane('propertyPane');
     map.getPane('propertyPane').style.zIndex = 900;
@@ -94,7 +95,7 @@
 
     function propertyIcon(property) {
       const state = property.status.toLowerCase().includes('almost') ? 'almost' : property.status.toLowerCase().includes('no longer') ? 'unavailable' : 'available';
-      return L.divIcon({ className: '', html: `<div class="property-icon ${state}" title="${property.address} - ${property.status}"></div>`, iconSize: [42, 42], iconAnchor: [21, 42], popupAnchor: [0, -40] });
+      return L.divIcon({ className: 'knockquest-house-marker', html: `<div class="property-icon ${state}" title="${property.address} - ${property.status}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.7 12 3l9 7.7-1.3 1.5L18 10.8V21h-5v-6h-2v6H6V10.8l-1.7 1.4L3 10.7Z"/></svg></div>`, iconSize: [42, 42], iconAnchor: [21, 42], popupAnchor: [0, -40] });
     }
     function compIcon(label) {
       return L.divIcon({ className: '', html: `<div class="comp-marker">${label}</div>`, iconSize: [44, 22], iconAnchor: [22, 22] });
@@ -133,6 +134,8 @@
     document.querySelectorAll('[data-radius]').forEach(btn => btn.onclick = () => { document.querySelectorAll('[data-radius]').forEach(b => b.classList.remove('active')); btn.classList.add('active'); toast(`Showing properties within ${btn.textContent}.`); });
 
     drawProperties();
+    setTimeout(() => map.invalidateSize(true), 120);
+    setTimeout(() => map.invalidateSize(true), 600);
   </script>
 </body>
 </html>
