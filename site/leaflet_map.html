@@ -7,7 +7,9 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQnwwxU9kLr5n1uBDu0mI60O7/30B6M=" crossorigin="" />
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <style>
-    html, body, #map { height: 100%; width: 100%; margin: 0; background: #101820; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    html, body { position: fixed; inset: 0; height: 100dvh; width: 100vw; margin: 0; overflow: hidden; overscroll-behavior: none; background: #101820; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #map { position: fixed; inset: 0; height: 100dvh; width: 100vw; min-height: 100dvh; min-width: 100vw; overflow: hidden; background: #101820; }
+    .leaflet-container { height: 100% !important; width: 100% !important; background: #101820 !important; }
     .leaflet-control-attribution { background: rgba(10, 16, 22, .82) !important; color: #dce7f5 !important; font-size: 10px; }
     .leaflet-control-attribution a { color: #a8f0c7 !important; }
     .topbar { position: absolute; z-index: 1000; top: 10px; left: 10px; right: 10px; display: flex; gap: 8px; align-items: center; }
@@ -133,8 +135,19 @@
     document.querySelectorAll('[data-radius]').forEach(btn => btn.onclick = () => { document.querySelectorAll('[data-radius]').forEach(b => b.classList.remove('active')); btn.classList.add('active'); toast(`Showing properties within ${btn.textContent}.`); });
 
     drawProperties();
-    setTimeout(() => map.invalidateSize(true), 120);
-    setTimeout(() => map.invalidateSize(true), 600);
+    function refreshMapSize() {
+      requestAnimationFrame(() => map.invalidateSize(false));
+    }
+    refreshMapSize();
+    setTimeout(refreshMapSize, 80);
+    setTimeout(refreshMapSize, 240);
+    setTimeout(refreshMapSize, 700);
+    window.addEventListener('resize', refreshMapSize, { passive: true });
+    window.addEventListener('orientationchange', () => setTimeout(refreshMapSize, 250), { passive: true });
+    document.addEventListener('visibilitychange', refreshMapSize);
+    if ('ResizeObserver' in window) {
+      new ResizeObserver(refreshMapSize).observe(document.getElementById('map'));
+    }
   </script>
 </body>
 </html>
