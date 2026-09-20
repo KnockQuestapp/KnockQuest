@@ -101738,7 +101738,7 @@ I(a){A.b42()
 return B.Mm}}
 A.agL.prototype={
 $1(a){var s=v.G.document.createElement("iframe")
-s.src="leaflet_map.html?v=20260920-visible-markers-pane"
+s.src="leaflet_map.html?v=20260920-smooth-leaflet-zoom"
 s.style.border="0"
 s.style.width="100%"
 s.style.height="100%"
