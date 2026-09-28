@@ -124440,7 +124440,7 @@ A.aYS.prototype={
 $3(a,b,a0){var s,r,q,p,o,n,m,l,k,j,i,h=null,g=this.a,f=$.bbX(),e=g.to?"https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}":"https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}",d=A.bzQ(),c=$.bsf()
 e=new A.Nf(e,d,c,h)
 e.dx=B.a3z
-e.y=19
+e.y=1/0
 e.Q=19
 e.x=0
 e.z=0
@@ -124484,7 +124484,7 @@ if(g.dy&&g.aY.length!==0){c=A.b([],d)
 for(s=g.aY,r=s.length,k=0;k<s.length;s.length===r||(0,A.C)(s),++k){i=s[k]
 c.push(new A.Bz(i.c,A.nI(h,new A.aar(g.y2===i,h),B.S,!1,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,h,new A.aYO(g,i),h,h,h,h,h,h),40,44))}e.push(A.bdJ(c))}c=g.y1
 if(c!=null)e.push(A.bdJ(A.b([A.bdI(B.ahO,72,c.gEV(),64)],d)))
-return new A.vX(e,new A.By(f,12.8,3,17.5,B.O2,new A.aYP(g),new A.aYQ(g),g.gayz(),new A.aYR(g),new A.aYI(g),new A.aYJ(g),B.TX),g.d,h)},
+return new A.vX(e,new A.By(f,12.8,3,20.5,B.O2,new A.aYP(g),new A.aYQ(g),g.gayz(),new A.aYR(g),new A.aYI(g),new A.aYJ(g),B.TX),g.d,h)},
 $S:775}
 A.aYJ.prototype={
 $0(){var s=this.a
@@ -142391,7 +142391,7 @@ s($,"bN3","bbS",()=>A.FJ(2,52))
 s($,"bN2","brY",()=>B.d.hI(A.Uu($.bbS())/A.Uu(10)))
 s($,"bPZ","bhn",()=>A.Uu(10))
 s($,"bQ_","btF",()=>A.Uu(10))
-s($,"bKE","bqQ",()=>A.dN("https://knockquestapp.github.io/KnockQuest/downloads/KnockQuest-production-0.1.25.apk",0,null))
+s($,"bKE","bqQ",()=>A.dN("https://knockquestapp.github.io/KnockQuest/downloads/KnockQuest-production-0.1.26.apk",0,null))
 s($,"bKF","bqR",()=>A.dN("io.knockquest.app://open",0,null))
 s($,"bOJ","bbX",()=>A.byV(40.7128,-74.006))
 s($,"bL3","UA",()=>new A.amr())
