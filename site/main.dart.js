@@ -33625,7 +33625,7 @@ _.e=!1
 _.f=b
 _.r=c
 _.w=""
-_.x="outcome"
+_.x="lead"
 _.z=_.y=null
 _.Q=d
 _.as=e
@@ -124291,7 +124291,7 @@ s.$2(o.fx,"city")
 s.$2(o.fy,"postalCode")
 s.$2(o.go,"notes")
 p=A.aB(q.i(0,"mapIconCategory"))
-if(B.f8.aA(0,p)){p.toString
+if(p!=="outcome"&&B.f8.aA(0,p)){p.toString
 o.x=p}o.y=A.aB(q.i(0,"mapPinIcon"))
 s=A.iz(q.i(0,"mapPinColor"))
 o.z=s==null?null:B.d.c_(s)
@@ -124472,7 +124472,8 @@ m.push(B.aB)
 if(!e.f.m(0,c)){r=e.x
 q=A.b([],t.FG)
 for(p=B.f8.gfd(B.f8),p=p.ga5(p),o=t.b7;p.q();){l=p.gK(p)
-q.push(new A.dJ(l.a,A.E(l.b,d,d,d,d,d,d,d),B.bq,d,o))}m.push(A.kH(B.US,r,!1,q,new A.aPH(e),n))}if(!e.f.m(0,c))B.b.L(m,A.b([B.aB,new A.xc(e.y,e.z,new A.aPI(e),new A.aPJ(e),d)],a0))
+i=l.a
+if(i!=="outcome")q.push(new A.dJ(i,A.E(l.b,d,d,d,d,d,d,d),B.bq,d,o))}m.push(A.kH(B.US,r,!1,q,new A.aPH(e),n))}if(!e.f.m(0,c))B.b.L(m,A.b([B.aB,new A.xc(e.y,e.z,new A.aPI(e),new A.aPJ(e),d)],a0))
 if(!e.f.m(0,"coordinates"))B.b.L(m,A.b([new A.jz("Latitude",e.id,B.mi,1,d,d),new A.jz("Longitude",e.k1,B.mi,1,d,d)],a0))
 if(!e.f.m(0,"lastContactDate"))m.push(new A.Eu("Last Contact Date",e.k2,!1,d))
 if(!e.f.m(0,"followUpDate"))m.push(new A.Eu("Follow Up Date",e.k3,!1,d))
