@@ -15,7 +15,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #26395e;
+  background: transparent;
   color: #ffffff;
   box-shadow: none;
   font-family: Arial, Helvetica, sans-serif;
@@ -39,10 +39,9 @@
 .kq-tour-help:hover,
 .kq-tour-help:focus-visible,
 .kq-tour-help[aria-pressed="true"] {
-  background: #64dfcb;
-  color: #0f172a;
-  outline: 3px solid rgba(20, 184, 166, 0.35);
-  outline-offset: 3px;
+  background: transparent;
+  color: #64dfcb;
+  outline: none;
 }
 
 .kq-tour-backdrop {
