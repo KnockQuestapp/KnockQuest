@@ -40,7 +40,7 @@
     helpButton.setAttribute('aria-label', 'Toggle app guide');
     helpButton.setAttribute('aria-pressed', 'false');
     helpButton.title = 'Toggle app guide';
-    helpButton.textContent = '?';
+    helpButton.textContent = '';
     helpButton.addEventListener('click', toggleTour);
     document.body.appendChild(helpButton);
 

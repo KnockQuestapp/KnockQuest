@@ -25,6 +25,17 @@
   text-align: center;
 }
 
+.kq-tour-help::before {
+  content: "?";
+  display: block;
+  color: currentColor;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 23px;
+  font-weight: 900;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
 .kq-tour-help:hover,
 .kq-tour-help:focus-visible,
 .kq-tour-help[aria-pressed="true"] {
@@ -135,7 +146,10 @@
     right: max(190px, calc(env(safe-area-inset-right) + 190px));
     width: 38px;
     height: 38px;
-    font-size: 21px;
+  }
+
+  .kq-tour-help::before {
+    font-size: 22px;
   }
 
   .kq-tour-card {
