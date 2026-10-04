@@ -34377,12 +34377,13 @@ _.z=i
 _.a=j},
 b3A:function b3A(a){this.a=a},
 b3B:function b3B(a){this.a=a},
-aaM:function aaM(a,b,c,d,e){var _=this
+aaM:function aaM(a,b,c,d,e,f){var _=this
 _.c=a
 _.d=b
 _.e=c
 _.f=d
-_.a=e},
+_.r=e
+_.a=f},
 R7:function R7(a,b){this.c=a
 this.a=b},
 aaN:function aaN(a,b,c){this.c=a
@@ -124727,53 +124728,53 @@ o.Tj(A.wx(j,!1,b4,e,null,g?null:b5.a,f,d,i,k,c))}o=p.c
 if(o!=null){g=A.a0(["doorRecordId",b4,"createdLead",p.CW],b3,t.K)
 A.aT(o,!1).bH(g)}case 1:return A.p(q,r)}})
 return A.q($async$Bu,r)},
-F(a3){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e,d=this,c=null,b="Do Not Solicit",a="mapIconCategory",a0=A.m(a3),a1=A.m(a3),a2=t.p
-a1=A.bV(c,A.b4(A.b([A.bc(A.D("Log a Door",c,c,c,A.b6(c,c,A.m(a3).ax.c,c,c,c,c,c,c,c,c,34,c,c,B.ah,c,c,!0,c,c,c,c,c,c,c,c),c,c,c),1),A.dS(A.m(a3).ax.c,c,B.le,c,c,new A.aPP(d,a3),c,c,"Customize door and lead form",c)],a2),B.n,B.h,B.j,0,c),B.r,c,c,new A.bo(a1.ax.b,c,c,B.Kz,c,c,B.O),c,c,c,c,B.RN,c,c,1/0)
-s=A.j3(a3,c)
-r=d.ax
-q=t.fo
-p=q.h("aj.E")
-o=A.G(new A.Y(B.x9,new A.aPQ(),q),p)
-n=t.N
-o=A.kK(B.VD,r,!1,o,new A.aPR(d),n)
-r=A.b([],a2)
-for(m=["Tenant","Language Barrier","Not Interested","Already Purchased","Hot Lead","Vacant","No Answer","Do Not Solicit"],l=d.as,k=0;k<8;++k){j=m[k]
-r.push(A.IP(A.D(A.vk(j),c,c,c,c,c,c,c),new A.aPW(d,j),l.m(0,j)))}r=A.fJ(B.aF,r,B.b4,8,8)
-m=d.CW?new A.aPX():c
-m=A.b([new A.jF("Address (optional)",d.dy,c,1,c,c),B.aC,new A.Er("Door record",c),o,B.aC,B.awa,r,B.aC,new A.jF("First Name",d.cx,c,1,m,c),new A.jF("Last Name",d.cy,c,1,c,c),new A.jF("Phone (optional)",d.db,B.cZ,1,c,c),new A.jF("Email (optional)",d.dx,B.hJ,1,c,c),new A.jF("Number of tenants (optional)",d.Q,B.eo,1,c,c)],a2)
-if(!d.f.m(0,"unitNumber"))m.push(new A.jF("Unit Number",d.fr,c,1,c,c))
-if(!d.f.m(0,"city"))m.push(new A.jF("City",d.fx,c,1,c,c))
-if(!d.f.m(0,"postalCode"))m.push(new A.jF("Postal Code",d.fy,c,1,c,c))
-if(!d.f.m(0,"notes"))m.push(new A.jF("Notes",d.go,c,3,c,c))
-m.push(A.Np(B.J,new A.aPY(d),B.asf,B.asa,d.CW))
-if(d.CW){r=d.ch
-o=t.h4
-o=A.G(new A.Y(B.eh,new A.aPZ(),o),o.h("aj.E"))
-r=A.kK(B.VA,r,!0,o,new A.aQ_(d),t.jG)
-o=d.w
-i=A.b([B.QI],t.FG)
-for(h=J.aE(d.r),g=t.b7;h.q();){f=h.gK(h)
-i.push(new A.dJ(f,A.D(f,c,c,c,c,c,c,c),B.bq,c,g))}o=A.b4(A.b([A.bc(A.kK(B.VK,o,!0,i,new A.aQ0(d),n),1),B.bh,A.bo6(B.Up,d.gaul(),"Create a group")],a2),B.n,B.h,B.j,0,c)
-i=A.b([],a2)
-for(h=["Hot","Sure Prospect","Appointment","Follow-Up"],g=d.at,k=0;k<4;++k){e=h[k]
-i.push(A.IP(A.D(e,c,c,c,c,c,c,c),new A.aQ1(d,e),g.m(0,e)))}B.b.L(m,A.b([r,B.aC,o,B.aC,B.aw9,A.fJ(B.aF,i,B.b4,8,8)],a2))}m.push(B.aC)
-if(!(d.ax==="Do Not Solicit"||l.m(0,b))){r=d.ay
-q=A.G(new A.Y(B.YD,new A.aQ2(),q),p)
-m.push(A.kK(B.VF,r,!1,q,new A.aPS(d),n))}if(!(d.ax==="Do Not Solicit"||l.m(0,b))&&d.ay!=="None")m.push(B.aC)
-if(!(d.ax==="Do Not Solicit"||l.m(0,b))&&d.ay!=="None")m.push(new A.Ey(d.ay+" date",d.k3,!0,c))
-m.push(B.aC)
-if(!d.f.m(0,a)){r=d.x
-q=A.b([],t.FG)
-for(p=B.f6.gfd(B.f6),p=p.ga6(p),o=t.b7;p.q();){l=p.gK(p)
-i=l.a
-if(i!=="outcome")q.push(new A.dJ(i,A.D(l.b,c,c,c,c,c,c,c),B.bq,c,o))}m.push(A.kK(B.Vq,r,!1,q,new A.aPT(d),n))}if(!d.f.m(0,a))B.b.L(m,A.b([B.aC,new A.xh(d.y,d.z,new A.aPU(d),new A.aPV(d),c)],a2))
-if(!d.f.m(0,"coordinates"))B.b.L(m,A.b([new A.jF("Latitude",d.id,B.mo,1,c,c),new A.jF("Longitude",d.k1,B.mo,1,c,c)],a2))
-if(!d.f.m(0,"lastContactDate"))m.push(new A.Ey("Last Contact Date",d.k2,!1,c))
-if(!d.f.m(0,"followUpDate"))m.push(new A.Ey("Follow Up Date",d.k3,!1,c))
-m.push(B.fi)
-r=A.wi(c,c,A.m(a3).ax.b,c,c,c,c,c,c,A.m(a3).ax.c,c,c,c,c,c,c,c,c,c,c)
-m.push(new A.dP(B.bQ,c,c,A.lD(A.D(d.CW?"Save Door Record + Lead":"Save Door Record",c,c,c,c,c,c,c),c,d.gaII(),r),c))
-return A.hT(c,a0.fx,A.h0(!0,A.fa(A.cT(new A.d6(B.eA,A.aV(A.b([a1,new A.aO(s,new A.Ah(A.at0(c,A.aV(m,B.n,B.h,B.j,0,B.q),d.d),c),c)],a2),B.I,B.h,B.j,0,B.q),c),c,c,c),c,c,B.a2),B.J,!0),c)}}
+F(a3){var s,r,q,p,o,n,m,l,k,j,i,h,g,f,e=this,d=null,c="Do Not Solicit",b="mapIconCategory",a=A.m(a3),a0=A.m(a3),a1=e.CW?"Add a Lead":"Log a Door",a2=t.p
+a0=A.bV(d,A.b4(A.b([A.bc(A.D(a1,d,d,d,A.b6(d,d,A.m(a3).ax.c,d,d,d,d,d,d,d,d,34,d,d,B.ah,d,d,!0,d,d,d,d,d,d,d,d),d,d,d),1),A.dS(A.m(a3).ax.c,d,B.le,d,d,new A.aPP(e,a3),d,d,"Customize door and lead form",d)],a2),B.n,B.h,B.j,0,d),B.r,d,d,new A.bo(a0.ax.b,d,d,B.Kz,d,d,B.O),d,d,d,d,B.RN,d,d,1/0)
+a1=A.j3(a3,d)
+s=e.ax
+r=t.fo
+q=r.h("aj.E")
+p=A.G(new A.Y(B.x9,new A.aPQ(),r),q)
+o=t.N
+p=A.kK(B.VD,s,!1,p,new A.aPR(e),o)
+s=A.b([],a2)
+for(n=["Tenant","Language Barrier","Not Interested","Already Purchased","Hot Lead","Vacant","No Answer","Do Not Solicit"],m=e.as,l=0;l<8;++l){k=n[l]
+s.push(A.IP(A.D(A.vk(k),d,d,d,d,d,d,d),new A.aPW(e,k),m.m(0,k)))}s=A.fJ(B.aF,s,B.b4,8,8)
+n=e.CW?new A.aPX():d
+n=A.b([new A.jF("Address (optional)",e.dy,d,1,d,d),B.aC,new A.Er("Door record",d),p,B.aC,B.awa,s,B.aC,new A.jF("First Name",e.cx,d,1,n,d),new A.jF("Last Name",e.cy,d,1,d,d),new A.jF("Phone (optional)",e.db,B.cZ,1,d,d),new A.jF("Email (optional)",e.dx,B.hJ,1,d,d),new A.jF("Number of tenants (optional)",e.Q,B.eo,1,d,d)],a2)
+if(!e.f.m(0,"unitNumber"))n.push(new A.jF("Unit Number",e.fr,d,1,d,d))
+if(!e.f.m(0,"city"))n.push(new A.jF("City",e.fx,d,1,d,d))
+if(!e.f.m(0,"postalCode"))n.push(new A.jF("Postal Code",e.fy,d,1,d,d))
+if(!e.f.m(0,"notes"))n.push(new A.jF("Notes",e.go,d,3,d,d))
+n.push(A.Np(B.J,new A.aPY(e),B.asf,B.asa,e.CW))
+if(e.CW){s=e.ch
+p=t.h4
+p=A.G(new A.Y(B.eh,new A.aPZ(),p),p.h("aj.E"))
+s=A.kK(B.VA,s,!0,p,new A.aQ_(e),t.jG)
+p=e.w
+j=A.b([B.QI],t.FG)
+for(i=J.aE(e.r),h=t.b7;i.q();){g=i.gK(i)
+j.push(new A.dJ(g,A.D(g,d,d,d,d,d,d,d),B.bq,d,h))}p=A.b4(A.b([A.bc(A.kK(B.VK,p,!0,j,new A.aQ0(e),o),1),B.bh,A.bo6(B.Up,e.gaul(),"Create a group")],a2),B.n,B.h,B.j,0,d)
+j=A.b([],a2)
+for(i=["Hot","Sure Prospect","Appointment","Follow-Up"],h=e.at,l=0;l<4;++l){f=i[l]
+j.push(A.IP(A.D(f,d,d,d,d,d,d,d),new A.aQ1(e,f),h.m(0,f)))}B.b.L(n,A.b([s,B.aC,p,B.aC,B.aw9,A.fJ(B.aF,j,B.b4,8,8)],a2))}n.push(B.aC)
+if(!(e.ax==="Do Not Solicit"||m.m(0,c))){s=e.ay
+r=A.G(new A.Y(B.YD,new A.aQ2(),r),q)
+n.push(A.kK(B.VF,s,!1,r,new A.aPS(e),o))}if(!(e.ax==="Do Not Solicit"||m.m(0,c))&&e.ay!=="None")n.push(B.aC)
+if(!(e.ax==="Do Not Solicit"||m.m(0,c))&&e.ay!=="None")n.push(new A.Ey(e.ay+" date",e.k3,!0,d))
+n.push(B.aC)
+if(!e.f.m(0,b)){s=e.x
+r=A.b([],t.FG)
+for(q=B.f6.gfd(B.f6),q=q.ga6(q),p=t.b7;q.q();){m=q.gK(q)
+j=m.a
+if(j!=="outcome")r.push(new A.dJ(j,A.D(m.b,d,d,d,d,d,d,d),B.bq,d,p))}n.push(A.kK(B.Vq,s,!1,r,new A.aPT(e),o))}if(!e.f.m(0,b))B.b.L(n,A.b([B.aC,new A.xh(e.y,e.z,new A.aPU(e),new A.aPV(e),d)],a2))
+if(!e.f.m(0,"coordinates"))B.b.L(n,A.b([new A.jF("Latitude",e.id,B.mo,1,d,d),new A.jF("Longitude",e.k1,B.mo,1,d,d)],a2))
+if(!e.f.m(0,"lastContactDate"))n.push(new A.Ey("Last Contact Date",e.k2,!1,d))
+if(!e.f.m(0,"followUpDate"))n.push(new A.Ey("Follow Up Date",e.k3,!1,d))
+n.push(B.fi)
+s=A.wi(d,d,A.m(a3).ax.b,d,d,d,d,d,d,A.m(a3).ax.c,d,d,d,d,d,d,d,d,d,d)
+n.push(new A.dP(B.bQ,d,d,A.lD(A.D(e.CW?"Save Door Record + Lead":"Save Door Record",d,d,d,d,d,d,d),d,e.gaII(),s),d))
+return A.hT(d,a.fx,A.h0(!0,A.fa(A.cT(new A.d6(B.eA,A.aV(A.b([a0,new A.aO(a1,new A.Ah(A.at0(d,A.aV(n,B.n,B.h,B.j,0,B.q),e.d),d),d)],a2),B.I,B.h,B.j,0,B.q),d),d,d,d),d,d,B.a2),B.J,!0),d)}}
 A.aPG.prototype={
 $0(){var s=this.a,r=this.c,q=s.as
 if(this.b){q.u(0,r)
@@ -126599,7 +126600,7 @@ q=n.go!=null?n.gauj():n.ga27()
 p=r===0
 o=p?m:new A.b0L(n)
 p=p?m:new A.b0M(n)
-j.push(A.lQ(92,new A.a6X(k,s,r,n.gaLE(),n.gaJi(),q,o,p,n.gaIH(),m),m,m,m,12,m,m))}return A.hT(m,l.fx,A.h0(!0,A.cT(new A.d6(B.eA,A.x8(B.cv,A.hi(B.bP,j,B.m,B.bd,m),new A.b0N(n),new A.b0O(n),m,m,m,m,new A.b0P(n)),m),m,m,m),B.J,!0),m)}}
+j.push(A.lQ(148,new A.a6X(k,s,r,n.gaLE(),n.gaJi(),q,o,p,n.gaIH(),m),m,m,m,12,m,m))}return A.hT(m,l.fx,A.h0(!0,A.cT(new A.d6(B.eA,A.x8(B.cv,A.hi(B.bP,j,B.m,B.bd,m),new A.b0N(n),new A.b0O(n),m,m,m,m,new A.b0P(n)),m),m,m,m),B.J,!0),m)}}
 A.b0R.prototype={
 $1(a){var s=this.a
 if(s.c!=null)s.I(new A.b0Q())},
@@ -127308,7 +127309,7 @@ g=i.go
 if(g!=null)B.b.L(s,A.b([new A.ae7(g,new A.b0B(i),new A.b0C(i),i.gatt(),k),B.b2],r))
 g=i.B.length
 h=B.c.a1(h.a.a).length!==0||i.x2
-s.push(new A.aaM(g,g,h,i.gaIg(),k))
+s.push(new A.aaM(g,g,h,i.x2,i.gaIg(),k))
 s.push(B.b2)
 h=i.ry?B.SS:B.TA
 g=i.gaxK()
@@ -127476,11 +127477,12 @@ A.aaM.prototype={
 F(a){var s,r,q=this,p="1 property",o=q.c,n=o===1?p:""+o+" properties"
 o=q.d
 s=o===1?p:""+o+" properties"
-o=q.e
-r=A.b([A.bc(new A.R7(o?n+" found":s+" nearby",null),1)],t.p)
-if(o)r.push(B.agp)
-r.push(new A.aaN("Reset Map",q.f,null))
-return A.b4(r,B.n,B.h,B.j,0,null)}}
+if(q.f)r="Loading nearby properties..."
+else r=q.e?n+" found":s+" nearby"
+o=A.b([A.bc(new A.R7(r,null),1)],t.p)
+if(q.e)o.push(B.agp)
+o.push(new A.aaN("Reset Map",q.r,null))
+return A.b4(o,B.n,B.h,B.j,0,null)}}
 A.R7.prototype={
 F(a){var s=null
 return A.D(this.c,1,B.aq,s,B.aq1,s,s,s)}}
@@ -145894,7 +145896,7 @@ B.r5=new A.a5("Lead Overview",null,null,null,null,null,null,null,null,null)
 B.asN=new A.a5("Review & Create Leads",null,null,null,null,null,null,null,null,null)
 B.asQ=new A.a5("Share calendar invite",null,null,null,null,null,null,null,null,null)
 B.asR=new A.a5("Create lead group",null,null,null,null,null,null,null,null,null)
-B.asS=new A.a5("Release notes \xb7 0.1.55",null,null,null,null,null,null,null,null,null)
+B.asS=new A.a5("Release notes \xb7 0.1.56",null,null,null,null,null,null,null,null,null)
 B.asT=new A.a5("Door Record \xb7 Outcome",null,null,null,null,null,null,null,null,null)
 B.asU=new A.a5("Map Icon",null,null,null,null,null,null,null,null,null)
 B.asV=new A.a5("Call",null,null,null,null,null,null,null,null,null)
@@ -147016,7 +147018,7 @@ s($,"bRL","bfX",()=>A.Gl(2,52))
 s($,"bRK","bwi",()=>B.d.hM(A.Vl($.bfX())/A.Vl(10)))
 s($,"bUQ","blu",()=>A.Vl(10))
 s($,"bUR","by5",()=>A.Vl(10))
-s($,"bPj","bv8",()=>A.dX("https://knockquestapp.github.io/KnockQuest/downloads/KnockQuest-production-0.1.55.apk",0,null))
+s($,"bPj","bv8",()=>A.dX("https://knockquestapp.github.io/KnockQuest/downloads/KnockQuest-production-0.1.56.apk",0,null))
 s($,"bPk","bv9",()=>A.dX("io.knockquest.app://open",0,null))
 s($,"bTy","bg4",()=>A.bDm(40.7128,-74.006))
 s($,"bPJ","A4",()=>new A.anI())
