@@ -122399,7 +122399,7 @@ j=A.cQ(B.h1,s?f.k3:r,g,3)
 i=A.m(a3).ok.Q
 if(i==null)s=g
 else{r=i.bd(s?f.k3:r)
-s=r}return A.hT(g,d.fx,A.bV(g,A.h0(!0,A.cT(A.fa(new A.d6(B.KZ,A.aV(A.b([B.cX,a,B.al2,a0,B.al5,a1,B.ch,a2,B.al3,new A.Ah(p,g),B.b2,q,B.fj,n,B.cg,l,B.fi,m,B.as,A.fJ(B.rm,A.b([k,j,A.D("Terms of Service",g,g,g,s,g,g,g)],o),B.rn,0,8)],o),B.ba,B.h,B.j,0,B.q),g),b,g,B.a2),g,g,g),B.J,!0),B.r,g,g,new A.bo(g,g,g,g,g,new A.mS(B.e6,B.rR,B.d0,c,g,g),B.O),g,g,g,g,g,g,g,g),g)}}
+s=r}return A.hT(g,d.fx,A.bV(g,A.h0(!0,A.cT(A.fa(new A.d6(B.KZ,A.aV(A.b([B.cX,a,B.al2,a0,B.al5,a1,B.ch,a2,B.al3,new A.Ah(p,g),B.b2,q,B.fj,n,B.cg,l,B.fi,m,B.as,A.fJ(B.rm,A.b([k,j,A.D("Terms of Use",g,g,g,s,g,g,g)],o),B.rn,0,8)],o),B.ba,B.h,B.j,0,B.q),g),b,g,B.a2),g,g,g),B.J,!0),B.r,g,g,new A.bo(g,g,g,g,g,new A.mS(B.e6,B.rR,B.d0,c,g,g),B.O),g,g,g,g,g,g,g,g),g)}}
 A.b37.prototype={
 $1(a){var s=this.a.c
 if(s!=null)A.bi_(s,"/dashboard",new A.b36(),t.X)},
@@ -123490,7 +123490,7 @@ if(r==null)r=q.y
 l.r!==$&&A.aS()
 l.r=new A.cm(new A.ck(r,B.az,B.ad),m)
 r=p?k:s.e
-if(r==null)r="Follow Up"
+if(r==null)r="Follow-Up"
 l.w!==$&&A.aS()
 l.w=new A.cm(new A.ck(r,B.az,B.ad),m)
 l.y=A.c0(A.b1(o),A.ba(o),A.cn(o),0,0,0,0)
@@ -123578,7 +123578,7 @@ if(n.length===0)n="Scheduled follow-up"
 m=j.w
 m===$&&A.a()
 m=B.c.a1(m.a.a)
-if(m.length===0)m="Follow Up"
+if(m.length===0)m="Follow-Up"
 l=j.Q
 l===$&&A.a()
 k=j.a.c
@@ -142239,7 +142239,7 @@ B.Vc=new A.a_j(!0,!0,B.hh)
 B.aI=s([],t.oU)
 B.Vd=new A.pZ("\ufffc",null,null,null,!0,!0,B.aI)
 B.Ve=new A.q_(null,null,null,null,null,null,null,null,null,B.l2,B.k6,!1,null,!1,null,null,null,null,null,null,null,null,!1,null,null,null,null,null,null,null,null,null,null,null,!1,null,null)
-B.Vf=new A.d8(null,null,null,"Schedule Type",null,null,null,null,null,null,"Follow Up, Showing, Call, Door Knock",null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
+B.Vf=new A.d8(null,null,null,"Schedule Type",null,null,null,null,null,null,"Follow-Up, Showing, Call, Door Knock",null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.Ur=new A.bE(B.vY,16,null,null,null)
 B.Vg=new A.d8(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,!1,null,null,null,null,null,null,null,null,B.Ur,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.Ue=new A.bE(B.vW,null,null,null,null)
@@ -145894,7 +145894,7 @@ B.r5=new A.a5("Lead Overview",null,null,null,null,null,null,null,null,null)
 B.asN=new A.a5("Review & Create Leads",null,null,null,null,null,null,null,null,null)
 B.asQ=new A.a5("Share calendar invite",null,null,null,null,null,null,null,null,null)
 B.asR=new A.a5("Create lead group",null,null,null,null,null,null,null,null,null)
-B.asS=new A.a5("Release notes \xb7 0.1.54",null,null,null,null,null,null,null,null,null)
+B.asS=new A.a5("Release notes \xb7 0.1.55",null,null,null,null,null,null,null,null,null)
 B.asT=new A.a5("Door Record \xb7 Outcome",null,null,null,null,null,null,null,null,null)
 B.asU=new A.a5("Map Icon",null,null,null,null,null,null,null,null,null)
 B.asV=new A.a5("Call",null,null,null,null,null,null,null,null,null)
@@ -147016,7 +147016,7 @@ s($,"bRL","bfX",()=>A.Gl(2,52))
 s($,"bRK","bwi",()=>B.d.hM(A.Vl($.bfX())/A.Vl(10)))
 s($,"bUQ","blu",()=>A.Vl(10))
 s($,"bUR","by5",()=>A.Vl(10))
-s($,"bPj","bv8",()=>A.dX("https://knockquestapp.github.io/KnockQuest/downloads/KnockQuest-production-0.1.54.apk",0,null))
+s($,"bPj","bv8",()=>A.dX("https://knockquestapp.github.io/KnockQuest/downloads/KnockQuest-production-0.1.55.apk",0,null))
 s($,"bPk","bv9",()=>A.dX("io.knockquest.app://open",0,null))
 s($,"bTy","bg4",()=>A.bDm(40.7128,-74.006))
 s($,"bPJ","A4",()=>new A.anI())
