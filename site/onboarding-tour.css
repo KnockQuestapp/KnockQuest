@@ -15,7 +15,7 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: transparent;
+  background: #26395e;
   color: #ffffff;
   box-shadow: none;
   font-family: Arial, Helvetica, sans-serif;
@@ -39,7 +39,7 @@
 .kq-tour-help:hover,
 .kq-tour-help:focus-visible,
 .kq-tour-help[aria-pressed="true"] {
-  background: transparent;
+  background: #2f456f;
   color: #64dfcb;
   outline: none;
 }

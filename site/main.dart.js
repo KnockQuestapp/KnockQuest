@@ -122994,7 +122994,7 @@ j=A.m(a)
 k=A.m(a).ax
 r=k.RG
 k=r==null?k.k2:r
-j=A.b4(A.b([i,A.aV(A.b([A.b4(A.b([A.bhF(B.Up,new A.b3q(a),A.pU(o,k,o,o,o,o,o,j.ax.k3,o,o,o,o,o,o,o,o,o,o),"Quickstart / New user guide"),new A.NY(p.a.c,new A.b3r(p),o),B.bh,A.dS(o,o,B.Ur,o,o,p.gaK5(),o,o,"Sign out",o)],s),B.n,B.h,B.a1,0,o)],s),B.eb,B.h,B.j,0,B.q)],s),B.n,B.h,B.j,0,o)
+j=A.b4(A.b([i,A.aV(A.b([A.b4(A.b([A.bhF(B.Up,new A.b3q(a),A.pU(o,k,o,o,o,o,o,j.ax.k3,o,o,o,o,o,o,o,o,o,o),"Interactive tour"),new A.NY(p.a.c,new A.b3r(p),o),B.bh,A.dS(o,o,B.Ur,o,o,p.gaK5(),o,o,"Sign out",o)],s),B.n,B.h,B.a1,0,o)],s),B.eb,B.h,B.j,0,B.q)],s),B.n,B.h,B.j,0,o)
 k=$.i7().a.a
 k=k==null?o:k.c
 k=A.b([j,B.alh,A.B("Hey, "+B.b.gR((k==null?"Agent":k).split(" "))+". Own your area.",o,o,o,A.m(a).ok.f,o,o,o),B.aD],s)
