@@ -124118,7 +124118,7 @@ d=A.a2(a4)
 if(m.c!=null){c=A.l(d)
 b=m.c
 b.toString
-A.cb(b,A.ew(null,null,null,null,null,B.m,null,A.B("Could not import CRM data: "+c,null,null,null,null,null,null,null),null,B.S,null,null,null,null,null,null,null,null,null,null))}n.push(6)
+A.cb(b,A.ew(null,null,null,null,null,B.m,null,A.B("Could not sync CRM data: "+c,null,null,null,null,null,null,null),null,B.S,null,null,null,null,null,null,null,null,null,null))}n.push(6)
 s=5
 break
 case 3:n=[2]
@@ -124398,7 +124398,7 @@ $0(){},
 $S:0}
 A.aUT.prototype={
 $3(a,a0,a1){var s,r,q,p,o,n,m,l,k,j,i,h,g,f=null,e=A.j3(a,f),d=t.p,c=A.b4(A.b([A.dS(f,f,B.iX,f,f,new A.aUL(a),f,f,f,f),A.bc(A.B("CRM & Integrations",f,f,f,A.b6(f,f,A.m(a).ax.k3,f,f,f,f,f,f,f,f,22,f,f,B.ah,f,f,!0,f,f,f,f,f,f,f,f),f,f,f),1)],d),B.n,B.h,B.j,0,f),b=A.m(a).ok.Q
-b=A.B("Configure webhook sync or import CRM files for clean review inside KnockQuest.",f,f,f,A.b6(f,f,b==null?f:b.b,f,f,f,f,f,f,f,f,f,f,f,f,f,f,!0,f,f,f,f,f,f,f,f),f,f,f)
+b=A.B("Configure CRM sync so existing records stay aligned with KnockQuest.",f,f,f,A.b6(f,f,b==null?f:b.b,f,f,f,f,f,f,f,f,f,f,f,f,f,f,!0,f,f,f,f,f,f,f,f),f,f,f)
 s=A.as(a,B.d4,t.w).w
 r=this.a
 q=A.fa(new A.a7O(r.x,r.y,r.gaCL(),r.gatp(),r.gaIs(),r.gaMm(),f),f,f,B.a2)
@@ -124442,7 +124442,7 @@ $1(a){return this.a.BI(this.b,a)},
 $S:8}
 A.a7O.prototype={
 F(a){var s,r,q,p,o=this,n=null,m=A.m(a).ax,l=A.dQ(A.m(a).ch,1),k=A.be(26),j=A.be(12),i=m.k3,h=t.p
-j=A.b([A.b4(A.b([A.bV(n,A.cJ(B.TB,m.c,n,n),B.r,n,n,new A.bo(m.b,n,n,j,n,n,B.O),n,38,n,n,n,n,n,38),B.fi,A.bc(A.aV(A.b([A.B("Import CRM Data",n,n,n,A.b6(n,n,i,n,n,n,n,n,n,n,n,n,n,n,B.bs,n,n,!0,n,n,n,n,n,n,n,n),n,n,n),B.fj,A.B("CSV, XLSX, ODS, DOCX, PPTX, PDF, vCard, JSON, text and image OCR. Review extracted records before saving.",n,n,n,A.m(a).ok.Q,n,n,n)],h),B.I,B.h,B.j,0,B.q),1)],h),B.n,B.h,B.j,0,n),B.ac],h)
+j=A.b([A.b4(A.b([A.bV(n,A.cJ(B.TB,m.c,n,n),B.r,n,n,new A.bo(m.b,n,n,j,n,n,B.O),n,38,n,n,n,n,n,38),B.fi,A.bc(A.aV(A.b([A.B("Sync CRM Data",n,n,n,A.b6(n,n,i,n,n,n,n,n,n,n,n,n,n,n,B.bs,n,n,!0,n,n,n,n,n,n,n,n),n,n,n),B.fj,A.B("Connect your CRM integration so existing records sync into KnockQuest for review before saving.",n,n,n,A.m(a).ok.Q,n,n,n)],h),B.I,B.h,B.j,0,B.q),1)],h),B.n,B.h,B.j,0,n),B.ac],h)
 s=o.d
 if(s)B.b.L(j,A.b([B.WJ,B.agx],h))
 r=A.wu(B.Un,B.asC,s?n:o.e,n)
@@ -142475,7 +142475,7 @@ B.ax4=new A.r7(B.iU,"Leads","Create real opportunities only.","Create a Lead whe
 B.YD=s(["Today","Upcoming","Complete Task","Add Task"],t.s)
 B.ax2=new A.r7(B.pa,"Tasks","Know what to do next.","Follow-ups, re-knocks, appointments, and closing reminders appear here. Complete tasks as you work.",B.YD,"/follow-ups","Open Tasks")
 B.aap=s(["Import","Export","Configure","Pin Styles"],t.s)
-B.ax_=new A.r7(B.wm,"Customize & Integrations","Make the workflow fit your team.","Customize pin styles and configure CRM imports, exports, notes, and one-way sync.",B.aap,"/integrations","Open Integrations")
+B.ax_=new A.r7(B.wm,"Customize & Integrations","Make the workflow fit your team.","Customize pin styles and configure CRM sync, exports, notes, and follow-up flow.",B.aap,"/integrations","Open Integrations")
 B.WW=s([B.ax3,B.ax1,B.ax0,B.ax4,B.ax2,B.ax_],A.at("D<r7>"))
 B.pq=s([100,250,500,1000],t.n)
 B.WX=s([144,169],t.t)
