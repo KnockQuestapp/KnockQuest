@@ -26,7 +26,8 @@
 }
 
 .kq-tour-help:hover,
-.kq-tour-help:focus-visible {
+.kq-tour-help:focus-visible,
+.kq-tour-help[aria-pressed="true"] {
   background: #64dfcb;
   color: #0f172a;
   outline: 3px solid rgba(20, 184, 166, 0.35);

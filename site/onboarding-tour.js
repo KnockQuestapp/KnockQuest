@@ -37,9 +37,11 @@
     helpButton = document.createElement('button');
     helpButton.type = 'button';
     helpButton.className = 'kq-tour-help';
-    helpButton.setAttribute('aria-label', 'Show app tour');
+    helpButton.setAttribute('aria-label', 'Toggle app guide');
+    helpButton.setAttribute('aria-pressed', 'false');
+    helpButton.title = 'Toggle app guide';
     helpButton.textContent = '?';
-    helpButton.addEventListener('click', () => startTour(0));
+    helpButton.addEventListener('click', toggleTour);
     document.body.appendChild(helpButton);
 
     if (!hasSeenTour()) {
@@ -106,6 +108,7 @@
     removePrompt();
     active = true;
     currentStep = stepIndex;
+    updateHelpButtonState();
     ensureTourElements();
     renderStep();
   }
@@ -183,7 +186,23 @@
     backdrop = undefined;
     spotlight = undefined;
     card = undefined;
+    updateHelpButtonState();
     if (helpButton) helpButton.focus({ preventScroll: true });
+  }
+
+  function toggleTour() {
+    if (active) {
+      endTour();
+      return;
+    }
+
+    startTour(0);
+  }
+
+  function updateHelpButtonState() {
+    if (!helpButton) return;
+    helpButton.setAttribute('aria-pressed', active ? 'true' : 'false');
+    helpButton.title = active ? 'Turn guide off' : 'Turn guide on';
   }
 
   function handleKeydown(event) {
