@@ -70247,7 +70247,7 @@ case B.iE:a0.a=j.$0()
 break
 case B.ec:a0.a=i.$0()
 b.a.toString
-h=A.dM(l,a,B.Ul,a,a,b.ga4a(),a,a,"Switch to calendar",a)
+h=A.dM(l,a,B.Uk,a,a,b.ga4a(),a,a,"Switch to calendar",a)
 break
 case B.eO:a0.a=i.$0()
 break}b.a.toString
@@ -71525,7 +71525,7 @@ switch(1){case 1:case 2:return B.wV}},
 a11(a,b){var s=$.bxn(),r=$.blu(),q=s.$ti.h("dG<aG.T>")
 q=new A.aI(t.F.a(b),new A.dG(r,s,q),q.h("aI<aG.T>"))
 this.w=q
-return A.aH0(B.Uj,q)},
+return A.aH0(B.Ui,q)},
 ase(a,b){if(this.a2S()!==B.WN)return null
 return this.a11(a,b)},
 asr(a,b){if(this.a2S()!==B.wV)return null
@@ -122299,7 +122299,7 @@ return A.q($async$HF,r)},
 a0J(a){var s=null,r=this.c
 if(r==null)return
 A.cb(r,A.ew(s,s,s,s,s,B.m,s,A.B(a,s,s,s,s,s,s,s),s,B.S,s,s,s,s,s,s,s,s,s,s))},
-F(a){var s,r,q,p,o=this,n=null,m=A.m(a).ax,l=o.d,k=l?"Open App":"Download App",j=l?B.TM:B.TE
+F(a){var s,r,q,p,o=this,n=null,m=A.m(a).ax,l=o.d,k=l?"Open App":"Download App",j=l?B.TM:B.TF
 l=o.e
 s=l?n:o.gaAQ()
 if(l){o.a.toString
@@ -122417,7 +122417,7 @@ q=h.r?g:h.gaKX()
 p=A.wl(g,g,e,g,g,g,g,g,g,f.c,g,B.al8,g,g,new A.cU(A.be(999),B.v),g,g,g,g,g)
 o=t.p
 p=A.at3(g,A.aV(A.b([B.awM,B.an,s,B.a9,B.awN,B.an,r,B.cg,A.cP(A.cx(A.lD(h.r?B.alj:B.arH,g,q,p),g,1/0),g,g,g)],o),B.ba,B.h,B.j,0,B.q),h.d)
-q=A.cV(B.asK,g,g,h.gawL(),g,A.yG(g,g,g,g,g,g,g,g,g,e,g,g,g,g,g,g,g,g,g,g))
+q=A.cV(B.asL,g,g,h.gawL(),g,A.yG(g,g,g,g,g,g,g,g,g,e,g,g,g,g,g,g,g,g,g,g))
 r=f.rx
 s=r==null
 n=A.b4(A.b([B.kT,new A.aO(B.vm,A.B("or",g,g,g,A.b6(g,g,s?f.k3:r,g,g,g,g,g,g,g,g,16,g,g,g,g,g,!0,g,g,g,g,g,g,g,g),g,g,g),g),B.kT],o),B.n,B.h,B.j,0,g)
@@ -122499,7 +122499,7 @@ s=A.m(a).ax
 r=s.rx
 q=t.p
 r=A.aV(A.b([n,B.a9,A.b4(A.b([B.kT,new A.aO(B.vm,A.B("or",p,p,p,A.b6(p,p,r==null?s.k3:r,p,p,p,p,p,p,p,p,p,p,p,p,p,p,!0,p,p,p,p,p,p,p,p),p,p,p),p),B.kT],q),B.n,B.h,B.j,0,p),B.an,A.eP(p,B.xr,!1,p,!0,B.m,p,A.f1(),this.a,p,p,p,p,p,2,B.Vv,B.R,!0,p,!0,p,!1,p,B.as,p,p,p,p,p,p,p,p,p,1,p,p,!1,"\u2022",p,p,p,p,p,!1,p,p,!1,p,!0,p,B.au,p,p,p,p,p,p,p,p,p,p,p,p,!0,B.U,p,B.fl,p,B.c_,p,p),A.eP(p,B.a0X,!1,p,!0,B.m,p,A.f1(),this.b,p,p,p,p,p,2,B.VQ,B.R,!0,p,!0,p,!1,p,B.as,p,p,p,p,p,B.hJ,p,p,p,1,p,p,!1,"\u2022",p,p,p,p,p,!1,p,p,!1,p,!0,p,B.au,p,p,p,p,p,p,p,p,p,p,p,p,!0,B.U,p,B.b4,p,B.c_,p,p),A.eP(p,B.a5h,!1,p,!0,B.m,p,A.f1(),this.c,p,p,p,p,p,2,B.VN,B.R,!0,p,!0,p,!1,p,B.as,p,p,p,p,p,p,p,p,p,1,p,p,!0,"\u2022",p,p,p,p,p,!1,p,p,!1,p,!0,p,B.au,p,p,p,p,p,p,p,p,p,p,p,p,!0,B.U,p,B.b4,p,B.ep,p,p)],q),B.n,B.h,B.Y,0,B.q)
-return A.fA(A.b([A.cV(B.bD,p,p,new A.b3p(a),p,p),A.lD(B.asC,p,new A.b3q(a),p)],q),p,p,p,r,p,!1,o,p)},
+return A.fA(A.b([A.cV(B.bD,p,p,new A.b3p(a),p,p),A.lD(B.asD,p,new A.b3q(a),p)],q),p,p,p,r,p,!1,o,p)},
 $S:31}
 A.b3o.prototype={
 $0(){A.aR(this.a,!1).bG("google")
@@ -122549,7 +122549,7 @@ r=this.c
 r.toString
 r=A.m(r).ax
 q=r.rx
-n.push(A.cF(B.TF,q==null?r.k3:q,p,19))
+n.push(A.cF(B.TG,q==null?r.k3:q,p,19))
 n=A.b4(n,B.n,B.h,B.j,0,p)
 r=this.c
 r.toString
@@ -122628,9 +122628,9 @@ b3=A.B(""+A.b1(b2)+" Closed GCI",b0,b0,b0,b0,b0,b0,b0)
 k=s.ad4(A.b1(b2))
 k=A.eV(!1,B.J,b0,b0,!0,b0,b0,b0,!0,b0,b0,b0,b0,b0,b0,new A.aQG(b5),!1,b0,b0,b0,b0,b0,b0,b0,b3,b0,A.B(A.Cm(2,"$").cY(k),b0,b0,b0,A.m(b5).ok.w,b0,b0,b0),b0)
 b3=s.gaZa()
-b3=A.eV(!1,B.J,b0,b0,!0,b0,b0,b0,!0,b0,b0,b0,b0,b0,b0,new A.aQH(b5),!1,b0,b0,b0,b0,b0,B.ate,b0,B.arc,b0,A.B(A.Cm(2,"$").cY(b3),b0,b0,b0,A.m(b5).ok.w,b0,b0,b0),b0)
+b3=A.eV(!1,B.J,b0,b0,!0,b0,b0,b0,!0,b0,b0,b0,b0,b0,b0,new A.aQH(b5),!1,b0,b0,b0,b0,b0,B.atf,b0,B.arc,b0,A.B(A.Cm(2,"$").cY(b3),b0,b0,b0,A.m(b5).ok.w,b0,b0,b0),b0)
 j=s.gaWE()
-j=A.b([b1,k,b3,A.eV(!1,B.J,b0,b0,!0,b0,b0,b0,!0,b0,b0,b0,b0,b0,b0,new A.aQI(b5),!1,b0,b0,b0,b0,b0,b0,b0,B.asI,b0,A.B(A.Cm(2,"$").cY(j),b0,b0,b0,A.m(b5).ok.w,b0,b0,b0),b0)],l)
+j=A.b([b1,k,b3,A.eV(!1,B.J,b0,b0,!0,b0,b0,b0,!0,b0,b0,b0,b0,b0,b0,new A.aQI(b5),!1,b0,b0,b0,b0,b0,b0,b0,B.asJ,b0,A.B(A.Cm(2,"$").cY(j),b0,b0,b0,A.m(b5).ok.w,b0,b0,b0),b0)],l)
 if(B.b.cU(s.gxj(0),new A.aQJ()))j.push(B.arK)
 j.push(A.cV(B.as1,b0,b0,new A.aQK(q,b5,s),b0,b0))
 m.push(A.j5(new A.aO(B.iL,A.aV(j,B.ba,B.h,B.j,0,B.q),b0),b0))
@@ -122640,7 +122640,7 @@ m.push(B.aC)
 m.push(A.B("Today\u2019s Tasks",b0,b0,b0,A.m(b5).ok.r,b0,b0,b0))
 if(s.gYa().length+s.gU0().length===0)m.push(B.agz)
 for(b1=s.gU0(),b3=b1.length,h=0;h<b1.length;b1.length===b3||(0,A.C)(b1),++h){a8=b1[h]
-m.push(A.j5(A.eV(!1,b0,b0,b0,!0,b0,b0,b0,!0,b0,b0,b0,b0,b0,b0,new A.aQO(q,a8),!1,b0,b0,b0,b0,b0,A.B(a8.f+"\n"+(a8.b+" "+a8.c),b0,b0,b0,b0,b0,b0,b0),b0,B.asy,b0,A.cV(B.asa,b0,b0,new A.aQP(b5,a8,b2),b0,b0),b0),b0))}for(b1=s.gYa(),b3=b1.length,h=0;h<b1.length;b1.length===b3||(0,A.C)(b1),++h){a9=b1[h]
+m.push(A.j5(A.eV(!1,b0,b0,b0,!0,b0,b0,b0,!0,b0,b0,b0,b0,b0,b0,new A.aQO(q,a8),!1,b0,b0,b0,b0,b0,A.B(a8.f+"\n"+(a8.b+" "+a8.c),b0,b0,b0,b0,b0,b0,b0),b0,B.asz,b0,A.cV(B.asa,b0,b0,new A.aQP(b5,a8,b2),b0,b0),b0),b0))}for(b1=s.gYa(),b3=b1.length,h=0;h<b1.length;b1.length===b3||(0,A.C)(b1),++h){a9=b1[h]
 b4=A.B(a9.e+": "+a9.b,b0,b0,b0,b0,b0,b0,b0)
 m.push(A.j5(A.eV(!1,b0,b0,b0,!0,b0,b0,b0,!0,b0,b0,b0,b0,b0,b0,new A.aQQ(q,a9,b5),!1,b0,b0,b0,b0,b0,A.B(A.bBc().cY(a9.w.hA())+" \xb7 "+a9.c+"\n"+a9.d,b0,b0,b0,b0,b0,b0,b0),b0,b4,b0,A.dM(b0,b0,B.h4,b0,b0,new A.aQR(a9),b0,b0,"Complete task",b0),b0),b0))}m.push(A.ur(B.Ub,B.arF,new A.aQS(b5)))
 b1=a5.length
@@ -122763,7 +122763,7 @@ B.b.cL(q,new A.aQm())
 p=A.U(q).h("Y<1,tf>")
 r=A.G(new A.Y(q,new A.aQn(this.a,r),p),p.h("aj.E"))
 r=A.cx(A.q3(r,s,s,!0),s,400)
-return A.fA(A.b([A.cV(B.jI,s,s,new A.aQo(a),s,s)],t.p),s,s,s,r,s,!1,B.atI,s)},
+return A.fA(A.b([A.cV(B.jI,s,s,new A.aQo(a),s,s)],t.p),s,s,s,r,s,!1,B.atJ,s)},
 $S:31}
 A.aQk.prototype={
 $1(a){return a.db!=null},
@@ -122988,7 +122988,7 @@ if(i==null)i=o
 else{s=A.m(a).ax
 r=s.rx
 i=i.bd(r==null?s.k3:r)}s=t.p
-i=A.b4(A.b([A.ba(A.aV(A.b([k,A.B(j,o,o,o,i,o,o,o)],s),B.I,B.h,B.j,0,B.q),1),A.aV(A.b([A.b4(A.b([A.dM(o,o,B.Uh,o,o,new A.b3x(a),o,o,"Open KnockQuest guide",o),new A.NX(p.a.c,new A.b3y(p),o),B.bh,A.dM(o,o,B.Uu,o,o,p.gaK8(),o,o,"Sign out",o)],s),B.n,B.h,B.Y,0,o)],s),B.eb,B.h,B.j,0,B.q)],s),B.n,B.h,B.j,0,o)
+i=A.b4(A.b([A.ba(A.aV(A.b([k,A.B(j,o,o,o,i,o,o,o)],s),B.I,B.h,B.j,0,B.q),1),A.aV(A.b([A.b4(A.b([A.dM(o,o,B.Us,o,o,new A.b3x(a),o,o,"Quickstart / New user guide",o),new A.NX(p.a.c,new A.b3y(p),o),B.bh,A.dM(o,o,B.Uu,o,o,p.gaK8(),o,o,"Sign out",o)],s),B.n,B.h,B.Y,0,o)],s),B.eb,B.h,B.j,0,B.q)],s),B.n,B.h,B.j,0,o)
 j=$.i7().a.a
 k=j==null?o:j.c
 k=A.b([i,B.ald,A.B("Hey, "+B.b.gR((k==null?"Agent":k).split(" "))+". Own your area.",o,o,o,A.m(a).ok.f,o,o,o),B.aC],s)
@@ -123010,13 +123010,13 @@ k.push(new A.a7Q(new A.b3G(a),o))
 k.push(A.bhF(new A.b3H(),p.d,j))
 k.push(B.Kg)
 k.push(B.eo)
-k.push(A.b4(A.b([A.ba(A.mZ(B.atn,new A.b3I(a),o),1),B.en,A.ba(A.mZ(B.asR,new A.b3J(a),o),1)],s),B.n,B.h,B.j,0,o))
+k.push(A.b4(A.b([A.ba(A.mZ(B.ato,new A.b3I(a),o),1),B.en,A.ba(A.mZ(B.asS,new A.b3J(a),o),1)],s),B.n,B.h,B.j,0,o))
 k.push(B.a9)
-k.push(A.b4(A.b([A.ba(A.jg(B.wr,B.atc,new A.b3K(a)),1)],s),B.n,B.h,B.j,0,o))
+k.push(A.b4(A.b([A.ba(A.jg(B.wr,B.atd,new A.b3K(a)),1)],s),B.n,B.h,B.j,0,o))
 k.push(B.a9)
 k.push(A.b4(A.b([A.ba(A.mZ(B.arQ,new A.b3A(a),o),1)],s),B.n,B.h,B.j,0,o))
 k.push(B.a9)
-k.push(A.b4(A.b([A.ba(A.mZ(B.atu,new A.b3B(a),o),1)],s),B.n,B.h,B.j,0,o))
+k.push(A.b4(A.b([A.ba(A.mZ(B.atv,new A.b3B(a),o),1)],s),B.n,B.h,B.j,0,o))
 k.push(B.a9)
 k.push(A.b4(A.b([A.ba(A.mZ(B.as7,new A.b3C(a),o),1)],s),B.n,B.h,B.j,0,o))
 B.b.L(k,A.b([B.a9,B.Ko],s))
@@ -123052,7 +123052,7 @@ $S:0}
 A.b3H.prototype={
 $2(a,b){var s=null
 if(b.b!==!0)return B.ax
-return new A.aO(B.Ru,A.j5(A.IP(B.a_i,s,!1,B.UX,B.arN,s,B.at7,s),s),s)},
+return new A.aO(B.Ru,A.j5(A.IP(B.a_i,s,!1,B.UX,B.arN,s,B.at8,s),s),s)},
 $S:283}
 A.b3I.prototype={
 $0(){return A.aR(this.a,!1).cF("/territories",null,t.X)},
@@ -123178,7 +123178,7 @@ case 2:if(d===!0&&q.c!=null){p=q.c
 p.toString
 A.cb(p,A.ew(null,null,null,null,B.dS,B.m,null,A.B(a==null?"Schedule added.":"Schedule updated.",null,null,null,null,null,null,null),null,B.S,null,null,null,null,null,null,null,null,null,null))}return A.p(null,r)}})
 return A.q($async$Bd,r)},
-F(a){var s=null,r=A.m(a),q=A.m(a),p=A.m(a),o=A.bnV(B.ph,B.asX,new A.aYN(this)),n=$.cp()
+F(a){var s=null,r=A.m(a),q=A.m(a),p=A.m(a),o=A.bnV(B.ph,B.asY,new A.aYN(this)),n=$.cp()
 return A.hF(s,p.fx,A.fG(!0,A.cP(new A.d4(B.td,new A.kX(new A.aYO(this,r.ok,q.ax),s,new A.nu(A.b([n.b,n.a],t.bA)),s),s),s,s,s),B.J,!0),o)},
 Gx(a,b){return this.avT(a,b)},
 avT(a,b){var s=0,r=A.r(t.H),q=1,p=[],o=this,n,m,l,k
@@ -123278,7 +123278,7 @@ k=A.j4(a,8)
 s=o.b
 r=s.f
 q=t.p
-r=A.b([A.b4(A.b([A.ba(A.aV(A.b([A.B("Tasks",n,n,n,r==null?n:r.Cj(o.c.k3,B.bs),n,n,n),B.aV,A.B("Schedule appointments, callbacks, door knocks, and lead follow-ups.",n,n,n,s.Q,n,n,n)],q),B.I,B.h,B.j,0,B.q),1),A.boj(B.Ua,new A.aYF(m),"Today"),A.dM(n,n,B.lf,n,n,new A.aYG(m,a),n,n,"Customize tasks",n)],q),B.n,B.h,B.j,0,n),B.aC,A.b4(A.b([A.ba(new A.Fa("Today",""+h,B.Tn,!1,n),1),B.bh,A.ba(new A.Fa("Overdue",""+i,B.TW,i>0,n),1),B.bh,A.ba(new A.Fa("Upcoming",""+g,B.TA,!1,n),1)],q),B.n,B.h,B.j,0,n),B.aC],q)
+r=A.b([A.b4(A.b([A.ba(A.aV(A.b([A.B("Tasks",n,n,n,r==null?n:r.Cj(o.c.k3,B.bs),n,n,n),B.aV,A.B("Schedule appointments, callbacks, door knocks, and lead follow-ups.",n,n,n,s.Q,n,n,n)],q),B.I,B.h,B.j,0,B.q),1),A.boj(B.Ua,new A.aYF(m),"Today"),A.dM(n,n,B.lf,n,n,new A.aYG(m,a),n,n,"Customize tasks",n)],q),B.n,B.h,B.j,0,n),B.aC,A.b4(A.b([A.ba(new A.Fa("Today",""+h,B.Tn,!1,n),1),B.bh,A.ba(new A.Fa("Overdue",""+i,B.TW,i>0,n),1),B.bh,A.ba(new A.Fa("Upcoming",""+g,B.TB,!1,n),1)],q),B.n,B.h,B.j,0,n),B.aC],q)
 p=m.r
 if(p==="Week"||p==="Both")B.b.L(r,A.b([new A.agD(m.aNj(),m.e,new A.aYH(m,l),new A.aYI(m),n),B.cg],q))
 p=m.r
@@ -123286,7 +123286,7 @@ if(p==="Month"||p==="Both")B.b.L(r,A.b([new A.ab7(m.d,m.e,m.aEg(),new A.aYJ(m,l)
 r.push(B.aC)
 p=A.fT("EEEE, MMMM d",n).cY(m.e)
 s=s.w
-r.push(A.b4(A.b([A.ba(A.B(p,n,n,n,s==null?n:s.Cj(o.c.k3,B.bs),n,n,n),1),A.IS(B.atj,new A.aYB(m),m.f)],q),B.n,B.h,B.j,0,n))
+r.push(A.b4(A.b([A.ba(A.B(p,n,n,n,s==null?n:s.Cj(o.c.k3,B.bs),n,n,n),1),A.IS(B.atk,new A.aYB(m),m.f)],q),B.n,B.h,B.j,0,n))
 k=A.b([new A.yv(k,new A.N7(A.aV(r,B.I,B.h,B.j,0,B.q),n),n)],q)
 if(j.length===0)k.push(new A.yv(A.j4(a,110),new A.N7(new A.a96(new A.aYC(m),n),n),n))
 else k.push(new A.yv(A.j4(a,110),A.bGE(new A.aYD(m,j),j.length,new A.aYE()),n))
@@ -123383,7 +123383,7 @@ A.aYD.prototype={
 $2(a,b){var s,r,q,p,o=null,n=this.b[b]
 if(n.a===-1){s=J.bm8($.cp().a.a,new A.aYl(n))
 r=A.B("Closing: "+(s.b+" "+s.c),o,o,o,o,o,o,o)
-return A.j5(A.eV(!1,o,o,o,!0,o,o,o,!0,o,o,o,o,o,o,o,!1,o,o,o,o,o,A.B(s.f,o,o,o,o,o,o,o),o,r,o,A.cV(B.asZ,o,o,new A.aYm(a,s),o,o),o),o)}r=n.b
+return A.j5(A.eV(!1,o,o,o,!0,o,o,o,!0,o,o,o,o,o,o,o,!1,o,o,o,o,o,A.B(s.f,o,o,o,o,o,o,o),o,r,o,A.cV(B.at_,o,o,new A.aYm(a,s),o,o),o),o)}r=n.b
 q=r.r?o:new A.aYn(this.a,n)
 p=this.a
 return new A.adU(r,n.c,new A.aYq(p,n),new A.aYr(p,n),new A.aYs(p,n),new A.aYt(p,n),q,o)},
@@ -123484,9 +123484,9 @@ k=A.m(a).ok.z
 if(k==null)o=r
 else{k=k.aQ9(o?B.IJ:r)
 o=k}o=A.B(p.d,r,r,r,o,r,r,r)
-p=A.jg(B.Ug,B.atK,s.r)
-k=A.jg(B.wr,B.at5,s.w)
-return A.bV(r,A.aV(A.b([l,B.a9,o,B.a9,A.fu(B.aF,A.b([p,k,new A.wt(B.JR,!0,s.e,r,r,r,r,B.r,r,!1,r,!0,r,new A.Qk(B.asc,B.U7,r,r,r),r),A.jg(B.V2,B.asF,s.x),A.ur(B.V3,B.IV,s.f)],i),B.aY,8,8)],i),B.I,B.h,B.j,0,B.q),B.r,r,r,new A.bo(q.k2,r,n,m,r,r,B.O),r,r,r,r,B.dg,r,r,r)}}
+p=A.jg(B.Ug,B.atL,s.r)
+k=A.jg(B.wr,B.at6,s.w)
+return A.bV(r,A.aV(A.b([l,B.a9,o,B.a9,A.fu(B.aF,A.b([p,k,new A.wt(B.JR,!0,s.e,r,r,r,r,B.r,r,!1,r,!0,r,new A.Qk(B.asc,B.U7,r,r,r),r),A.jg(B.V2,B.asG,s.x),A.ur(B.V3,B.IV,s.f)],i),B.aY,8,8)],i),B.I,B.h,B.j,0,B.q),B.r,r,r,new A.bo(q.k2,r,n,m,r,r,B.O),r,r,r,r,B.dg,r,r,r)}}
 A.FS.prototype={
 F(a){var s=null,r=A.m(a).ax,q=r.RG
 r=q==null?r.k2:q
@@ -123494,7 +123494,7 @@ q=A.be(999)
 return A.bV(s,A.b4(A.b([A.cF(this.c,s,s,14),B.qR,A.B(this.d,s,s,s,B.ap6,s,s,s)],t.p),B.n,B.h,B.Y,0,s),B.r,s,s,new A.bo(r,s,s,q,s,s,B.O),s,s,s,s,B.RD,s,s,s)}}
 A.a96.prototype={
 F(a){var s=null,r=A.m(a),q=A.be(28),p=A.dR(A.m(a).ch,1)
-return A.bV(s,A.aV(A.b([B.UQ,B.bB,A.B("No appointments for this day",s,s,s,A.b6(s,s,A.m(a).ax.k3,s,s,s,s,s,s,s,s,s,s,s,B.bs,s,s,!0,s,s,s,s,s,s,s,s),s,s,s),B.aV,A.B("Add a callback, showing, door knock route stop, or client meeting.",s,s,s,A.m(a).ok.Q,B.bZ,s,s),B.cg,A.th(B.ph,B.asN,this.c,s)],t.p),B.n,B.h,B.j,0,B.q),B.r,s,s,new A.bo(r.ax.k2,s,p,q,s,s,B.O),s,s,s,s,B.au,s,s,1/0)}}
+return A.bV(s,A.aV(A.b([B.UQ,B.bB,A.B("No appointments for this day",s,s,s,A.b6(s,s,A.m(a).ax.k3,s,s,s,s,s,s,s,s,s,s,s,B.bs,s,s,!0,s,s,s,s,s,s,s,s),s,s,s),B.aV,A.B("Add a callback, showing, door knock route stop, or client meeting.",s,s,s,A.m(a).ok.Q,B.bZ,s,s),B.cg,A.th(B.ph,B.asO,this.c,s)],t.p),B.n,B.h,B.j,0,B.q),B.r,s,s,new A.bo(r.ax.k2,s,p,q,s,s,B.O),s,s,s,s,B.au,s,s,1/0)}}
 A.zK.prototype={
 a7(){return new A.SH()},
 aYe(a){return this.e.$1(a)}}
@@ -123665,7 +123665,7 @@ l.push(B.a9)
 h=A.fT("MMM d, yyyy",i)
 n=j.y
 n===$&&A.a()
-n=A.ba(A.jg(B.Um,A.B(h.cY(n),i,i,i,i,i,i,i),j.gaH8()),1)
+n=A.ba(A.jg(B.Ul,A.B(h.cY(n),i,i,i,i,i,i,i),j.gaH8()),1)
 h=j.z
 h===$&&A.a()
 m=A.cw(a,B.a0,t.A)
@@ -123756,7 +123756,7 @@ return null},
 $S:0}
 A.zE.prototype={
 F(a){var s=null,r=A.be(999),q=A.bK(this.c),p=this.d,o=A.dR(p?A.m(a).ax.k3:B.z,3)
-p=p?B.Un:s
+p=p?B.Um:s
 return A.er(!1,r,!0,A.bV(s,p,B.r,s,s,new A.bo(q,s,o,s,s,s,B.bj),s,42,s,s,s,s,s,42),s,!0,s,s,s,s,s,s,s,s,s,s,s,this.e,s,s,s,s,s,s,s)}}
 A.wK.prototype={
 a7(){return new A.QA()}}
@@ -123772,7 +123772,7 @@ s=2
 return A.i(A.fl(null,null,!0,null,new A.aZn(o),p,null,!0,t.H),$async$Ip)
 case 2:return A.p(null,r)}})
 return A.q($async$Ip,r)},
-F(a){var s,r,q,p,o=null,n=A.rK(o,B.atQ),m=t.p,l=A.b([A.B("A quick field guide",o,o,o,A.m(a).ok.f,o,o,o),B.an,B.ask,B.co,A.th(B.UZ,B.atf,this.gaKI(),o),B.eo],m)
+F(a){var s,r,q,p,o=null,n=A.rK(o,B.ask),m=t.p,l=A.b([A.B("A quick field guide",o,o,o,A.m(a).ok.f,o,o,o),B.an,B.asl,B.co,A.th(B.UZ,B.atg,this.gaKI(),o),B.eo],m)
 for(s=0;s<6;++s){r=B.x9[s]
 q=A.cF(r.a,o,o,o)
 p=A.B(r.b,o,o,o,o,o,o,o)
@@ -123884,7 +123884,7 @@ break
 case 7:case 1:return A.p(q,r)
 case 2:return A.o(o.at(-1),r)}})
 return A.q($async$Cg,r)},
-F(a){var s,r,q,p,o,n,m,l,k,j=this,i=null,h=j.gXq(),g=A.rK(i,B.atz),f=A.j4(a,i),e=t.p,d=A.b([A.B(j.a.c.b,i,i,i,A.m(a).ok.r,i,i,i),B.at_],e),c=j.a.c.y
+F(a){var s,r,q,p,o,n,m,l,k,j=this,i=null,h=j.gXq(),g=A.rK(i,B.atA),f=A.j4(a,i),e=t.p,d=A.b([A.B(j.a.c.b,i,i,i,A.m(a).ok.r,i,i,i),B.at0],e),c=j.a.c.y
 if(c.length!==0)d.push(new A.aO(B.Rt,A.B("Import note: "+c,i,i,i,i,i,i,i),i))
 e=A.b([],e)
 for(c=B.lF.gfd(B.lF),c=c.ga6(c),s=t.N,r=t.FG;c.q();){q=c.gK(c)
@@ -123895,7 +123895,7 @@ n=A.b([B.QH],r)
 m=j.a.c.r
 B.b.L(n,new A.Y(m,new A.aU9(),A.U(m).h("Y<1,dJ<c>>")))
 q=j.r?i:new A.aUa(j,q)
-e.push(new A.aO(B.eT,A.kK(new A.d8(i,i,i,o,i,i,i,i,i,i,i,i,i,i,i,i,!0,!0,!1,i,i,i,i,i,i,!0,B.RK,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,!0,i,i,i,i),p,!0,n,q,s),i))}d.push(A.IP(e,B.vl,!0,i,i,B.J,B.asH,i))
+e.push(new A.aO(B.eT,A.kK(new A.d8(i,i,i,o,i,i,i,i,i,i,i,i,i,i,i,i,!0,!0,!1,i,i,i,i,i,i,!0,B.RK,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,i,!0,i,i,i,i),p,!0,n,q,s),i))}d.push(A.IP(e,B.vl,!0,i,i,B.J,B.asI,i))
 e=h.a
 c=h.c
 d.push(A.B(""+e.length+" ready \xb7 "+h.b+" duplicates \xb7 "+c.length+" invalid",i,i,i,i,i,i,i))
@@ -123903,7 +123903,7 @@ if(c.length!==0)d.push(A.B(A.fb(c,0,A.jN(20,"count",t.S),A.U(c).c).aR(0,"\n"),i,
 d.push(B.a9)
 r=j.r
 c=r||c.length!==0||e.length===0?i:j.gaPH(j)
-d.push(A.th(B.Us,A.B(r?"Saving\u2026":"Create "+e.length+" leads",i,i,i,i,i,i,i),c,i))
+d.push(A.th(B.Ur,A.B(r?"Saving\u2026":"Create "+e.length+" leads",i,i,i,i,i,i,i),c,i))
 for(l=0;e=j.gMo(0),l<e.length;l=k){k=l+1
 c=A.B("Row "+k,i,i,i,i,i,i,i)
 e=J.rE(e[l])
@@ -123939,7 +123939,7 @@ $S:750}
 A.aUg.prototype={
 $1(a){var s=null,r=this.a
 r=A.B("Create "+r.a.length+" leads and skip "+r.b+" duplicates. Property addresses are checked across contact names to avoid duplicate pins. Records with latitude and longitude appear on the map after import; address-only records need coordinates added from the map. Your import note is attached to each created lead.",s,s,s,s,s,s,s)
-return A.fA(A.b([A.cV(B.bD,s,s,new A.aUe(a),s,s),A.iL(B.arX,new A.aUf(a))],t.p),s,s,s,r,s,!1,B.atF,s)},
+return A.fA(A.b([A.cV(B.bD,s,s,new A.aUe(a),s,s),A.iL(B.arX,new A.aUf(a))],t.p),s,s,s,r,s,!1,B.atG,s)},
 $S:31}
 A.aUe.prototype={
 $0(){A.aR(this.a,!1).bG(!1)
@@ -124477,11 +124477,11 @@ $1(a){return this.a.BI(this.b,a)},
 $S:8}
 A.a7P.prototype={
 F(a){var s,r,q,p,o=this,n=null,m=A.m(a).ax,l=A.dR(A.m(a).ch,1),k=A.be(26),j=A.be(12),i=m.k3,h=t.p
-j=A.b([A.b4(A.b([A.bV(n,A.cF(B.TD,m.c,n,n),B.r,n,n,new A.bo(m.b,n,n,j,n,n,B.O),n,38,n,n,n,n,n,38),B.en,A.ba(A.aV(A.b([A.B("Import CRM Data",n,n,n,A.b6(n,n,i,n,n,n,n,n,n,n,n,n,n,n,B.bs,n,n,!0,n,n,n,n,n,n,n,n),n,n,n),B.fj,A.B("CSV, XLSX, ODS, DOCX, PPTX, PDF, vCard, JSON, text and image OCR. Review extracted records before saving.",n,n,n,A.m(a).ok.Q,n,n,n)],h),B.I,B.h,B.j,0,B.q),1)],h),B.n,B.h,B.j,0,n),B.a9],h)
+j=A.b([A.b4(A.b([A.bV(n,A.cF(B.TE,m.c,n,n),B.r,n,n,new A.bo(m.b,n,n,j,n,n,B.O),n,38,n,n,n,n,n,38),B.en,A.ba(A.aV(A.b([A.B("Import CRM Data",n,n,n,A.b6(n,n,i,n,n,n,n,n,n,n,n,n,n,n,B.bs,n,n,!0,n,n,n,n,n,n,n,n),n,n,n),B.fj,A.B("CSV, XLSX, ODS, DOCX, PPTX, PDF, vCard, JSON, text and image OCR. Review extracted records before saving.",n,n,n,A.m(a).ok.Q,n,n,n)],h),B.I,B.h,B.j,0,B.q),1)],h),B.n,B.h,B.j,0,n),B.a9],h)
 s=o.d
 if(s)B.b.L(j,A.b([B.WM,B.agt],h))
-r=A.th(B.Ur,B.asz,s?n:o.e,n)
-j.push(A.fu(B.aF,A.b([r,A.jg(B.UD,B.ats,s?n:o.e)],h),B.aY,8,8))
+r=A.th(B.Uq,B.asA,s?n:o.e,n)
+j.push(A.fu(B.aF,A.b([r,A.jg(B.UD,B.att,s?n:o.e)],h),B.aY,8,8))
 s=o.c
 if(s.length!==0){i=A.b([B.cg,A.B("Imported Files",n,n,n,A.b6(n,n,i,n,n,n,n,n,n,n,n,n,n,n,B.ah,n,n,!0,n,n,n,n,n,n,n,n),n,n,n),B.an],h)
 for(r=t.kK,q=0;q<s.length;++q){p=s[q]
@@ -124520,7 +124520,7 @@ q=A.B(n.a.c.b,m,m,m,A.b6(m,m,l.k3,m,m,m,m,m,m,m,m,m,m,m,B.bs,m,m,!0,m,m,m,m,m,m,
 p=n.a.c
 o=t.p
 p=A.b([A.b4(A.b([r,B.bh,A.ba(A.aV(A.b([q,B.fj,A.B(p.e+" \u2022 "+p.gakO(),m,m,m,A.m(a).ok.Q,m,m,m)],o),B.I,B.h,B.j,0,B.q),1),A.dM(m,m,B.UM,m,m,n.a.d,m,m,"Remove import",m)],o),B.I,B.h,B.j,0,m),B.an,A.B(n.a.c.f,m,m,m,A.m(a).ok.Q,m,m,m)],o)
-if(J.jR(n.a.c.w))p.push(A.th(B.Ud,B.at2,n.a.e,m))
+if(J.jR(n.a.c.w))p.push(A.th(B.Ud,B.at3,n.a.e,m))
 if(j.length!==0){r=A.m(a).ok.Q
 r=r==null?m:r.JL(B.ah)
 B.b.L(p,A.b([B.aV,A.B("Detected fields: "+j,m,m,m,r,m,m,m)],o))}r=n.a.c.x
@@ -124579,7 +124579,7 @@ i=A.eP(!1,B.xt,!1,a0,!0,B.m,a0,A.f1(),a.as,a0,a0,a0,a0,a0,2,B.VE,B.R,!0,a0,!0,a0
 h=A.b([],k)
 for(m=a.at,g=0;g<5;++g){f=B.px[g]
 e=f.a
-h.push(new A.aO(B.vl,A.eP(a0,B.a9Q,!1,a0,!0,B.m,a0,A.f1(),m.i(0,e),a0,a0,a0,a0,a0,2,new A.d8(a0,a0,a0,f.b+" destination key",a0,a0,a0,a0,a0,a0,e,a0,a0,a0,a0,a0,!0,!0,!1,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,!0,a0,a0,a0,a0),B.R,!0,a0,!0,a0,!1,a0,B.as,a0,a0,a0,a0,a0,a0,a0,a0,a0,1,a0,a0,!1,"\u2022",a0,a0,a0,a0,a0,!1,a0,a0,!1,a0,!0,a0,B.au,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,!0,B.U,a0,B.b4,a0,B.c_,a0,a0),a0))}B.b.L(s,A.b([j,B.bB,i,B.a9,A.IP(h,B.eT,!1,a0,B.atx,B.J,B.asA,a0),A.fu(B.aF,A.b([A.lD(B.arj,new A.dv("crm-save-"+l,r),a.cy,a0),A.cV(B.bD,a0,a0,a.cx,a0,a0)],k),B.aY,0,8)],k))}else{r=B.c.a1(a.Q.a.a).length===0?"No webhook configured. Tap Configure to add one.":"Webhook saved. Use Test Sync to verify delivery."
+h.push(new A.aO(B.vl,A.eP(a0,B.a9Q,!1,a0,!0,B.m,a0,A.f1(),m.i(0,e),a0,a0,a0,a0,a0,2,new A.d8(a0,a0,a0,f.b+" destination key",a0,a0,a0,a0,a0,a0,e,a0,a0,a0,a0,a0,!0,!0,!1,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,!0,a0,a0,a0,a0),B.R,!0,a0,!0,a0,!1,a0,B.as,a0,a0,a0,a0,a0,a0,a0,a0,a0,1,a0,a0,!1,"\u2022",a0,a0,a0,a0,a0,!1,a0,a0,!1,a0,!0,a0,B.au,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,!0,B.U,a0,B.b4,a0,B.c_,a0,a0),a0))}B.b.L(s,A.b([j,B.bB,i,B.a9,A.IP(h,B.eT,!1,a0,B.aty,B.J,B.asB,a0),A.fu(B.aF,A.b([A.lD(B.arj,new A.dv("crm-save-"+l,r),a.cy,a0),A.cV(B.bD,a0,a0,a.cx,a0,a0)],k),B.aY,0,8)],k))}else{r=B.c.a1(a.Q.a.a).length===0?"No webhook configured. Tap Configure to add one.":"Webhook saved. Use Test Sync to verify delivery."
 B.b.L(s,A.b([new A.dQ(B.bQ,a0,a0,A.B(r,a0,a0,a0,A.m(a2).ok.Q,a0,a0,a0),a0)],k))}s.push(B.a9)
 r=a.r
 if(r.length!==0){m=A.m(a2).ax
@@ -124610,7 +124610,7 @@ h=new A.bk(10,10)
 e=A.B(d.c+" - "+d.r,a0,a0,a0,new A.J(!0,B.uQ,a0,a0,a0,a0,a0,B.di,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0),a0,a0,a0)
 c=A.B(d.e,a0,a0,a0,new A.J(!0,B.u1,a0,a0,a0,a0,12,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0),a0,a0,a0)
 b=B.b.gR(d.f.hA().k(0).split("."))
-l.push(A.bV(a0,A.aV(A.b([e,B.ch,c,B.ch,A.B(b,a0,a0,a0,new A.J(!0,B.u1,a0,a0,a0,a0,11,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0),a0,a0,a0)],k),B.I,B.h,B.j,0,B.q),B.r,a0,a0,new A.bo(i,a0,a0,new A.dr(h,h,h,h),a0,a0,B.O),a0,a0,a0,B.eT,B.RB,a0,a0,1/0))}s.push(A.IP(l,a0,!1,a0,p,B.J,B.atB,m))
+l.push(A.bV(a0,A.aV(A.b([e,B.ch,c,B.ch,A.B(b,a0,a0,a0,new A.J(!0,B.u1,a0,a0,a0,a0,11,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0,a0),a0,a0,a0)],k),B.I,B.h,B.j,0,B.q),B.r,a0,a0,new A.bo(i,a0,a0,new A.dr(h,h,h,h),a0,a0,B.O),a0,a0,a0,B.eT,B.RB,a0,a0,1/0))}s.push(A.IP(l,a0,!1,a0,p,B.J,B.atC,m))
 return A.bV(a0,A.aV(s,B.n,B.h,B.j,0,B.q),B.r,a0,a0,new A.bo(a0,a0,q,n,a0,a0,B.O),a0,a0,a0,a0,B.dg,a0,a0,a0)}}
 A.uX.prototype={
 b0c(){var s,r,q,p,o=this,n=B.c.a1(o.x.a.a),m=B.c.a1(o.y.a.a),l=t.N
@@ -124837,7 +124837,7 @@ if(!e.f.m(0,"unitNumber"))n.push(new A.jH("Unit Number",e.fr,d,1,d,d))
 if(!e.f.m(0,"city"))n.push(new A.jH("City",e.fx,d,1,d,d))
 if(!e.f.m(0,"postalCode"))n.push(new A.jH("Postal Code",e.fy,d,1,d,d))
 if(!e.f.m(0,"notes"))n.push(new A.jH("Notes",e.go,d,3,d,d))
-n.push(A.Nr(B.J,new A.aQ0(e),B.asv,B.asq,e.CW))
+n.push(A.Nr(B.J,new A.aQ0(e),B.asw,B.asr,e.CW))
 if(e.CW){s=e.ch
 p=t.h4
 p=A.G(new A.Y(B.eh,new A.aQ1(),p),p.h("aj.E"))
@@ -124893,7 +124893,7 @@ s.r=this.c},
 $S:0}
 A.aPF.prototype={
 $1(a){var s=null,r=this.a,q=A.eP(s,B.aH,!0,s,!0,B.m,s,A.f1(),s,s,s,s,s,s,2,B.VH,B.R,!0,s,!0,s,!1,s,B.as,s,s,s,s,s,s,s,s,s,1,s,s,!1,"\u2022",s,new A.aPB(r),s,new A.aPC(a),s,!1,s,s,!1,s,!0,s,B.au,s,s,s,s,s,s,s,s,s,s,s,s,!0,B.U,s,B.fl,s,B.ep,s,s)
-return A.fA(A.b([A.cV(B.bD,s,s,new A.aPD(a),s,s),A.iL(B.ars,new A.aPE(r,a))],t.p),s,s,s,q,s,!1,B.at6,s)},
+return A.fA(A.b([A.cV(B.bD,s,s,new A.aPD(a),s,s),A.iL(B.ars,new A.aPE(r,a))],t.p),s,s,s,q,s,!1,B.at7,s)},
 $S:31}
 A.aPB.prototype={
 $1(a){return this.a.a=a},
@@ -125327,9 +125327,9 @@ s=j.b
 o=A.eP(i,B.aH,!1,i,!0,B.m,i,A.f1(),s,i,i,i,i,i,2,B.Vu,B.R,!0,i,!0,i,!1,i,B.as,i,i,i,i,i,B.eq,i,i,i,1,i,i,!1,"\u2022",i,i,i,i,i,!1,i,i,!1,i,!0,i,B.au,i,i,i,i,i,i,i,i,i,i,i,i,!0,B.U,i,B.b4,i,i,i,i)
 n=A.b([],h)
 for(m=["Hot","Sure Prospect","Appointment","Follow-Up"],l=j.c,q=0;q<4;++q){k=m[q]
-n.push(A.IS(A.B(k,i,i,i,i,i,i,i),new A.b2b(b,l,k),l.m(0,k)))}g=A.cx(A.fa(A.aV(A.b([B.J0,g,B.a9,o,B.a9,B.atG,A.fu(B.aF,n,B.aY,0,6)],h),B.I,B.h,B.Y,0,B.q),i,i,B.a2),i,430)
+n.push(A.IS(A.B(k,i,i,i,i,i,i,i),new A.b2b(b,l,k),l.m(0,k)))}g=A.cx(A.fa(A.aV(A.b([B.J0,g,B.a9,o,B.a9,B.atH,A.fu(B.aF,n,B.aY,0,6)],h),B.I,B.h,B.Y,0,B.q),i,i,B.a2),i,430)
 o=j.d
-return A.fA(A.b([A.cV(B.bD,i,i,new A.b2c(o),i,i),A.iL(B.J2,new A.b2d(o,r,l,s))],h),i,i,i,g,i,!1,B.asp,i)},
+return A.fA(A.b([A.cV(B.bD,i,i,new A.b2c(o),i,i),A.iL(B.J2,new A.b2d(o,r,l,s))],h),i,i,i,g,i,!1,B.asq,i)},
 $S:47}
 A.b2a.prototype={
 $1(a){return this.a.$1(new A.b29(a,this.b,this.c))},
@@ -125390,7 +125390,7 @@ for(s=B.CB.gfd(B.CB),s=s.ga6(s),r=this.b,q=t.p,p=t.b7;s.q();){o=s.gK(s)
 n=o.a
 j.push(new A.dJ(n,A.b4(A.b([A.cF(r.Rm(n),m,m,m),B.bh,A.B(o.b,m,m,m,m,m,m,m)],q),B.n,B.h,B.j,0,m),B.bq,m,p))}k=A.kK(m,k,!1,j,new A.b1U(l,b),t.N)
 j=this.c
-return A.fA(A.b([A.cV(B.bD,m,m,new A.b1V(j),m,m),A.iL(B.atV,new A.b1W(l,j))],q),m,m,m,k,m,!1,B.atv,m)},
+return A.fA(A.b([A.cV(B.bD,m,m,new A.b1V(j),m,m),A.iL(B.atV,new A.b1W(l,j))],q),m,m,m,k,m,!1,B.atw,m)},
 $S:47}
 A.b1U.prototype={
 $1(a){if(a!=null)this.b.$1(new A.b1T(this.a,a))},
@@ -125415,7 +125415,7 @@ $1(a){return new A.jv(new A.b25(this.a,a),null)},
 $S:50}
 A.b25.prototype={
 $2(a,b){var s=null,r=this.a,q=A.fa(new A.xk(r.a,r.b,new A.b21(r,b),new A.b22(r,b),s),s,s,B.a2),p=this.b
-return A.fA(A.b([A.cV(B.bD,s,s,new A.b23(p),s,s),A.iL(B.asw,new A.b24(r,p))],t.p),s,s,s,q,s,!1,B.arJ,s)},
+return A.fA(A.b([A.cV(B.bD,s,s,new A.b23(p),s,s),A.iL(B.asx,new A.b24(r,p))],t.p),s,s,s,q,s,!1,B.arJ,s)},
 $S:47}
 A.b21.prototype={
 $1(a){return this.b.$1(new A.b20(this.a,a))},
@@ -125497,14 +125497,14 @@ e=s.ax
 b=A.B(e.c,c2,c2,c2,A.m(c6).ok.r,c2,c2,c2)
 a0=s.d
 a3=a0.length===0
-a9=A.jg(B.U6,B.ata,a3?c2:new A.b2r(r,c6,s))
-b0=A.jg(B.UJ,B.aty,a3?c2:new A.b2s(r,c6,s))
+a9=A.jg(B.U6,B.atb,a3?c2:new A.b2r(r,c6,s))
+b0=A.jg(B.UJ,B.atz,a3?c2:new A.b2s(r,c6,s))
 b1=s.e
 b2=b1.length===0
-b3=A.jg(B.UW,B.atC,b2?c2:new A.b2t(r,c6,s))
+b3=A.jg(B.UW,B.atD,b2?c2:new A.b2t(r,c6,s))
 b4=A.iL(B.IX,new A.b2u(c6))
 b5=A.mZ(B.IW,new A.b2v(r,c6,s),c2)
-b6=A.jg(A.cF(r.Rm(r.PF(s)),c2,c2,c2),B.at9,new A.b2w(r,c6,s))
+b6=A.jg(A.cF(r.Rm(r.PF(s)),c2,c2,c2),B.ata,new A.b2w(r,c6,s))
 b7=s.fr
 b7=b7==null?r.Rm(r.PF(s)):A.a0o(b7)
 b8=s.fx
@@ -125525,7 +125525,7 @@ k.push(A.b4(A.b([j,A.bnF(!1,b,new A.b2C(r),B.ax,i,q)],b9),B.n,B.h,B.j,0,c2))
 if(o.length===0)k.push(B.arv)
 for(q=o.length,h=0;h<o.length;o.length===q||(0,A.C)(o),++h){c0=o[h]
 j=A.B(A.vo(c0.b),c2,c2,c2,c2,c2,c2,c2)
-k.push(A.eV(!1,B.J,c2,c2,!0,c2,c2,c2,!0,c2,B.UH,c2,c2,c2,c2,c2,!1,c2,c2,c2,c2,c2,A.B(a7.$1(c0.a),c2,c2,c2,c2,c2,c2,c2),c2,j,c2,c2,c2))}k.push(A.jg(B.Uo,B.arS,new A.b2D(r,c6,s)))
+k.push(A.eV(!1,B.J,c2,c2,!0,c2,c2,c2,!0,c2,B.UH,c2,c2,c2,c2,c2,!1,c2,c2,c2,c2,c2,A.B(a7.$1(c0.a),c2,c2,c2,c2,c2,c2,c2),c2,j,c2,c2,c2))}k.push(A.jg(B.Un,B.arS,new A.b2D(r,c6,s)))
 r=s.fy
 if(r!=null)k.push(a8.$2("Tenants",A.l(r)))
 r=s.id
@@ -125549,7 +125549,7 @@ k.push(A.B("Tasks / Reminders",c2,c2,c2,A.m(c6).ok.r,c2,c2,c2))
 if(a6.length===0)k.push(B.atR)
 for(q=a6.length,h=0;h<a6.length;a6.length===q||(0,A.C)(a6),++h){c1=a6[h]
 j=A.B(c1.e,c2,c2,c2,c2,c2,c2,c2)
-k.push(A.eV(!1,B.J,c2,c2,!0,c2,c2,c2,!0,c2,c2,c2,c2,c2,c2,c2,!1,c2,c2,c2,c2,c2,A.B(A.l(a7.$1(c1.w))+" \xb7 "+c1.d,c2,c2,c2,c2,c2,c2,c2),c2,j,c2,c2,c2))}if(r&&s.cy!=null)k.push(A.eV(!1,B.J,c2,c2,!0,c2,c2,c2,!0,c2,c2,c2,c2,c2,c2,c2,!1,c2,c2,c2,c2,c2,A.B(a7.$1(s.cy),c2,c2,c2,c2,c2,c2,c2),c2,B.ass,c2,c2,c2))
+k.push(A.eV(!1,B.J,c2,c2,!0,c2,c2,c2,!0,c2,c2,c2,c2,c2,c2,c2,!1,c2,c2,c2,c2,c2,A.B(A.l(a7.$1(c1.w))+" \xb7 "+c1.d,c2,c2,c2,c2,c2,c2,c2),c2,j,c2,c2,c2))}if(r&&s.cy!=null)k.push(A.eV(!1,B.J,c2,c2,!0,c2,c2,c2,!0,c2,c2,c2,c2,c2,c2,c2,!1,c2,c2,c2,c2,c2,A.B(a7.$1(s.cy),c2,c2,c2,c2,c2,c2,c2),c2,B.ast,c2,c2,c2))
 k.push(B.kN)
 k.push(A.B("Activity History",c2,c2,c2,A.m(c6).ok.r,c2,c2,c2))
 if(l.length===0)k.push(B.arp)
@@ -126754,7 +126754,7 @@ q=m.f
 if(q!=null){i=i.i(j,"scheduledAction")
 h.push(A.B(A.l(i==null?"Task":i)+": "+A.fT(k,l).cY(q),l,l,l,l,l,l,l))}i=A.cx(A.fa(A.aV(h,B.I,B.h,B.Y,0,B.q),l,l,B.a2),l,430)
 h=m.r
-return A.fA(A.b([A.cV(B.jI,l,l,new A.b0b(h),l,l),A.iL(B.arO,new A.b0c(s,h,j,p,r))],g),l,l,l,i,l,!1,B.at8,l)},
+return A.fA(A.b([A.cV(B.jI,l,l,new A.b0b(h),l,l),A.iL(B.arO,new A.b0c(s,h,j,p,r))],g),l,l,l,i,l,!1,B.at9,l)},
 $S:47}
 A.b08.prototype={
 $1(a){var s=null
@@ -126828,7 +126828,7 @@ q=n.a
 r.push(new A.xk(q.a,q.b,new A.b0i(q,b),new A.b0j(q,b),m))
 r=A.cx(A.fa(A.aV(r,B.I,B.h,B.Y,0,B.q),m,m,B.a2),m,430)
 o=n.d
-return A.fA(A.b([A.cV(B.asU,m,m,new A.b0k(o,l,a),m,m),A.cV(B.jI,m,m,new A.b0l(o),m,m),A.iL(B.J2,new A.b0m(q,o,s))],p),m,m,m,r,m,!1,k,m)},
+return A.fA(A.b([A.cV(B.asV,m,m,new A.b0k(o,l,a),m,m),A.cV(B.jI,m,m,new A.b0l(o),m,m),A.iL(B.J2,new A.b0m(q,o,s))],p),m,m,m,r,m,!1,k,m)},
 $S:47}
 A.b0i.prototype={
 $1(a){return this.b.$1(new A.b0h(this.a,a))},
@@ -126939,7 +126939,7 @@ m=A.b([A.B("Show on Map:",o,o,o,A.m(a).ok.x,o,o,o),B.an,A.aI3(new A.b_v(n,b),B.Z
 l=B.c.a1(l.f.a.a)
 if(l.length!==0)B.b.L(m,A.b([B.ch,A.B('Search query: "'+l+'"',o,o,o,o,o,o,o)],k))
 m.push(B.bB)
-m.push(A.Nr(B.J,new A.b_w(n,b),B.asE,B.asM,n.d))
+m.push(A.Nr(B.J,new A.b_w(n,b),B.asF,B.asN,n.d))
 m.push(A.Nr(B.J,new A.b_x(n,b),o,B.ard,n.e))
 m.push(B.an)
 l=A.m(a).ok.ax
@@ -126948,7 +126948,7 @@ m.push(B.mk)
 for(l=p.c,s=0;s<12;++s){r=B.eh[s]
 m.push(A.bmT(B.J,!0,new A.b_y(b,l,r),A.B(r.c,o,o,o,o,o,o,o),l.m(0,r)))}m=A.cx(A.fa(A.aV(m,B.I,B.h,B.Y,0,B.q),o,o,B.a2),o,390)
 q=p.d
-return A.fA(A.b([A.cV(B.bD,o,o,new A.b_z(q),o,o),A.cV(B.asY,o,o,new A.b_A(n,b,l),o,o),A.iL(B.arm,new A.b_B(n,q,l))],k),o,o,o,m,o,!1,B.as9,o)},
+return A.fA(A.b([A.cV(B.bD,o,o,new A.b_z(q),o,o),A.cV(B.asZ,o,o,new A.b_A(n,b,l),o,o),A.iL(B.arm,new A.b_B(n,q,l))],k),o,o,o,m,o,!1,B.as9,o)},
 $S:47}
 A.b_v.prototype={
 $1(a){return this.b.$1(new A.b_u(this.a,a))},
@@ -127136,7 +127136,7 @@ q=A.b([],t.FG)
 for(p=B.f8.gfd(B.f8),p=p.ga6(p),o=t.b7;p.q();){n=p.gK(p)
 q.push(new A.dJ(n.a,A.B(n.b,l,l,l,l,l,l,l),B.bq,l,o))}p=m.c
 o=t.p
-q=A.cx(A.fa(A.aV(A.b([j,B.an,i,k,B.an,B.ato,B.cg,A.kK(B.VJ,r,!1,q,new A.b_Y(s,b),t.N),B.a9,A.eP(l,B.aH,!1,l,!0,B.m,l,A.f1(),p,l,l,l,l,l,2,B.VO,B.R,!0,l,!0,l,!1,l,B.as,l,l,l,l,l,l,l,l,l,4,2,l,!1,"\u2022",l,l,l,l,l,!1,l,l,!1,l,!0,l,B.au,l,l,l,l,l,l,l,l,l,l,l,l,!0,B.U,l,B.jF,l,l,l,l),B.a9,new A.xk(s.c,s.b,new A.b_Z(s,b),new A.b0_(s,b),l)],o),B.I,B.h,B.Y,0,B.q),l,l,B.a2),l,430)
+q=A.cx(A.fa(A.aV(A.b([j,B.an,i,k,B.an,B.atp,B.cg,A.kK(B.VJ,r,!1,q,new A.b_Y(s,b),t.N),B.a9,A.eP(l,B.aH,!1,l,!0,B.m,l,A.f1(),p,l,l,l,l,l,2,B.VO,B.R,!0,l,!0,l,!1,l,B.as,l,l,l,l,l,l,l,l,l,4,2,l,!1,"\u2022",l,l,l,l,l,!1,l,l,!1,l,!0,l,B.au,l,l,l,l,l,l,l,l,l,l,l,l,!0,B.U,l,B.jF,l,l,l,l),B.a9,new A.xk(s.c,s.b,new A.b_Z(s,b),new A.b0_(s,b),l)],o),B.I,B.h,B.Y,0,B.q),l,l,B.a2),l,430)
 r=m.d
 return A.fA(A.b([A.cV(B.jI,l,l,new A.b00(r),l,l),A.th(B.UB,B.J3,new A.b01(s,r,p),l)],o),l,l,l,q,l,!1,B.art,l)},
 $S:47}
@@ -127243,7 +127243,7 @@ $0(){return this.a.Q=!0},
 $S:0}
 A.b_H.prototype={
 $1(a){var s=null
-return A.fA(A.b([A.cV(B.ase,s,s,new A.b_F(a),s,s),A.iL(B.arE,new A.b_G(this.a,a))],t.p),s,s,s,B.atO,s,!1,B.atL,s)},
+return A.fA(A.b([A.cV(B.ase,s,s,new A.b_F(a),s,s),A.iL(B.arE,new A.b_G(this.a,a))],t.p),s,s,s,B.atP,s,!1,B.atM,s)},
 $S:31}
 A.b_F.prototype={
 $0(){A.aR(this.a,!1).bG(null)
@@ -127432,7 +127432,7 @@ p=m}else p=i.ay
 p=A.b([A.ba(A.B(p,k,k,k,A.m(a).ok.Q,k,k,k),1)],r)
 if(!i.z&&!i.ry)p.push(B.agA)
 s.push(A.fq(!1,B.M,!0,f,A.er(!1,q,!0,new A.aO(B.RC,A.b4(p,B.n,B.h,B.j,0,k),k),k,!0,k,k,k,k,k,k,k,k,k,k,k,o,k,k,k,k,k,k,k),B.r,h.ax.k2,0,k,k,k,k,k,B.bW))
-if(i.z&&!i.Q)s.push(new A.dQ(B.bQ,k,k,A.ur(B.UP,B.asn,g),k))
+if(i.z&&!i.Q)s.push(new A.dQ(B.bQ,k,k,A.ur(B.UP,B.aso,g),k))
 s.push(B.aV)
 h=A.b([],r)
 for(l=0;l<4;++l){g=A.b([new A.acw(B.xz[l],i.cx===l,new A.b0O(i,l),k)],r)
@@ -127531,7 +127531,7 @@ F(a){var s=null,r=A.be(14),q=A.dR(B.ea,1),p=this.c,o=t.p
 return A.kG(new A.aO(B.ef,A.aV(A.b([A.b4(A.b([B.wu,B.bh,A.ba(A.B(p.gNE(),1,B.ar,s,B.IO,s,s,s),1),A.dM(s,s,B.wx,s,s,this.e,s,s,s,B.jN)],o),B.n,B.h,B.j,0,s),A.B(p.a,2,B.ar,s,B.IQ,s,s,s),B.bB,A.th(B.wy,B.J3,this.d,s)],o),B.I,B.h,B.Y,0,B.q),s),new A.bo(B.io,s,q,r,B.Yz,s,B.O),B.c7)}}
 A.ae1.prototype={
 F(a){var s=null
-return A.aV(A.b([A.bV(s,B.Ut,B.r,s,s,new A.bo(B.il,s,A.dR(B.l,3),s,B.xx,s,B.bj),s,42,s,s,s,s,s,42),A.bV(s,B.asS,B.r,s,s,new A.bo(B.On,s,s,A.be(999),s,s,B.O),s,s,s,s,B.S2,s,s,s)],t.p),B.n,B.h,B.Y,0,B.q)}}
+return A.aV(A.b([A.bV(s,B.Ut,B.r,s,s,new A.bo(B.il,s,A.dR(B.l,3),s,B.xx,s,B.bj),s,42,s,s,s,s,s,42),A.bV(s,B.asT,B.r,s,s,new A.bo(B.On,s,s,A.be(999),s,s,B.O),s,s,s,s,B.S2,s,s,s)],t.p),B.n,B.h,B.Y,0,B.q)}}
 A.aea.prototype={
 F(a){var s=null,r=A.be(16),q=A.dR(B.ea,1),p=t.p,o=this.c
 return A.bV(s,A.aV(A.b([A.b4(A.b([B.UE,B.bh,B.Sc,A.dM(s,s,B.wx,s,s,this.f,s,s,s,B.jN)],p),B.n,B.h,B.j,0,s),A.B(B.d.am(o.a,5)+", "+B.d.am(o.b,5),s,s,s,B.IQ,s,s,s),B.an,A.JT(new A.b8C(this))],p),B.I,B.h,B.Y,0,B.q),B.r,s,s,new A.bo(B.io,s,q,r,B.Zl,s,B.O),s,s,s,s,B.ef,s,s,1/0)}}
@@ -127550,7 +127550,7 @@ A.aaO.prototype={
 F(a){var s,r=this,q=null,p="Search address",o=A.be(7),n=A.dR(B.kt,1),m=r.r,l=A.dM(B.ko,q,B.UN,q,q,m,q,q,p,q)
 if(r.e)m=B.agu
 else{s=r.z
-m=s==null?A.dM(B.ko,q,B.Uz,q,q,m,q,q,p,q):A.dM(B.ko,q,B.Uk,q,q,s,q,q,"Clear search",q)}o=A.ba(A.kG(A.eP(q,B.aa9,!1,q,!0,B.m,q,A.f1(),r.c,B.l,q,q,q,q,2,A.ty(q,B.rC,q,B.vk,q,q,q,q,!0,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,B.anN,"Full address, city, or postal code...",q,q,q,q,q,!0,q,q,q,!0,!0,!1,q,l,q,q,q,q,q,q,m,q,q,q,q,q),B.R,!0,q,!0,q,!1,q,B.as,q,q,q,q,q,q,q,q,q,1,q,q,!1,"\u2022",q,new A.b3N(r),q,new A.b3O(r),q,!1,q,q,!1,q,!0,q,B.au,q,q,q,q,q,q,q,q,q,q,q,B.ap9,!0,B.U,q,B.fl,q,B.r4,q,q),new A.bo(B.nF,q,n,o,q,q,B.O),B.c7),1)
+m=s==null?A.dM(B.ko,q,B.Uz,q,q,m,q,q,p,q):A.dM(B.ko,q,B.Uj,q,q,s,q,q,"Clear search",q)}o=A.ba(A.kG(A.eP(q,B.aa9,!1,q,!0,B.m,q,A.f1(),r.c,B.l,q,q,q,q,2,A.ty(q,B.rC,q,B.vk,q,q,q,q,!0,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,q,B.anN,"Full address, city, or postal code...",q,q,q,q,q,!0,q,q,q,!0,!0,!1,q,l,q,q,q,q,q,q,m,q,q,q,q,q),B.R,!0,q,!0,q,!1,q,B.as,q,q,q,q,q,q,q,q,q,1,q,q,!1,"\u2022",q,new A.b3N(r),q,new A.b3O(r),q,!1,q,q,!1,q,!0,q,B.au,q,q,q,q,q,q,q,q,q,q,q,B.ap9,!0,B.U,q,B.fl,q,B.r4,q,q),new A.bo(B.nF,q,n,o,q,q,B.O),B.c7),1)
 n=r.x
 n=n===0?"Filter":"Filter "+n
 m=r.d
@@ -127727,7 +127727,7 @@ break}A.cb(o,B.alz)
 case 1:return A.p(q,r)}})
 return A.q($async$Gm,r)},
 F(a){var s=this,r=null,q=t.p,p=t.y
-return A.hF(r,A.m(a).fx,A.fG(!0,A.aV(A.b([new A.aO(B.RM,A.aV(A.b([A.b4(A.b([A.dM(r,r,B.iW,r,r,new A.b68(a),r,r,r,r),A.ba(A.B("Quests",r,r,r,A.b6(r,r,A.m(a).ax.k3,r,r,r,r,r,r,r,r,22,r,r,B.ah,r,r,!0,r,r,r,r,r,r,r,r),B.bZ,r,r),1),B.Ip],q),B.n,B.h,B.j,0,r),B.an,A.b4(A.b([A.ba(A.aI3(new A.b69(s),B.a2T,A.cL([s.d],p),p),1),B.bh,A.lD(B.asW,r,s.garp(),r)],q),B.n,B.h,B.j,0,r)],q),B.n,B.h,B.j,0,B.q),r),A.ba(new A.dP($.cp().c,new A.b6a(s),r,r,t.Hy),1)],q),B.n,B.h,B.j,0,B.q),B.J,!0),r)}}
+return A.hF(r,A.m(a).fx,A.fG(!0,A.aV(A.b([new A.aO(B.RM,A.aV(A.b([A.b4(A.b([A.dM(r,r,B.iW,r,r,new A.b68(a),r,r,r,r),A.ba(A.B("Quests",r,r,r,A.b6(r,r,A.m(a).ax.k3,r,r,r,r,r,r,r,r,22,r,r,B.ah,r,r,!0,r,r,r,r,r,r,r,r),B.bZ,r,r),1),B.Ip],q),B.n,B.h,B.j,0,r),B.an,A.b4(A.b([A.ba(A.aI3(new A.b69(s),B.a2T,A.cL([s.d],p),p),1),B.bh,A.lD(B.asX,r,s.garp(),r)],q),B.n,B.h,B.j,0,r)],q),B.n,B.h,B.j,0,B.q),r),A.ba(new A.dP($.cp().c,new A.b6a(s),r,r,t.Hy),1)],q),B.n,B.h,B.j,0,B.q),B.J,!0),r)}}
 A.b62.prototype={
 $1(a){return!a.e},
 $S:799}
@@ -127881,7 +127881,7 @@ k.push(new A.dJ(h,A.b4(A.b([A.cF(i.b,f,f,18),B.bh,A.B(h[0].toUpperCase()+B.c.bt(
 a0.push(A.B("Pin size \xb7 "+B.d.aE(g.d)+" px",f,f,f,f,f,f,f))
 s=g.d
 a0.push(new A.N4(s,new A.aRM(g),new A.aRN(),28,52,6,""+B.d.aE(s)+" px",f))
-a0.push(A.Nr(B.J,new A.aRO(g),B.atr,B.arM,g.e))
+a0.push(A.Nr(B.J,new A.aRO(g),B.ats,B.arM,g.e))
 for(s=B.CE.gfd(B.CE),s=s.ga6(s),q=g.r;s.q();){p=s.gK(s)
 o=p.b
 n=q.i(0,p.a)
@@ -128126,7 +128126,7 @@ $2(a,b){return B.c.b2(b.c,a.c)},
 $S:806}
 A.b9R.prototype={
 $1(a){var s=null,r=this.a,q=A.eP(s,B.xf,!1,s,!0,B.m,s,A.f1(),r,s,s,s,s,s,2,B.Vy,B.R,!0,s,!0,s,!1,s,B.as,s,s,s,s,s,s,s,s,s,1,s,s,!1,"\u2022",s,s,s,s,s,!1,s,s,!1,s,!0,s,B.au,s,s,s,s,s,s,s,s,s,s,s,s,!0,B.U,s,B.fl,s,B.ep,s,s)
-return A.fA(A.b([A.cV(B.bD,s,s,new A.b9P(a),s,s),A.lD(B.arU,s,new A.b9Q(r,a),s)],t.p),s,s,s,q,s,!1,B.asJ,s)},
+return A.fA(A.b([A.cV(B.bD,s,s,new A.b9P(a),s,s),A.lD(B.arU,s,new A.b9Q(r,a),s)],t.p),s,s,s,q,s,!1,B.asK,s)},
 $S:31}
 A.b9P.prototype={
 $0(){A.aR(this.a,!1).bG(null)
@@ -129179,7 +129179,7 @@ n=A.a1I(0,new A.aO(new A.am(0,0,0,r?104:0),e.d,d))
 m=b?88:12
 l=e.a
 k=t.p
-m=A.lQ(m,A.cP(A.fu(B.mE,A.b([A.ur(B.Ui,B.aru,new A.b1j(l)),A.cV(B.IZ,d,d,new A.b1k(l),d,d)],k),B.aY,0,6),d,d,d),d,d,0,0,d,d)
+m=A.lQ(m,A.cP(A.fu(B.mE,A.b([A.ur(B.Uh,B.aru,new A.b1j(l)),A.cV(B.IZ,d,d,new A.b1k(l),d,d)],k),B.aY,0,6),d,d,d),d,d,0,0,d,d)
 j=A.ee(0,0,a0?0:300,0)
 i=A.ee(0,0,a0?0:220,0)
 if(b){h=A.m(a1).ax.a===B.aB?0.7:0.76
@@ -130767,7 +130767,7 @@ $S:9}
 A.akw.prototype={
 $1(a){var s=null,r=A.bnn(this.a.c,A.b6(s,s,A.m(a).ax.k3,s,s,s,s,s,s,s,s,s,s,s,s,s,s,!0,s,s,s,s,s,s,s,s)),q=A.b([],t.p)
 q.push(A.iL(B.arR,new A.akv(a)))
-return A.fA(q,s,B.V,B.KZ,r,s,!0,B.asP,s)},
+return A.fA(q,s,B.V,B.KZ,r,s,!0,B.asQ,s)},
 $S:31}
 A.akv.prototype={
 $0(){return A.aR(this.a,!1).h0()},
@@ -130803,7 +130803,7 @@ m=new A.cD("")
 l=new A.QZ("  ",0,m,[],A.beF())
 l.pS(p)
 p=m.a
-i.push(A.j5(new A.aO(B.ef,A.aV(A.b([o,new A.My("This device:\n"+(n.charCodeAt(0)==0?n:n)+"\n\nCloud:\n"+(p.charCodeAt(0)==0?p:p),k),new A.z2(B.aF,8,0,B.aY,A.b([A.cV(B.asG,k,k,new A.amG(r,q),k,k),A.cV(B.atX,k,k,new A.amH(r,q),k,k)],j),k)],j),B.I,B.h,B.j,0,B.q),k),k))}return A.aV(i,B.n,B.h,B.j,0,B.q)},
+i.push(A.j5(new A.aO(B.ef,A.aV(A.b([o,new A.My("This device:\n"+(n.charCodeAt(0)==0?n:n)+"\n\nCloud:\n"+(p.charCodeAt(0)==0?p:p),k),new A.z2(B.aF,8,0,B.aY,A.b([A.cV(B.asH,k,k,new A.amG(r,q),k,k),A.cV(B.atX,k,k,new A.amH(r,q),k,k)],j),k)],j),B.I,B.h,B.j,0,B.q),k),k))}return A.aV(i,B.n,B.h,B.j,0,B.q)},
 $S:887}
 A.amG.prototype={
 $0(){return this.a.rH(this.b,!1)},
@@ -130818,7 +130818,7 @@ $S:0}
 A.Yv.prototype={
 F(a){var s=$.ca()
 if(s.b==="guest")return B.ax
-return A.ur(B.UG,B.atm,new A.api(s,a))}}
+return A.ur(B.UG,B.atn,new A.api(s,a))}}
 A.api.prototype={
 $0(){var s=0,r=A.r(t.H),q,p=2,o=[],n=this,m,l,k,j,i,h,g,f,e,d
 var $async$$0=A.n(function(a,b){if(a===1){o.push(b)
@@ -130865,7 +130865,7 @@ $1(a){return""+J.bv(a.b)+" "+a.a},
 $S:889}
 A.aph.prototype={
 $1(a){var s=null,r=A.B(this.a+"\n\nOnly continue if these earlier device records belong to you. They will be copied into your current private account and synchronized. Original device copies are retained. No external CRM webhook is triggered.",s,s,s,s,s,s,s)
-return A.fA(A.b([A.cV(B.bD,s,s,new A.apd(a),s,s),A.iL(B.as3,new A.ape(a))],t.p),s,s,s,r,s,!1,B.atb,s)},
+return A.fA(A.b([A.cV(B.bD,s,s,new A.apd(a),s,s),A.iL(B.as3,new A.ape(a))],t.p),s,s,s,r,s,!1,B.atc,s)},
 $S:31}
 A.apd.prototype={
 $0(){A.aR(this.a,!1).bG(!1)
@@ -141447,8 +141447,8 @@ B.tU=new A.rU(null,null,null,null,null,null,null,null)
 B.NI=new A.lv(B.V,null,null,B.tU,null)
 B.arA=new A.a3("No saved leads yet. Add a lead to get started.",null,null,null,null,null,null,null,null,null)
 B.NJ=new A.lv(B.V,null,null,B.arA,null)
-B.atd=new A.a3("No leads match this search or stage.",null,null,null,null,null,null,null,null,null)
-B.NK=new A.lv(B.V,null,null,B.atd,null)
+B.ate=new A.a3("No leads match this search or stage.",null,null,null,null,null,null,null,null,null)
+B.NK=new A.lv(B.V,null,null,B.ate,null)
 B.ka=new A.iG(0,"close")
 B.kb=new A.iG(1,"error")
 B.nv=new A.iG(2,"join")
@@ -141830,12 +141830,12 @@ B.QE=new A.YP(null)
 B.QF=new A.Iw(null,null,null,null,null,null,null,null,null)
 B.as0=new A.a3("Use category default",null,null,null,null,null,null,null,null,null)
 B.QG=new A.dJ("__category_default__",B.as0,B.bq,null,t.b7)
-B.atp=new A.a3("Not mapped",null,null,null,null,null,null,null,null,null)
-B.QH=new A.dJ("",B.atp,B.bq,null,t.b7)
-B.atg=new A.a3("All stages",null,null,null,null,null,null,null,null,null)
-B.QI=new A.dJ(null,B.atg,B.bq,null,A.at("dJ<dt?>"))
-B.asQ=new A.a3("No group",null,null,null,null,null,null,null,null,null)
-B.QL=new A.dJ("",B.asQ,B.bq,null,t.b7)
+B.atq=new A.a3("Not mapped",null,null,null,null,null,null,null,null,null)
+B.QH=new A.dJ("",B.atq,B.bq,null,t.b7)
+B.ath=new A.a3("All stages",null,null,null,null,null,null,null,null,null)
+B.QI=new A.dJ(null,B.ath,B.bq,null,A.at("dJ<dt?>"))
+B.asR=new A.a3("No group",null,null,null,null,null,null,null,null,null)
+B.QL=new A.dJ("",B.asR,B.bq,null,t.b7)
 B.QM=new A.Iy(null,null,null,null)
 B.T=new A.b2(0)
 B.QN=new A.b2(1000)
@@ -142022,8 +142022,8 @@ B.vw=new A.wo(!1,!1,!1,!0)
 B.dG=new A.Zh(0,"tight")
 B.c9=new A.k6(900)
 B.anb=new A.J(!0,B.l,null,null,null,null,null,B.c9,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.ati=new A.a3("New property pin",null,B.anb,null,null,null,null,null,null,null)
-B.Sc=new A.mD(1,B.dG,B.ati,null)
+B.atj=new A.a3("New property pin",null,B.anb,null,null,null,null,null,null,null)
+B.Sc=new A.mD(1,B.dG,B.atj,null)
 B.awD=new A.a8x(null)
 B.vx=new A.mD(1,B.dG,B.awD,null)
 B.kT=new A.mD(1,B.dG,B.oc,null)
@@ -142180,13 +142180,13 @@ B.pb=new A.ar(61705,"MaterialIcons",!1)
 B.iS=new A.ar(61870,"MaterialIcons",!1)
 B.lb=new A.ar(62006,"MaterialIcons",!1)
 B.iT=new A.ar(62058,"MaterialIcons",!1)
-B.TA=new A.ar(62265,"MaterialIcons",!1)
-B.TD=new A.ar(62584,"MaterialIcons",!1)
+B.TB=new A.ar(62265,"MaterialIcons",!1)
+B.TE=new A.ar(62584,"MaterialIcons",!1)
 B.wb=new A.ar(62634,"MaterialIcons",!1)
-B.TE=new A.ar(62819,"MaterialIcons",!1)
+B.TF=new A.ar(62819,"MaterialIcons",!1)
 B.pc=new A.ar(62910,"MaterialIcons",!1)
 B.wd=new A.ar(63028,"MaterialIcons",!1)
-B.TF=new A.ar(63035,"MaterialIcons",!0)
+B.TG=new A.ar(63035,"MaterialIcons",!0)
 B.we=new A.ar(63047,"MaterialIcons",!1)
 B.wf=new A.ar(63116,"MaterialIcons",!1)
 B.wg=new A.ar(63174,"MaterialIcons",!1)
@@ -142227,45 +142227,45 @@ B.U0=new A.ar(984559,"MaterialIcons",!1)
 B.U7=new A.bw(B.U0,null,null,null,null)
 B.U8=new A.bw(B.w9,null,null,null,null)
 B.U9=new A.bw(B.wp,42,null,null,null)
-B.TC=new A.ar(62541,"MaterialIcons",!1)
-B.Ua=new A.bw(B.TC,null,null,null,null)
+B.TD=new A.ar(62541,"MaterialIcons",!1)
+B.Ua=new A.bw(B.TD,null,null,null,null)
 B.U3=new A.ar(984763,"MaterialIcons",!1)
 B.Ub=new A.bw(B.U3,null,null,null,null)
 B.TL=new A.ar(63734,"MaterialIcons",!1)
 B.Uc=new A.bw(B.TL,21,B.l,null,null)
 B.Tq=new A.ar(61509,"MaterialIcons",!1)
 B.Ud=new A.bw(B.Tq,null,null,null,null)
-B.TH=new A.ar(63192,"MaterialIcons",!1)
-B.Ue=new A.bw(B.TH,40,B.l,null,null)
+B.TI=new A.ar(63192,"MaterialIcons",!1)
+B.Ue=new A.bw(B.TI,40,B.l,null,null)
 B.Tu=new A.ar(61752,"MaterialIcons",!1)
 B.wr=new A.bw(B.Tu,null,null,null,null)
 B.Uf=new A.bw(B.w6,16,B.it,null,null)
 B.Ug=new A.bw(B.w8,null,null,null,null)
-B.TJ=new A.ar(63460,"MaterialIcons",!0)
-B.Uh=new A.bw(B.TJ,null,null,null,null)
 B.T0=new A.ar(58123,"MaterialIcons",!0)
-B.Ui=new A.bw(B.T0,16,null,null,null)
+B.Uh=new A.bw(B.T0,16,null,null,null)
 B.SZ=new A.ar(57984,"MaterialIcons",!1)
 B.ws=new A.bw(B.SZ,null,null,null,null)
 B.SY=new A.ar(57926,"MaterialIcons",!1)
-B.Uj=new A.bw(B.SY,null,null,null,null)
+B.Ui=new A.bw(B.SY,null,null,null,null)
 B.Tb=new A.ar(58644,"MaterialIcons",!1)
 B.wt=new A.bw(B.Tb,null,null,null,null)
-B.Uk=new A.bw(B.p6,16,null,null,null)
+B.Uj=new A.bw(B.p6,16,null,null,null)
 B.w_=new A.ar(57634,"MaterialIcons",!1)
-B.Ul=new A.bw(B.w_,null,null,null,null)
+B.Uk=new A.bw(B.w_,null,null,null,null)
 B.iW=new A.bw(B.p4,null,null,null,null)
-B.Um=new A.bw(B.wo,null,null,null,null)
-B.Un=new A.bw(B.la,null,B.l,null,null)
+B.Ul=new A.bw(B.wo,null,null,null,null)
+B.Um=new A.bw(B.la,null,B.l,null,null)
 B.h4=new A.bw(B.w1,null,null,null,null)
-B.Uo=new A.bw(B.p9,null,null,null,null)
+B.Un=new A.bw(B.p9,null,null,null,null)
 B.TQ=new A.ar(983198,"MaterialIcons",!1)
 B.wu=new A.bw(B.TQ,null,B.ea,null,null)
 B.wv=new A.bw(B.vX,null,null,null,null)
 B.Tr=new A.ar(61533,"MaterialIcons",!1)
-B.Ur=new A.bw(B.Tr,null,null,null,null)
+B.Uq=new A.bw(B.Tr,null,null,null,null)
 B.T9=new A.ar(58516,"MaterialIcons",!1)
-B.Us=new A.bw(B.T9,null,null,null,null)
+B.Ur=new A.bw(B.T9,null,null,null,null)
+B.Tw=new A.ar(61890,"MaterialIcons",!1)
+B.Us=new A.bw(B.Tw,null,null,null,null)
 B.Ut=new A.bw(B.lc,25,B.l,null,null)
 B.T3=new A.ar(58291,"MaterialIcons",!1)
 B.Uu=new A.bw(B.T3,null,null,null,null)
@@ -142287,8 +142287,8 @@ B.wc=new A.ar(62769,"MaterialIcons",!1)
 B.UE=new A.bw(B.wc,null,B.ea,null,null)
 B.SS=new A.ar(57704,"MaterialIcons",!1)
 B.UF=new A.bw(B.SS,18,null,null,null)
-B.Tw=new A.ar(61938,"MaterialIcons",!1)
-B.UG=new A.bw(B.Tw,null,null,null,null)
+B.Tx=new A.ar(61938,"MaterialIcons",!1)
+B.UG=new A.bw(B.Tx,null,null,null,null)
 B.T2=new A.ar(58212,"MaterialIcons",!0)
 B.UH=new A.bw(B.T2,null,null,null,null)
 B.wx=new A.bw(B.we,null,B.ap,null,null)
@@ -142313,8 +142313,8 @@ B.UR=new A.bw(B.SR,null,null,null,null)
 B.US=new A.bw(B.w2,null,null,null,null)
 B.SV=new A.ar(57898,"MaterialIcons",!1)
 B.UW=new A.bw(B.SV,null,null,null,null)
-B.Tx=new A.ar(61966,"MaterialIcons",!1)
-B.UX=new A.bw(B.Tx,null,null,null,null)
+B.Ty=new A.ar(61966,"MaterialIcons",!1)
+B.UX=new A.bw(B.Ty,null,null,null,null)
 B.SU=new A.ar(57882,"MaterialIcons",!1)
 B.UY=new A.bw(B.SU,null,null,null,null)
 B.wa=new A.ar(62318,"MaterialIcons",!1)
@@ -142326,8 +142326,8 @@ B.V_=new A.bw(B.wm,null,null,null,null)
 B.Tp=new A.ar(61486,"MaterialIcons",!0)
 B.V0=new A.bw(B.Tp,null,B.l,null,null)
 B.V1=new A.bw(B.wc,25,B.l,null,null)
-B.TB=new A.ar(62504,"MaterialIcons",!1)
-B.V2=new A.bw(B.TB,null,null,null,null)
+B.TC=new A.ar(62504,"MaterialIcons",!1)
+B.V2=new A.bw(B.TC,null,null,null,null)
 B.V3=new A.bw(B.p7,null,null,null,null)
 B.SP=new A.ar(57415,"MaterialIcons",!1)
 B.ph=new A.bw(B.SP,null,null,null,null)
@@ -142355,8 +142355,8 @@ B.Vq=new A.q_(null,null,null,null,null,null,null,null,null,B.l4,B.k8,!1,null,!1,
 B.Vr=new A.d8(null,null,null,"Schedule Type",null,null,null,null,null,null,"Follow-Up, Showing, Call, Door Knock",null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.UC=new A.bw(B.w_,16,null,null,null)
 B.Vs=new A.d8(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,!1,null,null,null,null,null,null,null,null,B.UC,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
-B.Up=new A.bw(B.vY,null,null,null,null)
-B.Vt=new A.d8(null,null,null,"Recipient email (optional)",null,null,null,null,null,null,"Select a lead above or enter an email",null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,B.Up,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
+B.Uo=new A.bw(B.vY,null,null,null,null)
+B.Vt=new A.d8(null,null,null,"Recipient email (optional)",null,null,null,null,null,null,"Select a lead above or enter an email",null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,B.Uo,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.Vu=new A.d8(null,null,null,"Number of tenants",null,null,null,null,null,null,null,null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.Vv=new A.d8(null,null,null,"Full Name",null,null,null,null,null,null,null,null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.Vw=new A.d8(null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
@@ -142376,8 +142376,8 @@ B.VG=new A.d8(null,null,null,"Notes",null,null,null,null,null,null,"Add a note a
 B.VH=new A.d8(null,null,null,"Group name",null,null,null,null,null,null,"For example, Open House Leads",null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.VI=new A.d8(null,null,null,"Details",null,null,null,null,null,null,null,null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.VJ=new A.d8(null,null,null,"Lead type",null,null,null,null,null,null,null,null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
-B.Ty=new A.ar(61999,"MaterialIcons",!0)
-B.UK=new A.bw(B.Ty,null,null,null,null)
+B.Tz=new A.ar(61999,"MaterialIcons",!0)
+B.UK=new A.bw(B.Tz,null,null,null,null)
 B.VK=new A.d8(null,null,null,"Import Notes",null,null,null,null,null,null,"Add context, mapping reminders, cleanup notes, or CRM destination details...",null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,B.UK,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.VL=new A.d8(null,null,null,"Status",null,null,null,null,null,null,null,null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
 B.VM=new A.d8(null,null,null,"Lead status",null,null,null,null,null,null,null,null,null,null,null,null,!0,!0,!1,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,!0,null,null,null,null)
@@ -142556,8 +142556,8 @@ B.axb=new A.ko(1,1)
 B.XY=s([B.ax9,B.axe,B.axh,B.axj,B.axf,B.axd,B.axc,B.axi,B.axg,B.axa,B.axb],A.at("D<ko>"))
 B.T8=new A.ar(58504,"MaterialIcons",!1)
 B.UT=new A.bw(B.T8,null,null,null,null)
-B.aso=new A.a3("Lead List",null,null,null,null,null,null,null,null,null)
-B.M_=new A.hv(!1,B.UT,B.aso,t.Mt)
+B.asp=new A.a3("Lead List",null,null,null,null,null,null,null,null,null)
+B.M_=new A.hv(!1,B.UT,B.asp,t.Mt)
 B.IT=new A.a3("Lead Status",null,null,null,null,null,null,null,null,null)
 B.M0=new A.hv(!0,B.ws,B.IT,t.Mt)
 B.XZ=s([B.M_,B.M0],t.st)
@@ -142785,12 +142785,12 @@ B.PP=new A.ec(B.iC,"SalesRabbit",!1,"","",B.hf,"idle","",null,null)
 B.pt=s([B.PQ,B.PR,B.PO,B.PP],t.m1)
 B.as_=new A.a3("New accounts start without demo leads, tasks, quests, or territories, so field totals reflect real work.",null,null,null,null,null,null,null,null,null)
 B.WU=new A.iO(B.h4,B.as_,null,null,null,!0,null,null,null,null,!0,null,null,!1,null,null,null,!1,null,null,null,null,null,null,null,null,!0,null,null)
-B.atD=new A.a3("Door Records stay separate from a lead\u2019s visit history; logged visits persist as their own records.",null,null,null,null,null,null,null,null,null)
-B.WR=new A.iO(B.h4,B.atD,null,null,null,!0,null,null,null,null,!0,null,null,!1,null,null,null,!1,null,null,null,null,null,null,null,null,!0,null,null)
-B.asl=new A.a3("The Change Lead Status picker scrolls on phone-sized screens instead of clipping its options.",null,null,null,null,null,null,null,null,null)
-B.WV=new A.iO(B.h4,B.asl,null,null,null,!0,null,null,null,null,!0,null,null,!1,null,null,null,!1,null,null,null,null,null,null,null,null,!0,null,null)
-B.at0=new A.a3("Map pins now offer separate Log Door and Add Lead actions with GPS coordinates and address prefill.",null,null,null,null,null,null,null,null,null)
-B.WS=new A.iO(B.h4,B.at0,null,null,null,!0,null,null,null,null,!0,null,null,!1,null,null,null,!1,null,null,null,null,null,null,null,null,!0,null,null)
+B.atE=new A.a3("Door Records stay separate from a lead\u2019s visit history; logged visits persist as their own records.",null,null,null,null,null,null,null,null,null)
+B.WR=new A.iO(B.h4,B.atE,null,null,null,!0,null,null,null,null,!0,null,null,!1,null,null,null,!1,null,null,null,null,null,null,null,null,!0,null,null)
+B.asm=new A.a3("The Change Lead Status picker scrolls on phone-sized screens instead of clipping its options.",null,null,null,null,null,null,null,null,null)
+B.WV=new A.iO(B.h4,B.asm,null,null,null,!0,null,null,null,null,!0,null,null,!1,null,null,null,!1,null,null,null,null,null,null,null,null,!0,null,null)
+B.at1=new A.a3("Map pins now offer separate Log Door and Add Lead actions with GPS coordinates and address prefill.",null,null,null,null,null,null,null,null,null)
+B.WS=new A.iO(B.h4,B.at1,null,null,null,!0,null,null,null,null,!0,null,null,!1,null,null,null,!1,null,null,null,null,null,null,null,null,!0,null,null)
 B.arb=new A.a3("Lead Overview has a visible Add Lead button that starts from the device location when available.",null,null,null,null,null,null,null,null,null)
 B.WT=new A.iO(B.h4,B.arb,null,null,null,!0,null,null,null,null,!0,null,null,!1,null,null,null,!1,null,null,null,null,null,null,null,null,!0,null,null)
 B.a_i=s([B.WU,B.WR,B.WV,B.WS,B.WT],t.p)
@@ -142856,16 +142856,16 @@ B.agQ=new A.hS(204,11,"cyrillic")
 B.agR=new A.hS(222,12,"thai")
 B.agS=new A.hS(238,13,"easternEuropean")
 B.a2H=s([B.agG,B.agP,B.agT,B.agH,B.agI,B.agJ,B.agK,B.agL,B.agM,B.agN,B.agO,B.agQ,B.agR,B.agS],A.at("D<hS>"))
-B.atA=new A.a3("Week",null,null,null,null,null,null,null,null,null)
-B.LZ=new A.hv("Week",null,B.atA,t.Zx)
+B.atB=new A.a3("Week",null,null,null,null,null,null,null,null,null)
+B.LZ=new A.hv("Week",null,B.atB,t.Zx)
 B.as4=new A.a3("Month",null,null,null,null,null,null,null,null,null)
 B.M3=new A.hv("Month",null,B.as4,t.Zx)
 B.as8=new A.a3("Both",null,null,null,null,null,null,null,null,null)
 B.M2=new A.hv("Both",null,B.as8,t.Zx)
 B.a2O=s([B.LZ,B.M3,B.M2],t.CK)
 B.xo=s([B.eL,B.iA,B.iB,B.iC],A.at("D<lz>"))
-B.asu=new A.a3("Open",null,null,null,null,null,null,null,null,null)
-B.M1=new A.hv(!0,null,B.asu,t.Mt)
+B.asv=new A.a3("Open",null,null,null,null,null,null,null,null,null)
+B.M1=new A.hv(!0,null,B.asv,t.Mt)
 B.M4=new A.hv(!1,null,B.J_,t.Mt)
 B.a2T=s([B.M1,B.M4],t.st)
 B.cD=s([4098969767,1098797925,387629988,658151006,2872822635,2636116293,4205620056,3813380867,807425530,1991112301,3431502198,49620300,3847224535,717608907,891715652,1656065955,2984135002,3123013403,3930429454,4267565504,801309301,1283527408,1183687575,3547055865,2399397727,2450888092,1841294202,1385552473,3201576323,1951978273,3762891113,3381544136,3262474889,2398386297,1486449470,3106397553,3787372111,2297436077,550069932,3464344634,3747813450,451248689,1368875059,1398949247,1689378935,1807451310,2180914336,150574123,1215322216,1167006205,3734275948,2069018616,1940595667,1265820162,534992783,1432758955,3954313e3,3039757250,3313932923,936617224,674296455,3206787749,50510442,384654466,3481938716,2041025204,133427442,1766760930,3664104948,84334014,886120290,2797898494,775200083,4087521365,2315596513,4137973227,2198551020,1614850799,1901987487,1857900816,557775242,3717610758,1054715397,3863824061,1418835341,3295741277,100954068,1348534037,2551784699,3184957417,1082772547,3647436702,3903896898,2298972299,434583643,3363429358,2090944266,1115482383,2230896926,0,2148107142,724715757,287222896,1517047410,251526143,2232374840,2923241173,758523705,252339417,1550328230,1536938324,908343854,168604007,1469255655,4004827798,2602278545,3229634501,3697386016,2002413899,303830554,2481064634,2696996138,574374880,454171927,151915277,2347937223,3056449960,504678569,4049044761,1974422535,2582559709,2141453664,33005350,1918680309,1715782971,4217058430,1133213225,600562886,3988154620,3837289457,836225756,1665273989,2534621218,3330547729,1250262308,3151165501,4188934450,700935585,2652719919,3000824624,2249059410,3245854947,3005967382,1890163129,2484206152,3913753188,4238918796,4037024319,2102843436,857927568,1233635150,953795025,3398237858,3566745099,4121350017,2057644254,3084527246,2906629311,976020637,2018512274,1600822220,2119459398,2381758995,3633375416,959340279,3280139695,1570750080,3496574099,3580864813,634368786,2898803609,403744637,2632478307,1004239803,650971512,1500443672,2599158199,1334028442,2514904430,4289363686,3156281551,368043752,3887782299,1867173430,2682967049,2955531900,2754719666,1059729699,2781229204,2721431654,1316239292,2197595850,2430644432,2805143e3,82922136,3963746266,3447656016,2434215926,1299615190,4014165424,2865517645,2531581700,3516851125,1783372680,750893087,1699118929,1587348714,2348899637,2281337716,201010753,1739807261,3683799762,283718486,3597472583,3617229921,2704767500,4166618644,334203196,2848910887,1639396809,484568549,1199193265,3533461983,4065673075,337148366,3346251575,4149471949,4250885034,1038029935,1148749531,2949284339,1756970692,607661108,2747424576,488010435,3803974693,1009290057,234832277,2822336769,201907891,3034094820,1449431233,3413860740,852848822,1816687708,3100656215],t.t)
@@ -142876,8 +142876,8 @@ B.a3l=s([B.Jc,B.Jd,B.Je,B.Jf,B.Jg,B.Jh,B.Ji,B.Jj,B.Jk,B.Jl,B.Ja,B.Jb],t.JN)
 B.a3s=s(["jobTitle"],t.s)
 B.asb=new A.a3("CSV",null,null,null,null,null,null,null,null,null)
 B.QK=new A.dJ("CSV",B.asb,B.bq,null,t.b7)
-B.ast=new A.a3("JSON",null,null,null,null,null,null,null,null,null)
-B.QJ=new A.dJ("JSON",B.ast,B.bq,null,t.b7)
+B.asu=new A.a3("JSON",null,null,null,null,null,null,null,null,null)
+B.QJ=new A.dJ("JSON",B.asu,B.bq,null,t.b7)
 B.a3A=s([B.QK,B.QJ],t.FG)
 B.xp=s([0,1996959894,3993919788,2567524794,124634137,1886057615,3915621685,2657392035,249268274,2044508324,3772115230,2547177864,162941995,2125561021,3887607047,2428444049,498536548,1789927666,4089016648,2227061214,450548861,1843258603,4107580753,2211677639,325883990,1684777152,4251122042,2321926636,335633487,1661365465,4195302755,2366115317,997073096,1281953886,3579855332,2724688242,1006888145,1258607687,3524101629,2768942443,901097722,1119000684,3686517206,2898065728,853044451,1172266101,3705015759,2882616665,651767980,1373503546,3369554304,3218104598,565507253,1454621731,3485111705,3099436303,671266974,1594198024,3322730930,2970347812,795835527,1483230225,3244367275,3060149565,1994146192,31158534,2563907772,4023717930,1907459465,112637215,2680153253,3904427059,2013776290,251722036,2517215374,3775830040,2137656763,141376813,2439277719,3865271297,1802195444,476864866,2238001368,4066508878,1812370925,453092731,2181625025,4111451223,1706088902,314042704,2344532202,4240017532,1658658271,366619977,2362670323,4224994405,1303535960,984961486,2747007092,3569037538,1256170817,1037604311,2765210733,3554079995,1131014506,879679996,2909243462,3663771856,1141124467,855842277,2852801631,3708648649,1342533948,654459306,3188396048,3373015174,1466479909,544179635,3110523913,3462522015,1591671054,702138776,2966460450,3352799412,1504918807,783551873,3082640443,3233442989,3988292384,2596254646,62317068,1957810842,3939845945,2647816111,81470997,1943803523,3814918930,2489596804,225274430,2053790376,3826175755,2466906013,167816743,2097651377,4027552580,2265490386,503444072,1762050814,4150417245,2154129355,426522225,1852507879,4275313526,2312317920,282753626,1742555852,4189708143,2394877945,397917763,1622183637,3604390888,2714866558,953729732,1340076626,3518719985,2797360999,1068828381,1219638859,3624741850,2936675148,906185462,1090812512,3747672003,2825379669,829329135,1181335161,3412177804,3160834842,628085408,1382605366,3423369109,3138078467,570562233,1426400815,3317316542,2998733608,733239954,1555261956,3268935591,3050360625,752459403,1541320221,2607071920,3965973030,1969922972,40735498,2617837225,3943577151,1913087877,83908371,2512341634,3803740692,2075208622,213261112,2463272603,3855990285,2094854071,198958881,2262029012,4057260610,1759359992,534414190,2176718541,4139329115,1873836001,414664567,2282248934,4279200368,1711684554,285281116,2405801727,4167216745,1634467795,376229701,2685067896,3608007406,1308918612,956543938,2808555105,3495958263,1231636301,1047427035,2932959818,3654703836,1088359270,936918e3,2847714899,3736837829,1202900863,817233897,3183342108,3401237130,1404277552,615818150,3134207493,3453421203,1423857449,601450431,3009837614,3294710456,1567103746,711928724,3020668471,3272380065,1510334235,755167117],t.t)
 B.xq=s([0,1,3,7,15,31,63,127,255],t.t)
@@ -143010,8 +143010,8 @@ B.K=new A.k6(400)
 B.aP=new A.k6(500)
 B.abQ=s([B.p_,B.St,B.Su,B.K,B.aP,B.di,B.ah,B.bs,B.c9],A.at("D<k6>"))
 B.aC=new A.d3(null,16,null,null)
-B.ath=new A.a3("Syncing with CRM...",null,null,null,null,null,null,null,null,null)
-B.abR=s([B.tU,B.aC,B.ath],t.p)
+B.ati=new A.a3("Syncing with CRM...",null,null,null,null,null,null,null,null,null)
+B.abR=s([B.tU,B.aC,B.ati],t.p)
 B.xA=s([31,-1,31,30,31,30,31,31,30,31,30,31],t.t)
 B.abS=s([49,65,89,38,83,89],t.t)
 B.O1=new A.E(0.4,0.11372549019607843,0.3568627450980392,0.8431372549019608,B.f)
@@ -144406,13 +144406,13 @@ B.aeg=new A.bP(B.afh,[458907,458873,458978,458982,458833,458832,458831,458834,45
 B.af7={"status:newLead":0,"status:warm":1,"status:hot":2,"status:active":3,"status:purchasedElsewhere":4,"status:underContract":5,"status:followUp":6,"status:closed":7,"status:lost":8,"status:invalidContact":9,"status:archived":10,"status:doNotCall":11,"outcome:Tenant":12,"outcome:Language Barrier":13,"outcome:Not Interested":14,"outcome:Already Purchased":15,"outcome:Hot Lead":16,"outcome:Vacant":17,"outcome:No Answer":18,"outcome:Do Not Solicit":19}
 B.TX=new A.ar(983727,"MaterialIcons",!1)
 B.U2=new A.ar(984740,"MaterialIcons",!1)
-B.TI=new A.ar(63257,"MaterialIcons",!1)
+B.TJ=new A.ar(63257,"MaterialIcons",!1)
 B.TT=new A.ar(983578,"MaterialIcons",!1)
 B.TO=new A.ar(983147,"MaterialIcons",!1)
 B.TP=new A.ar(983163,"MaterialIcons",!1)
 B.Tt=new A.ar(61748,"MaterialIcons",!1)
-B.TG=new A.ar(63176,"MaterialIcons",!1)
-B.he=new A.bP(B.af7,[B.ld,B.TX,B.h2,B.h3,B.iU,B.U2,B.TI,B.TT,B.TO,B.TP,B.Tt,B.TG,B.wi,B.iV,B.wl,B.wk,B.h2,B.wn,B.lb,B.wh],t.gG)
+B.TH=new A.ar(63176,"MaterialIcons",!1)
+B.he=new A.bP(B.af7,[B.ld,B.TX,B.h2,B.h3,B.iU,B.U2,B.TJ,B.TT,B.TO,B.TP,B.Tt,B.TH,B.wi,B.iV,B.wl,B.wk,B.h2,B.wn,B.lb,B.wh],t.gG)
 B.afk={firstName:0,lastName:1,name:2,email:3,phone:4,address:5,unitNumber:6,city:7,postalCode:8,notes:9,estimatedValue:10,status:11,latitude:12,longitude:13}
 B.lF=new A.bP(B.afk,["First name","Last name","Full name","Email","Phone","Street address","Unit","City","Postal code","Notes","Property value","Lead status","Latitude","Longitude"],t.l)
 B.aei=new A.dD([8,"\\b",9,"\\t",10,"\\n",11,"\\v",12,"\\f",13,"\\r",34,'\\"',39,"\\'",92,"\\\\"],t.TM)
@@ -144974,28 +144974,28 @@ B.D9=new A.a1a(1,"end")
 B.Da=new A.aC4(0,"max")
 B.Db=new A.a1c(0,"nearestOverlay")
 B.ags=new A.a1c(1,"rootOverlay")
-B.asx=new A.a3("Reading files and extracting text\u2026 Scanned documents may take a few minutes.",null,null,null,null,null,null,null,null,null)
-B.agt=new A.aO(B.kQ,B.asx,null)
+B.asy=new A.a3("Reading files and extracting text\u2026 Scanned documents may take a few minutes.",null,null,null,null,null,null,null,null,null)
+B.agt=new A.aO(B.kQ,B.asy,null)
 B.RF=new A.am(13,13,13,13)
 B.NR=new A.rU(2,null,null,B.ko,null,null,null,null)
 B.alk=new A.d3(14,14,B.NR,null)
 B.agu=new A.aO(B.RF,B.alk,null)
-B.at4=new A.a3("No upcoming calendar items.",null,null,null,null,null,null,null,null,null)
-B.agv=new A.aO(B.dg,B.at4,null)
+B.at5=new A.a3("No upcoming calendar items.",null,null,null,null,null,null,null,null,null)
+B.agv=new A.aO(B.dg,B.at5,null)
 B.Rv=new A.am(0,20,0,20)
-B.asr=new A.a3("No visits logged yet.",null,null,null,null,null,null,null,null,null)
-B.agw=new A.aO(B.Rv,B.asr,null)
-B.atl=new A.a3("Choose the exact pin you want to review.",null,null,null,null,null,null,null,null,null)
-B.agx=new A.aO(B.iJ,B.atl,null)
+B.ass=new A.a3("No visits logged yet.",null,null,null,null,null,null,null,null,null)
+B.agw=new A.aO(B.Rv,B.ass,null)
+B.atm=new A.a3("Choose the exact pin you want to review.",null,null,null,null,null,null,null,null,null)
+B.agx=new A.aO(B.iJ,B.atm,null)
 B.uc=new A.E(1,0.9058823529411765,0.9254901960784314,0.9725490196078431,B.f)
 B.anX=new A.J(!0,B.uc,null,null,null,null,12,B.c9,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
 B.arB=new A.a3("Free property map \u2022 no API key",null,B.anX,null,null,null,null,null,null,null)
 B.agy=new A.aO(B.iK,B.arB,null)
-B.asB=new A.a3("Nothing due today. Your scheduled work will appear here.",null,null,null,null,null,null,null,null,null)
-B.agz=new A.aO(B.dg,B.asB,null)
+B.asC=new A.a3("Nothing due today. Your scheduled work will appear here.",null,null,null,null,null,null,null,null,null)
+B.agz=new A.aO(B.dg,B.asC,null)
 B.S4=new A.am(8,0,0,0)
-B.Uq=new A.bw(B.wa,17,null,"Open location settings",null)
-B.agA=new A.aO(B.S4,B.Uq,null)
+B.Up=new A.bw(B.wa,17,null,"Open location settings",null)
+B.agA=new A.aO(B.S4,B.Up,null)
 B.Rq=new A.am(0,0,10,0)
 B.axk=new A.Ra("Updating...",null)
 B.agB=new A.aO(B.Rq,B.axk,null)
@@ -145460,36 +145460,36 @@ B.alp=new A.oG(3,"hide")
 B.az5=new A.oG(4,"remove")
 B.alq=new A.oG(5,"timeout")
 B.alr=new A.Dp(null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.asD=new A.a3("Quick quest added.",null,null,null,null,null,null,null,null,null)
-B.als=new A.dF(B.asD,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.asE=new A.a3("Quick quest added.",null,null,null,null,null,null,null,null,null)
+B.als=new A.dF(B.asE,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.aro=new A.a3("Could not save. Please try again.",null,null,null,null,null,null,null,null,null)
 B.alt=new A.dF(B.aro,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.atE=new A.a3("Lead status and commission saved.",null,null,null,null,null,null,null,null,null)
-B.alu=new A.dF(B.atE,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atF=new A.a3("Lead status and commission saved.",null,null,null,null,null,null,null,null,null)
+B.alu=new A.dF(B.atF,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.arh=new A.a3("Invalid email or password",null,null,null,null,null,null,null,null,null)
 B.alv=new A.dF(B.arh,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.atq=new A.a3("Name and address are required.",null,null,null,null,null,null,null,null,null)
-B.alw=new A.dF(B.atq,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atr=new A.a3("Name and address are required.",null,null,null,null,null,null,null,null,null)
+B.alw=new A.dF(B.atr,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.au_=new A.a3("Password reset is unavailable in local testing mode.",null,null,null,null,null,null,null,null,null)
 B.alx=new A.dF(B.au_,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.asV=new A.a3("Recovery could not finish. Earlier device copies are retained; check storage and sync status before retrying.",null,null,null,null,null,null,null,null,null)
-B.aly=new A.dF(B.asV,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.atN=new A.a3("Quest deleted.",null,null,null,null,null,null,null,null,null)
-B.alz=new A.dF(B.atN,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.asW=new A.a3("Recovery could not finish. Earlier device copies are retained; check storage and sync status before retrying.",null,null,null,null,null,null,null,null,null)
+B.aly=new A.dF(B.asW,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atO=new A.a3("Quest deleted.",null,null,null,null,null,null,null,null,null)
+B.alz=new A.dF(B.atO,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.arg=new A.a3("Registration submitted. Check your email for a confirmation link, then sign in.",null,null,null,null,null,null,null,null,null)
 B.alA=new A.dF(B.arg,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.asL=new A.a3("Google sign-in config is still loading. Try again.",null,null,null,null,null,null,null,null,null)
-B.alB=new A.dF(B.asL,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.atH=new A.a3("Schedule deleted.",null,null,null,null,null,null,null,null,null)
-B.alC=new A.dF(B.atH,null,null,null,null,null,null,null,B.dS,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.asM=new A.a3("Google sign-in config is still loading. Try again.",null,null,null,null,null,null,null,null,null)
+B.alB=new A.dF(B.asM,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atI=new A.a3("Schedule deleted.",null,null,null,null,null,null,null,null,null)
+B.alC=new A.dF(B.atI,null,null,null,null,null,null,null,B.dS,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.atW=new A.a3("Quest updated.",null,null,null,null,null,null,null,null,null)
 B.alD=new A.dF(B.atW,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.att=new A.a3("Account changed. Reopen this import from the correct account.",null,null,null,null,null,null,null,null,null)
-B.alE=new A.dF(B.att,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.atw=new A.a3("Choose a follow-up date for a Hot Lead.",null,null,null,null,null,null,null,null,null)
-B.alF=new A.dF(B.atw,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.asm=new A.a3("Boundary editor opened.",null,null,null,null,null,null,null,null,null)
-B.alG=new A.dF(B.asm,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atu=new A.a3("Account changed. Reopen this import from the correct account.",null,null,null,null,null,null,null,null,null)
+B.alE=new A.dF(B.atu,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atx=new A.a3("Choose a follow-up date for a Hot Lead.",null,null,null,null,null,null,null,null,null)
+B.alF=new A.dF(B.atx,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.asn=new A.a3("Boundary editor opened.",null,null,null,null,null,null,null,null,null)
+B.alG=new A.dF(B.asn,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.as5=new A.a3("A Do not Solicit record cannot be converted to a lead.",null,null,null,null,null,null,null,null,null)
 B.alH=new A.dF(B.as5,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.ark=new A.a3("No email app is available to compose this message.",null,null,null,null,null,null,null,null,null)
@@ -145500,28 +145500,28 @@ B.arT=new A.a3("No compatible app is available on this device.",null,null,null,n
 B.alK=new A.dF(B.arT,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.arf=new A.a3("Enter a valid recipient email address.",null,null,null,null,null,null,null,null,null)
 B.alL=new A.dF(B.arf,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.asO=new A.a3("Lead map pin updated.",null,null,null,null,null,null,null,null,null)
-B.alM=new A.dF(B.asO,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.atM=new A.a3("Lead map icon updated.",null,null,null,null,null,null,null,null,null)
-B.alN=new A.dF(B.atM,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.asP=new A.a3("Lead map pin updated.",null,null,null,null,null,null,null,null,null)
+B.alM=new A.dF(B.asP,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atN=new A.a3("Lead map icon updated.",null,null,null,null,null,null,null,null,null)
+B.alN=new A.dF(B.atN,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.atU=new A.a3("Follow up marked completed.",null,null,null,null,null,null,null,null,null)
 B.alO=new A.dF(B.atU,null,null,null,null,null,null,null,B.dS,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.asT=new A.a3("Visit could not be saved locally.",null,null,null,null,null,null,null,null,null)
-B.alP=new A.dF(B.asT,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.asU=new A.a3("Visit could not be saved locally.",null,null,null,null,null,null,null,null,null)
+B.alP=new A.dF(B.asU,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.as2=new A.a3("Could not open the device share sheet.",null,null,null,null,null,null,null,null,null)
 B.alQ=new A.dF(B.as2,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.at3=new A.a3("Add a phone number or email to create a lead.",null,null,null,null,null,null,null,null,null)
-B.alR=new A.dF(B.at3,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.atJ=new A.a3("Could not open an email app on this device.",null,null,null,null,null,null,null,null,null)
-B.alS=new A.dF(B.atJ,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.at4=new A.a3("Add a phone number or email to create a lead.",null,null,null,null,null,null,null,null,null)
+B.alR=new A.dF(B.at4,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atK=new A.a3("Could not open an email app on this device.",null,null,null,null,null,null,null,null,null)
+B.alS=new A.dF(B.atK,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.atS=new A.a3("Registration failed.",null,null,null,null,null,null,null,null,null)
 B.alT=new A.dF(B.atS,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.at1=new A.a3("Visit history could not be loaded.",null,null,null,null,null,null,null,null,null)
-B.alU=new A.dF(B.at1,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.atk=new A.a3("Follow up added successfully.",null,null,null,null,null,null,null,null,null)
-B.alV=new A.dF(B.atk,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
-B.atP=new A.a3("The import could not finish saving. Check device storage and cloud sync status before retrying; pending records may be recovered automatically.",null,null,null,null,null,null,null,null,null)
-B.alW=new A.dF(B.atP,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.at2=new A.a3("Visit history could not be loaded.",null,null,null,null,null,null,null,null,null)
+B.alU=new A.dF(B.at2,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atl=new A.a3("Follow up added successfully.",null,null,null,null,null,null,null,null,null)
+B.alV=new A.dF(B.atl,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
+B.atQ=new A.a3("The import could not finish saving. Check device storage and cloud sync status before retrying; pending records may be recovered automatically.",null,null,null,null,null,null,null,null,null)
+B.alW=new A.dF(B.atQ,null,null,null,null,null,null,null,null,null,null,null,null,B.S,!1,null,null,null,B.m,null)
 B.It=new A.Nb(0,"permissive")
 B.alX=new A.Nb(1,"normal")
 B.alY=new A.Nb(2,"forced")
@@ -145979,78 +145979,78 @@ B.jI=new A.a3("Close",null,null,null,null,null,null,null,null,null)
 B.ash=new A.a3("This action cannot be undone.",null,null,null,null,null,null,null,null,null)
 B.asi=new A.a3("Older visits without a timestamp are included in All Time only.",null,null,null,null,null,null,null,null,null)
 B.asj=new A.a3("Admin \xb7 Signed-up users",null,null,null,null,null,null,null,null,null)
-B.ask=new A.a3("Use this walkthrough anytime you need a reminder of what a button or area does while you are working an area.",null,null,null,null,null,null,null,null,null)
+B.ask=new A.a3("Quickstart Guide",null,null,null,null,null,null,null,null,null)
+B.asl=new A.a3("Use this walkthrough anytime you need a reminder of what a button or area does while you are working an area.",null,null,null,null,null,null,null,null,null)
 B.IW=new A.a3("Add Note",null,null,null,null,null,null,null,null,null)
-B.asn=new A.a3("Follow My Location",null,null,null,null,null,null,null,null,null)
-B.asp=new A.a3("Edit lead outcomes",null,null,null,null,null,null,null,null,null)
-B.asq=new A.a3("Create a Lead",null,null,null,null,null,null,null,null,null)
+B.aso=new A.a3("Follow My Location",null,null,null,null,null,null,null,null,null)
+B.asq=new A.a3("Edit lead outcomes",null,null,null,null,null,null,null,null,null)
+B.asr=new A.a3("Create a Lead",null,null,null,null,null,null,null,null,null)
 B.IX=new A.a3("Log Visit",null,null,null,null,null,null,null,null,null)
-B.ass=new A.a3("Closing reminder",null,null,null,null,null,null,null,null,null)
-B.asv=new A.a3("Outcomes stay as Door Records. Choose this only for a genuine opportunity; a name and phone or email are required.",null,null,null,null,null,null,null,null,null)
-B.asw=new A.a3("Save pin",null,null,null,null,null,null,null,null,null)
-B.asy=new A.a3("\ud83c\udf89 Closing Today",null,null,null,null,null,null,null,null,null)
-B.asz=new A.a3("Import Files",null,null,null,null,null,null,null,null,null)
+B.ast=new A.a3("Closing reminder",null,null,null,null,null,null,null,null,null)
+B.asw=new A.a3("Outcomes stay as Door Records. Choose this only for a genuine opportunity; a name and phone or email are required.",null,null,null,null,null,null,null,null,null)
+B.asx=new A.a3("Save pin",null,null,null,null,null,null,null,null,null)
+B.asz=new A.a3("\ud83c\udf89 Closing Today",null,null,null,null,null,null,null,null,null)
+B.asA=new A.a3("Import Files",null,null,null,null,null,null,null,null,null)
 B.IN=new A.J(!0,null,null,null,null,null,null,B.di,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.asA=new A.a3("Field Mapping",null,B.IN,null,null,null,null,null,null,null)
-B.asC=new A.a3("Sign Up",null,null,null,null,null,null,null,null,null)
-B.asE=new A.a3("Building footprints and addresses",null,null,null,null,null,null,null,null,null)
-B.asF=new A.a3("Complete",null,null,null,null,null,null,null,null,null)
-B.asG=new A.a3("Use cloud version",null,null,null,null,null,null,null,null,null)
+B.asB=new A.a3("Field Mapping",null,B.IN,null,null,null,null,null,null,null)
+B.asD=new A.a3("Sign Up",null,null,null,null,null,null,null,null,null)
+B.asF=new A.a3("Building footprints and addresses",null,null,null,null,null,null,null,null,null)
+B.asG=new A.a3("Complete",null,null,null,null,null,null,null,null,null)
+B.asH=new A.a3("Use cloud version",null,null,null,null,null,null,null,null,null)
 B.IY=new A.a3("Add Task",null,null,null,null,null,null,null,null,null)
-B.asH=new A.a3("Field mapping",null,null,null,null,null,null,null,null,null)
-B.asI=new A.a3("Lifetime GCI",null,null,null,null,null,null,null,null,null)
-B.asJ=new A.a3("Add Territory",null,null,null,null,null,null,null,null,null)
-B.asK=new A.a3("Forgot Password?",null,null,null,null,null,null,null,null,null)
-B.asM=new A.a3("Open building data",null,null,null,null,null,null,null,null,null)
+B.asI=new A.a3("Field mapping",null,null,null,null,null,null,null,null,null)
+B.asJ=new A.a3("Lifetime GCI",null,null,null,null,null,null,null,null,null)
+B.asK=new A.a3("Add Territory",null,null,null,null,null,null,null,null,null)
+B.asL=new A.a3("Forgot Password?",null,null,null,null,null,null,null,null,null)
+B.asN=new A.a3("Open building data",null,null,null,null,null,null,null,null,null)
 B.IZ=new A.a3("Terms of Use",null,null,null,null,null,null,null,null,null)
-B.asN=new A.a3("Add Schedule",null,null,null,null,null,null,null,null,null)
-B.asP=new A.a3("KnockQuest",null,null,null,null,null,null,null,null,null)
-B.asR=new A.a3("CRM & Integrations",null,null,null,null,null,null,null,null,null)
+B.asO=new A.a3("Add Schedule",null,null,null,null,null,null,null,null,null)
+B.asQ=new A.a3("KnockQuest",null,null,null,null,null,null,null,null,null)
+B.asS=new A.a3("CRM & Integrations",null,null,null,null,null,null,null,null,null)
 B.anY=new A.J(!0,B.e9,null,null,null,null,10,B.c9,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null)
-B.asS=new A.a3("Selected",null,B.anY,null,null,null,null,null,null,null)
-B.asU=new A.a3("Details",null,null,null,null,null,null,null,null,null)
-B.asW=new A.a3("Quick Add",null,null,null,null,null,null,null,null,null)
-B.asX=new A.a3("Schedule",null,null,null,null,null,null,null,null,null)
-B.asY=new A.a3("Reset",null,null,null,null,null,null,null,null,null)
-B.asZ=new A.a3("Review deal",null,null,null,null,null,null,null,null,null)
-B.at_=new A.a3("Map the source columns, inspect extracted records, then create leads. Document and OCR extraction must be reviewed for accuracy.",null,null,null,null,null,null,null,null,null)
+B.asT=new A.a3("Selected",null,B.anY,null,null,null,null,null,null,null)
+B.asV=new A.a3("Details",null,null,null,null,null,null,null,null,null)
+B.asX=new A.a3("Quick Add",null,null,null,null,null,null,null,null,null)
+B.asY=new A.a3("Schedule",null,null,null,null,null,null,null,null,null)
+B.asZ=new A.a3("Reset",null,null,null,null,null,null,null,null,null)
+B.at_=new A.a3("Review deal",null,null,null,null,null,null,null,null,null)
+B.at0=new A.a3("Map the source columns, inspect extracted records, then create leads. Document and OCR extraction must be reviewed for accuracy.",null,null,null,null,null,null,null,null,null)
 B.r7=new A.a3("Lead Overview",null,null,null,null,null,null,null,null,null)
-B.at2=new A.a3("Review & Create Leads",null,null,null,null,null,null,null,null,null)
-B.at5=new A.a3("Share calendar invite",null,null,null,null,null,null,null,null,null)
-B.at6=new A.a3("Create lead group",null,null,null,null,null,null,null,null,null)
-B.at7=new A.a3("Release notes \xb7 0.1.58",null,null,null,null,null,null,null,null,null)
-B.at8=new A.a3("Door Record \xb7 Outcome",null,null,null,null,null,null,null,null,null)
-B.at9=new A.a3("Map Icon",null,null,null,null,null,null,null,null,null)
-B.ata=new A.a3("Call",null,null,null,null,null,null,null,null,null)
-B.atb=new A.a3("Recover earlier device data?",null,null,null,null,null,null,null,null,null)
-B.atc=new A.a3("Reports & Export",null,null,null,null,null,null,null,null,null)
+B.at3=new A.a3("Review & Create Leads",null,null,null,null,null,null,null,null,null)
+B.at6=new A.a3("Share calendar invite",null,null,null,null,null,null,null,null,null)
+B.at7=new A.a3("Create lead group",null,null,null,null,null,null,null,null,null)
+B.at8=new A.a3("Release notes \xb7 0.1.59",null,null,null,null,null,null,null,null,null)
+B.at9=new A.a3("Door Record \xb7 Outcome",null,null,null,null,null,null,null,null,null)
+B.ata=new A.a3("Map Icon",null,null,null,null,null,null,null,null,null)
+B.atb=new A.a3("Call",null,null,null,null,null,null,null,null,null)
+B.atc=new A.a3("Recover earlier device data?",null,null,null,null,null,null,null,null,null)
+B.atd=new A.a3("Reports & Export",null,null,null,null,null,null,null,null,null)
 B.J0=new A.a3("Outcomes (select all that apply)",null,null,null,null,null,null,null,null,null)
 B.J1=new A.a3("Continue with Google",null,null,null,null,null,null,null,null,null)
 B.r8=new A.a3("Change Status",null,null,null,null,null,null,null,null,null)
-B.ate=new A.a3("Under contract only",null,null,null,null,null,null,null,null,null)
-B.atf=new A.a3("Start guided tour",null,null,null,null,null,null,null,null,null)
-B.atj=new A.a3("Completed",null,null,null,null,null,null,null,null,null)
-B.atm=new A.a3("Recover earlier device data",null,null,null,null,null,null,null,null,null)
-B.atn=new A.a3("Territories",null,null,null,null,null,null,null,null,null)
-B.ato=new A.a3("Public building record \xb7 value and ownership unavailable",null,null,null,null,null,null,null,null,null)
-B.atr=new A.a3("Show controls for drawing and saving areas, polygons, and routes.",null,null,null,null,null,null,null,null,null)
-B.ats=new A.a3("Import Contacts",null,null,null,null,null,null,null,null,null)
+B.atf=new A.a3("Under contract only",null,null,null,null,null,null,null,null,null)
+B.atg=new A.a3("Start guided tour",null,null,null,null,null,null,null,null,null)
+B.atk=new A.a3("Completed",null,null,null,null,null,null,null,null,null)
+B.atn=new A.a3("Recover earlier device data",null,null,null,null,null,null,null,null,null)
+B.ato=new A.a3("Territories",null,null,null,null,null,null,null,null,null)
+B.atp=new A.a3("Public building record \xb7 value and ownership unavailable",null,null,null,null,null,null,null,null,null)
+B.ats=new A.a3("Show controls for drawing and saving areas, polygons, and routes.",null,null,null,null,null,null,null,null,null)
+B.att=new A.a3("Import Contacts",null,null,null,null,null,null,null,null,null)
 B.J2=new A.a3("Save changes",null,null,null,null,null,null,null,null,null)
 B.J3=new A.a3("Log Door / Create Lead",null,null,null,null,null,null,null,null,null)
-B.atu=new A.a3("Quests",null,null,null,null,null,null,null,null,null)
-B.atv=new A.a3("Assign map icon",null,null,null,null,null,null,null,null,null)
-B.atx=new A.a3("Map lead fields to your CRM destination keys",null,B.IS,null,null,null,null,null,null,null)
-B.aty=new A.a3("Text",null,null,null,null,null,null,null,null,null)
-B.atz=new A.a3("Review & map import",null,null,null,null,null,null,null,null,null)
-B.atB=new A.a3("Sync Activity",null,B.IN,null,null,null,null,null,null,null)
-B.atC=new A.a3("Email",null,null,null,null,null,null,null,null,null)
-B.atF=new A.a3("Create imported leads?",null,null,null,null,null,null,null,null,null)
-B.atG=new A.a3("Tags",null,null,null,null,null,null,null,null,null)
-B.atI=new A.a3("GCI History",null,null,null,null,null,null,null,null,null)
-B.atK=new A.a3("Email schedule",null,null,null,null,null,null,null,null,null)
-B.atL=new A.a3("Allow location access",null,null,null,null,null,null,null,null,null)
-B.atO=new A.a3("Your browser controls this permission. Open the site controls beside the address bar, set Location to Allow, then return and tap Current Location. On mobile, check your browser\u2019s Site settings if location is blocked.",null,null,null,null,null,null,null,null,null)
-B.atQ=new A.a3("KnockQuest Guide",null,null,null,null,null,null,null,null,null)
+B.atv=new A.a3("Quests",null,null,null,null,null,null,null,null,null)
+B.atw=new A.a3("Assign map icon",null,null,null,null,null,null,null,null,null)
+B.aty=new A.a3("Map lead fields to your CRM destination keys",null,B.IS,null,null,null,null,null,null,null)
+B.atz=new A.a3("Text",null,null,null,null,null,null,null,null,null)
+B.atA=new A.a3("Review & map import",null,null,null,null,null,null,null,null,null)
+B.atC=new A.a3("Sync Activity",null,B.IN,null,null,null,null,null,null,null)
+B.atD=new A.a3("Email",null,null,null,null,null,null,null,null,null)
+B.atG=new A.a3("Create imported leads?",null,null,null,null,null,null,null,null,null)
+B.atH=new A.a3("Tags",null,null,null,null,null,null,null,null,null)
+B.atJ=new A.a3("GCI History",null,null,null,null,null,null,null,null,null)
+B.atL=new A.a3("Email schedule",null,null,null,null,null,null,null,null,null)
+B.atM=new A.a3("Allow location access",null,null,null,null,null,null,null,null,null)
+B.atP=new A.a3("Your browser controls this permission. Open the site controls beside the address bar, set Location to Allow, then return and tap Current Location. On mobile, check your browser\u2019s Site settings if location is blocked.",null,null,null,null,null,null,null,null,null)
 B.atR=new A.a3("No open tasks.",null,null,null,null,null,null,null,null,null)
 B.atT=new A.a3("Route Not Found",null,null,null,null,null,null,null,null,null)
 B.atV=new A.a3("Save icon",null,null,null,null,null,null,null,null,null)
@@ -146366,8 +146366,8 @@ B.ag=new A.eM(6,"textScaler")
 B.mU=new A.eM(7,"platformBrightness")
 B.cM=new A.eM(8,"padding")
 B.mV=new A.eM(9,"viewInsets")
-B.Tz=new A.ar(62080,"MaterialIcons",!1)
-B.axo=new A.Ri(B.Tz,"No accounts yet","New sign-ups will appear here.",null)
+B.TA=new A.ar(62080,"MaterialIcons",!1)
+B.axo=new A.Ri(B.TA,"No accounts yet","New sign-ups will appear here.",null)
 B.rB=new A.v_(1/0,1/0,1/0,1/0,1/0,1/0)
 B.axp=new A.v1(0,"isCurrent")
 B.axq=new A.v1(5,"opaque")
@@ -147142,7 +147142,7 @@ s($,"bRY","bg9",()=>A.Go(2,52))
 s($,"bRX","bwv",()=>B.d.hM(A.Vo($.bg9())/A.Vo(10)))
 s($,"bV2","blI",()=>A.Vo(10))
 s($,"bV3","byi",()=>A.Vo(10))
-s($,"bPw","bvl",()=>A.dX("https://knockquestapp.github.io/KnockQuest/downloads/KnockQuest-production-0.1.58.apk",0,null))
+s($,"bPw","bvl",()=>A.dX("https://knockquestapp.github.io/KnockQuest/downloads/KnockQuest-production-0.1.59.apk",0,null))
 s($,"bPx","bvm",()=>A.dX("io.knockquest.app://open",0,null))
 s($,"bTL","bgh",()=>A.bDz(40.7128,-74.006))
 s($,"bPW","A6",()=>new A.anL())
