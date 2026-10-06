@@ -1,8 +1,8 @@
 {
-  "version": "0.1.78",
-  "build": 79,
-  "label": "address-units-0.1.78",
+  "version": "0.1.79",
+  "build": 80,
+  "label": "lead-overview-address-0.1.79",
   "apk": "downloads/KnockQuest-production.apk",
-  "apkSha256": "85992dece8b977d968b7e4cdac58279c795ba04a0c2e1f1d398c21ace82e7003",
-  "generatedAt": "2026-10-06T05:18:18Z"
+  "apkSha256": "ac84c96539341217c9f20c464b9be23f981836742885ebe4a69850aa15c361d5",
+  "generatedAt": "2026-10-06T05:32:32Z"
 }
