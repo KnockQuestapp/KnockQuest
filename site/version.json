@@ -1,8 +1,8 @@
 {
-  "version": "0.1.77",
-  "build": 78,
-  "label": "crm-bridge-0.1.77",
-  "apk": "downloads/KnockQuest-production-0.1.77.apk",
-  "apkSha256": "ed5e0304d983d9d843f95805e2595a49f2f7a97bef2d49bd14895862b165f4b8",
-  "generatedAt": "2026-10-06T04:40:14Z"
+  "version": "0.1.78",
+  "build": 79,
+  "label": "address-units-0.1.78",
+  "apk": "downloads/KnockQuest-production.apk",
+  "apkSha256": "85992dece8b977d968b7e4cdac58279c795ba04a0c2e1f1d398c21ace82e7003",
+  "generatedAt": "2026-10-06T05:18:18Z"
 }
