@@ -1,8 +1,8 @@
 {
-  "version": "0.1.82",
-  "build": 83,
-  "label": "full-address-fallback-0.1.82",
+  "version": "0.1.83",
+  "build": 84,
+  "label": "route-full-address-prefill-0.1.83",
   "apk": "downloads/KnockQuest-production.apk",
-  "apkSha256": "ec83ebe93a9d13922bbeed36c61e5973d1cf1b074ab6a6d8b4b43732bdbbff2f",
-  "generatedAt": "2026-10-06T06:39:06Z"
+  "apkSha256": "81d704fb19b14d382ed865f12e91c6ba058624aec74517ac6aac2608540bacf6",
+  "generatedAt": "2026-10-06T07:25:51Z"
 }
