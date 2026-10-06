@@ -1,8 +1,8 @@
 {
   "channel": "production",
-  "build": 76,
-  "version": "0.1.75",
-  "apk": "downloads/KnockQuest-production-0.1.75.apk",
-  "updatedAt": "2026-10-06T03:51:30Z",
-  "notes": "Fix web Google OAuth redirect to always return to the live KnockQuest app."
+  "build": 77,
+  "version": "0.1.76",
+  "apk": "downloads/KnockQuest-production-0.1.76.apk",
+  "updatedAt": "2026-10-06T04:26:11Z",
+  "notes": "Add CRM connect-first setup and clarify automated CRM sync copy."
 }
