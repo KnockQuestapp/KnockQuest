@@ -1,1 +1,8 @@
-{"app_name":"knockquest","version":"0.1.90","build_number":"91","package_name":"knockquest"}
+{
+  "version": "0.1.90",
+  "build": 91,
+  "label": "door-logo-icons-0.1.90",
+  "apk": "downloads/KnockQuest-production.apk",
+  "apkSha256": "424e0c951ddb642b7c440206c8a28df07780f1bafbaab79a89737bafb907d7f8",
+  "generatedAt": "2026-10-07T04:20:00Z"
+}
