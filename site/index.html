@@ -44,7 +44,7 @@
   -->
   <script>
     (async function loadKnockQuest() {
-      const cleanupKey = 'knockquest-cache-cleaned-crm-connect-0.1.76';
+      const cleanupKey = 'knockquest-cache-cleaned-crm-bridge-0.1.77';
       try {
         if ('caches' in window) {
           const names = await caches.keys();
@@ -65,7 +65,7 @@
         console.warn('KnockQuest cache cleanup skipped:', error);
       }
       const script = document.createElement('script');
-      script.src = 'flutter_bootstrap.js?v=crm-connect-0.1.76';
+      script.src = 'flutter_bootstrap.js?v=crm-bridge-0.1.77';
       script.async = true;
       document.body.appendChild(script);
     })();
