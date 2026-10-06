@@ -1,8 +1,8 @@
 {
-  "version": "0.1.86",
-  "build": 87,
-  "label": "address-fields-visible-0.1.86",
+  "version": "0.1.87",
+  "build": 88,
+  "label": "compact-form-header-0.1.87",
   "apk": "downloads/KnockQuest-production.apk",
   "apkSha256": "81d704fb19b14d382ed865f12e91c6ba058624aec74517ac6aac2608540bacf6",
-  "generatedAt": "2026-10-06T08:30:00Z"
+  "generatedAt": "2026-10-06T08:45:00Z"
 }
