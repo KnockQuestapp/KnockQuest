@@ -1,1 +1,8 @@
-{"app_name":"knockquest","version":"0.1.74","build_number":"75","package_name":"knockquest"}
+{
+  "channel": "production",
+  "build": 76,
+  "version": "0.1.75",
+  "apk": "downloads/KnockQuest-production-0.1.75.apk",
+  "updatedAt": "2026-10-06T03:51:30Z",
+  "notes": "Fix web Google OAuth redirect to always return to the live KnockQuest app."
+}
