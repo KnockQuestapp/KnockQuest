@@ -125327,59 +125327,48 @@ a0=A.bU(d,A.b_(A.b([A.b5(A.z(a1,d,d,d,A.b4(d,d,A.m(a3).ax.c,d,d,d,d,d,d,d,d,34,d
 a1=A.jb(a3,d)
 s=A.b([A.b5(new A.j_("House number",e.fx,d,1,d,d),2)],a2)
 if(!e.f.m(0,"unitNumber"))B.b.L(s,A.b([B.ep,A.b5(new A.j_("Unit / Apt / Suite",e.fy,d,1,d,d),3)],a2))
-s=A.b([A.b_(s,B.F,B.h,B.j,0,d),new A.j_("Street address (optional)",e.fr,d,1,d,d)],a2)
-if(!e.f.m(0,"city"))s.push(new A.j_("City",e.go,d,1,d,d))
-if(!e.f.m(0,"postalCode"))s.push(new A.j_("Postal Code",e.id,d,1,d,d))
-s.push(B.aE)
-s.push(new A.ED("Door record",d))
+s=A.b_(s,B.F,B.h,B.j,0,d)
 r=e.ax
 q=t.fo
 p=q.h("ak.E")
 o=A.G(new A.X(B.xp,new A.aQ_(),q),p)
 n=t.N
-s.push(new A.hF("addLead.response",A.kN(B.Wb,r,!1,o,new A.aQ0(e),n),d))
-s.push(B.aE)
-s.push(B.awX)
-o=A.b([],a2)
-for(r=["Tenant","Language Barrier","Not Interested","Already Purchased","Hot Lead","Vacant","No Answer","Do Not Solicit"],m=e.as,l=0;l<8;++l){k=r[l]
-o.push(A.IY(A.z(A.vs(k),d,d,d,d,d,d,d),new A.aQ5(e,k),m.m(0,k)))}s.push(new A.hF("addLead.outcomes",A.fu(B.aD,o,B.aS,8,8),d))
-s.push(B.aE)
-r=e.CW?new A.aQ6():d
-s.push(new A.j_("First Name",e.cy,d,1,r,d))
-s.push(new A.j_("Last Name",e.db,d,1,d,d))
-s.push(new A.j_("Phone (optional)",e.dx,B.d0,1,d,d))
-s.push(new A.j_("Email (optional)",e.dy,B.hP,1,d,d))
-s.push(new A.j_("Number of tenants (optional)",e.Q,B.es,1,d,d))
-if(!e.f.m(0,"notes"))s.push(new A.j_("Notes",e.k1,d,3,d,d))
-s.push(new A.hF("addLead.createLead",A.NB(B.I,new A.aQ7(e),B.at_,B.asV,e.CW),d))
-if(e.CW){r=e.ch
-o=t.h4
-o=A.G(new A.X(B.ej,new A.aQ8(),o),o.h("ak.E"))
-r=A.kN(B.W8,r,!0,o,new A.aQ9(e),t.jG)
-o=e.w
-j=A.b([B.QW],t.FG)
+o=A.kN(B.Wb,r,!1,o,new A.aQ0(e),n)
+r=A.b([],a2)
+for(m=["Tenant","Language Barrier","Not Interested","Already Purchased","Hot Lead","Vacant","No Answer","Do Not Solicit"],l=e.as,k=0;k<8;++k){j=m[k]
+r.push(A.IY(A.z(A.vs(j),d,d,d,d,d,d,d),new A.aQ5(e,j),l.m(0,j)))}r=A.fu(B.aD,r,B.aS,8,8)
+m=e.CW?new A.aQ6():d
+m=A.b([s,new A.j_("Street address (optional)",e.fr,d,1,d,d),new A.j_("City",e.go,d,1,d,d),new A.j_("Postal Code",e.id,d,1,d,d),B.aE,new A.ED("Door record",d),new A.hF("addLead.response",o,d),B.aE,B.awX,new A.hF("addLead.outcomes",r,d),B.aE,new A.j_("First Name",e.cy,d,1,m,d),new A.j_("Last Name",e.db,d,1,d,d),new A.j_("Phone (optional)",e.dx,B.d0,1,d,d),new A.j_("Email (optional)",e.dy,B.hP,1,d,d),new A.j_("Number of tenants (optional)",e.Q,B.es,1,d,d)],a2)
+if(!e.f.m(0,"notes"))m.push(new A.j_("Notes",e.k1,d,3,d,d))
+m.push(new A.hF("addLead.createLead",A.NB(B.I,new A.aQ7(e),B.at_,B.asV,e.CW),d))
+if(e.CW){s=e.ch
+r=t.h4
+r=A.G(new A.X(B.ej,new A.aQ8(),r),r.h("ak.E"))
+s=A.kN(B.W8,s,!0,r,new A.aQ9(e),t.jG)
+r=e.w
+o=A.b([B.QW],t.FG)
 for(i=J.aJ(e.r),h=t.b7;i.q();){g=i.gK(i)
-j.push(new A.dM(g,A.z(g,d,d,d,d,d,d,d),B.br,d,h))}o=A.b_(A.b([A.b5(A.kN(B.Wi,o,!0,j,new A.aQa(e),n),1),B.bf,A.bib(B.UZ,e.gauC(),d,"Create a group")],a2),B.n,B.h,B.j,0,d)
-j=A.b([],a2)
-for(i=["Hot","Sure Prospect","Appointment","Follow-Up"],h=e.at,l=0;l<4;++l){f=i[l]
-j.push(A.IY(A.z(f,d,d,d,d,d,d,d),new A.aQb(e,f),h.m(0,f)))}B.b.L(s,A.b([r,B.aE,o,B.aE,B.awW,A.fu(B.aD,j,B.aS,8,8)],a2))}s.push(B.aE)
-if(!(e.ax==="Do Not Solicit"||m.m(0,c))){r=e.ay
-q=A.G(new A.X(B.Ze,new A.aQc(),q),p)
-s.push(A.kN(B.Wd,r,!1,q,new A.aQ1(e),n))}if(!(e.ax==="Do Not Solicit"||m.m(0,c))&&e.ay!=="None")s.push(B.aE)
-if(!(e.ax==="Do Not Solicit"||m.m(0,c))&&e.ay!=="None")s.push(new A.EK(e.ay+" date",e.ok,!0,d))
-s.push(B.aE)
-if(!e.f.m(0,b)){r=e.x
-q=A.b([],t.FG)
-for(p=B.f8.gfd(B.f8),p=p.ga7(p),o=t.b7;p.q();){m=p.gK(p)
-j=m.a
-if(j!=="outcome")q.push(new A.dM(j,A.z(m.b,d,d,d,d,d,d,d),B.br,d,o))}s.push(A.kN(B.W_,r,!1,q,new A.aQ2(e),n))}if(!e.f.m(0,b))B.b.L(s,A.b([B.aE,new A.xo(e.y,e.z,new A.aQ3(e),new A.aQ4(e),d)],a2))
-if(!e.f.m(0,"coordinates"))B.b.L(s,A.b([new A.j_("Latitude",e.k2,B.mt,1,d,d),new A.j_("Longitude",e.k3,B.mt,1,d,d)],a2))
-if(!e.f.m(0,"lastContactDate"))s.push(new A.EK("Last Contact Date",e.k4,!1,d))
-if(!e.f.m(0,"followUpDate"))s.push(new A.EK("Follow Up Date",e.ok,!1,d))
-s.push(B.eq)
-r=A.wp(d,d,A.m(a3).ax.b,d,d,d,d,d,d,A.m(a3).ax.c,d,d,d,d,d,d,d,d,d,d)
-s.push(new A.dG(B.bT,d,d,A.lI(A.z(e.CW?"Save Door Record + Lead":"Save Door Record",d,d,d,d,d,d,d),d,e.gaJ3(),r),d))
-return A.hJ(d,a.fx,A.fs(!0,A.fi(A.cO(new A.d3(B.eE,A.aR(A.b([a0,new A.aL(a1,new A.Ar(A.at1(d,A.aR(s,B.n,B.h,B.j,0,B.q),e.d),d),d)],a2),B.F,B.h,B.j,0,B.q),d),d,d,d),d,d,B.a5),B.I,!0),d)}}
+o.push(new A.dM(g,A.z(g,d,d,d,d,d,d,d),B.br,d,h))}r=A.b_(A.b([A.b5(A.kN(B.Wi,r,!0,o,new A.aQa(e),n),1),B.bf,A.bib(B.UZ,e.gauC(),d,"Create a group")],a2),B.n,B.h,B.j,0,d)
+o=A.b([],a2)
+for(i=["Hot","Sure Prospect","Appointment","Follow-Up"],h=e.at,k=0;k<4;++k){f=i[k]
+o.push(A.IY(A.z(f,d,d,d,d,d,d,d),new A.aQb(e,f),h.m(0,f)))}B.b.L(m,A.b([s,B.aE,r,B.aE,B.awW,A.fu(B.aD,o,B.aS,8,8)],a2))}m.push(B.aE)
+if(!(e.ax==="Do Not Solicit"||l.m(0,c))){s=e.ay
+r=A.G(new A.X(B.Ze,new A.aQc(),q),p)
+m.push(A.kN(B.Wd,s,!1,r,new A.aQ1(e),n))}if(!(e.ax==="Do Not Solicit"||l.m(0,c))&&e.ay!=="None")m.push(B.aE)
+if(!(e.ax==="Do Not Solicit"||l.m(0,c))&&e.ay!=="None")m.push(new A.EK(e.ay+" date",e.ok,!0,d))
+m.push(B.aE)
+if(!e.f.m(0,b)){s=e.x
+r=A.b([],t.FG)
+for(q=B.f8.gfd(B.f8),q=q.ga7(q),p=t.b7;q.q();){o=q.gK(q)
+l=o.a
+if(l!=="outcome")r.push(new A.dM(l,A.z(o.b,d,d,d,d,d,d,d),B.br,d,p))}m.push(A.kN(B.W_,s,!1,r,new A.aQ2(e),n))}if(!e.f.m(0,b))B.b.L(m,A.b([B.aE,new A.xo(e.y,e.z,new A.aQ3(e),new A.aQ4(e),d)],a2))
+if(!e.f.m(0,"coordinates"))B.b.L(m,A.b([new A.j_("Latitude",e.k2,B.mt,1,d,d),new A.j_("Longitude",e.k3,B.mt,1,d,d)],a2))
+if(!e.f.m(0,"lastContactDate"))m.push(new A.EK("Last Contact Date",e.k4,!1,d))
+if(!e.f.m(0,"followUpDate"))m.push(new A.EK("Follow Up Date",e.ok,!1,d))
+m.push(B.eq)
+s=A.wp(d,d,A.m(a3).ax.b,d,d,d,d,d,d,A.m(a3).ax.c,d,d,d,d,d,d,d,d,d,d)
+m.push(new A.dG(B.bT,d,d,A.lI(A.z(e.CW?"Save Door Record + Lead":"Save Door Record",d,d,d,d,d,d,d),d,e.gaJ3(),s),d))
+return A.hJ(d,a.fx,A.fs(!0,A.fi(A.cO(new A.d3(B.eE,A.aR(A.b([a0,new A.aL(a1,new A.Ar(A.at1(d,A.aR(m,B.n,B.h,B.j,0,B.q),e.d),d),d)],a2),B.F,B.h,B.j,0,B.q),d),d,d,d),d,d,B.a5),B.I,!0),d)}}
 A.aPQ.prototype={
 $0(){var s=this.a,r=this.c,q=s.as
 if(this.b){q.v(0,r)
