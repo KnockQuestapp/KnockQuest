@@ -1,10 +1,10 @@
 {
-  "version": "0.1.92",
+  "version": "0.1.93",
   "package_name": "knockquest",
-  "build_number": "93",
-  "label": "update-check-0.1.92",
+  "build_number": "94",
+  "label": "address-verification-0.1.93",
   "apk": "downloads/KnockQuest-production.apk",
-  "build": 93,
-  "apkSha256": "9111c9ceb42e0bf6c291295ce186c414e667be03a7da93f44335478285cd209b",
+  "build": 94,
+  "apkSha256": "1b12c8d00a94efa2cd1e67da5bbafda9128bd1e3c101d4d8094d52f09f552e83",
   "app_name": "knockquest"
 }
