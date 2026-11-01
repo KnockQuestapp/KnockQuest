@@ -15,6 +15,15 @@
     the `--base-href` argument provided to `flutter build`.
   -->
   <base href="/KnockQuest/">
+  <script>
+    (function setKnockQuestBasePath() {
+      var host = window.location.hostname.toLowerCase();
+      var base = host === 'knockquest.app' || host === 'www.knockquest.app'
+        ? '/'
+        : '/KnockQuest/';
+      document.querySelector('base').setAttribute('href', base);
+    })();
+  </script>
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
