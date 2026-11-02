@@ -12,28 +12,28 @@
   "account_deletion_request": "https://knockquest.app/delete-account.html",
   "deployment_repository": "https://github.com/KnockQuestapp/KnockQuest",
   "provenance_note": "The artifact SHA-256 values generated with this record help identify exact published files. This record is an attribution claim and integrity aid, not a signed certificate, legal ownership determination, or royalty agreement.",
-  "generated_at_utc": "2026-11-02T04:42:13+00:00",
-  "source_commit": "932a71e7bc8d86ae5318a2c5a85e38089fc7b2cd",
+  "generated_at_utc": "2026-11-02T13:02:42+00:00",
+  "source_commit": "3fd59b3b6a1bf715cc9a0fd4ba4bd1485bfa98ca",
   "artifacts": {
     "index.html": {
-      "sha256": "949ffc9b9e9f984557223890aebf790022cbf97b15397ec0285ae5434434e28c",
-      "bytes": 10622
+      "sha256": "15085b014abcb753887bf2054ecb3cc4022507c2135fe9bc84b0922e33ad4618",
+      "bytes": 10670
     },
     "privacy-policy.html": {
-      "sha256": "81f06d1d9a1e97130173bd94f25ee561c40038f3be1ba6a84f5773c93351dbfd",
-      "bytes": 8478
+      "sha256": "aa4363493557c226c95a750ac7a9268558111ac82425d456068c313617847a23",
+      "bytes": 8437
     },
     "delete-account.html": {
-      "sha256": "71218fd697d82d1d7557e311097baa0463c706867e1a75cac769eb558181d073",
-      "bytes": 3134
+      "sha256": "b99135f80eb8bb9062d2877901e7e86861c5b7a27bd827805d548b22b16240db",
+      "bytes": 3151
     },
     "app/index.html": {
-      "sha256": "a20f1cc374e3e863c753b0c1745bd7e984f1a3dcd49a0a925ed2c123e7b57a58",
-      "bytes": 3427
+      "sha256": "94807e77d53f87a2221ba5605c65653c0f43ee7c3de7146f5ce088874541d4df",
+      "bytes": 3457
     },
     "app/main.dart.js": {
-      "sha256": "f67511c50743c6083b095ee70ca46a08d3252f572ff86d062d4a9b8a536bc615",
-      "bytes": 4239690
+      "sha256": "83830d39b2d5e65b1ad976a11634d82d20b66dcda379e800dd4b6856bc13589b",
+      "bytes": 4240502
     },
     "downloads/KnockQuest-production.apk": {
       "sha256": "1b12c8d00a94efa2cd1e67da5bbafda9128bd1e3c101d4d8094d52f09f552e83",
