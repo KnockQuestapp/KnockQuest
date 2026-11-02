@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>KnockQuest Google Real Estate Map</title>
+  <style>
+    html, body { position: fixed; inset: 0; height: 100dvh; width: 100vw; margin: 0; overflow: hidden; overscroll-behavior: none; background: #08111f; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    #map { position: fixed; inset: 0; height: 100dvh; width: 100vw; background: #08111f; }
+    .topbar { position: absolute; z-index: 10; top: 10px; left: 10px; right: 10px; display: flex; gap: 8px; align-items: center; }
+    .search { flex: 1; height: 44px; border-radius: 14px; border: 1px solid rgba(255,255,255,.18); background: rgba(10,16,24,.94); color: #f6f8ff; padding: 0 14px; font-size: 14px; outline: none; box-shadow: 0 12px 28px rgba(0,0,0,.24); }
+    .btn { height: 42px; border: 1px solid rgba(255,255,255,.18); border-radius: 14px; background: rgba(18,28,40,.94); color: #f6f8ff; padding: 0 12px; font-weight: 850; cursor: pointer; box-shadow: 0 10px 24px rgba(0,0,0,.24); }
+    .btn:hover { background: #35c784; color: #062d22; }
+    .status { position: absolute; z-index: 10; left: 14px; top: 62px; color: #f6f8ff; background: rgba(10,16,24,.82); border-radius: 999px; padding: 6px 11px; font-size: 13px; font-weight: 850; box-shadow: 0 10px 24px rgba(0,0,0,.25); }
+    .ranges { position: absolute; z-index: 10; left: 12px; top: 98px; display: flex; gap: 8px; }
+    .pill { border: 1px solid rgba(255,255,255,.16); border-radius: 999px; background: rgba(15,24,34,.94); color: #f6f8ff; padding: 8px 11px; font-size: 12px; font-weight: 850; cursor: pointer; }
+    .pill.active { background: #35c784; color: #062d22; }
+    .legend { position: absolute; z-index: 10; left: 12px; bottom: 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.15); background: rgba(8,14,20,.88); color: #e7ecf8; padding: 8px 12px; font-size: 12px; font-weight: 900; box-shadow: 0 12px 30px rgba(0,0,0,.25); }
+    .setup { position: fixed; z-index: 20; inset: 0; display: none; align-items: center; justify-content: center; padding: 22px; background: radial-gradient(circle at top, rgba(53,199,132,.18), transparent 38%), #08111f; color: #f6f8ff; }
+    .setup.show { display: flex; }
+    .setup-card { width: min(430px, 100%); border-radius: 24px; border: 1px solid rgba(255,255,255,.15); background: rgba(12,20,31,.96); box-shadow: 0 24px 80px rgba(0,0,0,.45); padding: 22px; text-align: left; }
+    .setup-card h1 { margin: 0 0 8px; font-size: 22px; }
+    .setup-card p { margin: 8px 0; color: #d7e3f3; line-height: 1.45; }
+    .setup-card code { color: #a8f0c7; word-break: break-word; }
+    .toast { position: fixed; z-index: 30; left: 50%; top: 50%; transform: translate(-50%, -50%); min-width: 240px; max-width: 86%; border-radius: 18px; background: rgba(7,18,15,.96); color: #f6f8ff; border: 1px solid rgba(255,255,255,.18); box-shadow: 0 20px 70px rgba(0,0,0,.45); padding: 18px 20px; font-weight: 850; text-align: center; opacity: 0; pointer-events: none; transition: opacity .18s ease; }
+    .toast.show { opacity: 1; }
+    .gm-style .gm-style-iw-c { border-radius: 18px; }
+    .lead-popup { min-width: 245px; color: #0f172a; line-height: 1.35; }
+    .lead-popup strong { display:block; font-size: 15px; margin-bottom: 6px; color: #062d22; }
+    .detail-row { display:flex; justify-content:space-between; gap:12px; padding:4px 0; border-bottom:1px solid #e5e7eb; }
+    .detail-row span:first-child { color:#64748b; font-weight:700; }
+    .detail-row span:last-child { color:#0f172a; font-weight:850; text-align:right; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+  <div class="topbar">
+    <input id="search" class="search" placeholder="City, Postal Code, Address..." />
+    <button id="locate" class="btn">Current</button>
+    <button id="reset" class="btn">Reset</button>
+  </div>
+  <div id="status" class="status">Loading Google real estate map...</div>
+  <div class="ranges">
+    <button class="pill" data-radius="100">100m</button>
+    <button class="pill active" data-radius="250">250m</button>
+    <button class="pill" data-radius="500">500m</button>
+    <button class="pill" data-radius="1000">1km</button>
+  </div>
+  <div class="legend">Green: Available • Yellow: Almost Closing • Red: No Longer Available</div>
+  <div id="setup" class="setup">
+    <div class="setup-card">
+      <h1>Google Maps setup needed</h1>
+      <p>This map is now built for Google Maps, but Google requires a browser API key for the Maps JavaScript API.</p>
+      <p>Create a restricted Google Maps key for <code>knockquestapp.github.io/KnockQuest/*</code>, enable Maps JavaScript API, then add it as <code>window.KNOCKQUEST_GOOGLE_MAPS_API_KEY</code> in <code>google-maps-env.js</code>.</p>
+      <p>Google offers free monthly usage tiers, but production Google Maps is still an API based service.</p>
+    </div>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="google-maps-env.js" onerror="window.KNOCKQUEST_GOOGLE_MAPS_CONFIG_MISSING=true"></script>
+  <script>
+    const center = { lat: 40.7580, lng: -73.9855 };
+    const properties = [
+      {name:'Jane Doe', owner:'Jane Doe', agent:'Ralph Johnpierre', address:'123 Main Street', city:'Metro City', postal:'10001', status:'Available', beds:4, baths:3, sqft:2180, value:1250000, lat:40.7580, lng:-73.9855},
+      {name:'Marcus Holloway', owner:'Marcus Holloway', agent:'Ingrid Morales', address:'482 Oak St', city:'Metro City', postal:'10001', status:'Almost Closing', beds:3, baths:2, sqft:1840, value:1080000, lat:40.7612, lng:-73.9822},
+      {name:'Sarah Jenkins', owner:'Sarah Jenkins', agent:'Ralph Johnpierre', address:'1290 Bayview Ave', city:'Metro City', postal:'10002', status:'Almost Closing', beds:5, baths:4, sqft:2740, value:1380000, lat:40.7548, lng:-73.9880},
+      {name:'David Chen', owner:'David Chen', agent:'KnockQuest Demo Agent', address:'18 River Park Road', city:'Metro City', postal:'10003', status:'Almost Closing', beds:3, baths:2, sqft:1660, value:929000, lat:40.7526, lng:-73.9804},
+      {name:'Nadia Brooks', owner:'Nadia Brooks', agent:'Ingrid Morales', address:'74 Maple Court', city:'Metro City', postal:'10004', status:'Available', beds:5, baths:3, sqft:3120, value:1700000, lat:40.7645, lng:-73.9915},
+      {name:'Evan Miller', owner:'Evan Miller', agent:'Ralph Johnpierre', address:'230 Garden Lane', city:'Metro City', postal:'10005', status:'No Longer Available', beds:4, baths:3, sqft:2410, value:1550000, lat:40.7501, lng:-73.9759}
+    ];
+    let map;
+    let infoWindow;
+    let markers = [];
+    let activeRadius = 250;
+
+    function money(value) { return value >= 1000000 ? (value / 1000000).toFixed(value >= 2000000 ? 1 : 2) + 'm' : Math.round(value / 1000) + 'k'; }
+    function toast(message) { const el = document.getElementById('toast'); el.textContent = message; el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 1800); }
+    function keyFromRuntime() {
+      const params = new URLSearchParams(location.search);
+      return (params.get('google_maps_key') || window.KNOCKQUEST_GOOGLE_MAPS_API_KEY || '').trim();
+    }
+    function showSetup() {
+      document.getElementById('setup').classList.add('show');
+      document.getElementById('status').textContent = 'Google Maps key required';
+    }
+    function markerColor(status) {
+      const value = status.toLowerCase();
+      if (value.includes('almost')) return '#facc15';
+      if (value.includes('no longer')) return '#ef4444';
+      return '#22c55e';
+    }
+    function houseIcon(status) {
+      const color = markerColor(status);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path fill="${color}" stroke="white" stroke-width="3" d="M24 4 6 19v23h12V29h12v13h12V19L24 4Z"/><path fill="white" d="M17 22h14v5H17z"/></svg>`;
+      return { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg), scaledSize: new google.maps.Size(42, 42), anchor: new google.maps.Point(21, 42) };
+    }
+    function popup(property) {
+      return `<div class="lead-popup"><strong>${property.address}</strong><div class="detail-row"><span>Value</span><span>${money(property.value)}</span></div><div class="detail-row"><span>Owner</span><span>${property.owner}</span></div><div class="detail-row"><span>Agent</span><span>${property.agent}</span></div><div class="detail-row"><span>Status</span><span>${property.status}</span></div><div class="detail-row"><span>Specs</span><span>${property.beds} bd · ${property.baths} ba · ${property.sqft.toLocaleString()} sqft</span></div><div class="detail-row"><span>Area</span><span>${property.city} ${property.postal}</span></div></div>`;
+    }
+    function matches(property, query) {
+      const q = query.trim().toLowerCase();
+      return !q || [property.name, property.address, property.city, property.postal, property.status, property.agent, property.owner].some(v => v.toLowerCase().includes(q));
+    }
+    function drawProperties() {
+      const query = document.getElementById('search').value;
+      markers.forEach(marker => marker.setMap(null));
+      markers = [];
+      const visible = properties.filter(p => matches(p, query));
+      visible.forEach(property => {
+        const marker = new google.maps.Marker({
+          map,
+          position: { lat: property.lat, lng: property.lng },
+          title: `${property.address} - ${property.status}`,
+          icon: houseIcon(property.status),
+          optimized: true,
+        });
+        marker.addListener('click', () => {
+          infoWindow.setContent(popup(property));
+          infoWindow.open({ map, anchor: marker });
+        });
+        markers.push(marker);
+      });
+      document.getElementById('status').textContent = `${visible.length} properties nearby`;
+    }
+    window.initKnockQuestGoogleMap = function() {
+      map = new google.maps.Map(document.getElementById('map'), {
+        center,
+        zoom: 15,
+        mapTypeControl: false,
+        streetViewControl: true,
+        fullscreenControl: false,
+        gestureHandling: 'greedy',
+        clickableIcons: true,
+        styles: [
+          { elementType: 'geometry', stylers: [{ color: '#101820' }] },
+          { elementType: 'labels.text.fill', stylers: [{ color: '#d7e3f3' }] },
+          { elementType: 'labels.text.stroke', stylers: [{ color: '#101820' }] },
+          { featureType: 'road', elementType: 'geometry', stylers: [{ color: '#26384f' }] },
+          { featureType: 'road.highway', elementType: 'geometry', stylers: [{ color: '#3f5f88' }] },
+          { featureType: 'poi', stylers: [{ visibility: 'on' }] },
+          { featureType: 'water', elementType: 'geometry', stylers: [{ color: '#0b2940' }] }
+        ]
+      });
+      infoWindow = new google.maps.InfoWindow();
+      drawProperties();
+      document.getElementById('search').addEventListener('input', drawProperties);
+      document.getElementById('reset').onclick = () => { document.getElementById('search').value=''; drawProperties(); map.setCenter(center); map.setZoom(15); toast('Map reset.'); };
+      document.getElementById('locate').onclick = () => {
+        if (!navigator.geolocation) return toast('Location unavailable.');
+        navigator.geolocation.getCurrentPosition(pos => { map.setCenter({ lat: pos.coords.latitude, lng: pos.coords.longitude }); map.setZoom(16); toast('Centered on current location.'); }, () => toast('Location permission unavailable.'));
+      };
+      document.querySelectorAll('[data-radius]').forEach(btn => btn.onclick = () => { document.querySelectorAll('[data-radius]').forEach(b => b.classList.remove('active')); btn.classList.add('active'); activeRadius = Number(btn.dataset.radius); toast(`Showing properties within ${btn.textContent}.`); });
+      window.addEventListener('resize', () => google.maps.event.trigger(map, 'resize'), { passive: true });
+    };
+    (function loadGoogleMaps() {
+      const key = keyFromRuntime();
+      if (!key || key.includes('replace_with')) { showSetup(); return; }
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(key)}&callback=initKnockQuestGoogleMap&loading=async`;
+      script.async = true;
+      script.defer = true;
+      script.onerror = showSetup;
+      document.head.appendChild(script);
+    })();
+  </script>
+</body>
+</html>
