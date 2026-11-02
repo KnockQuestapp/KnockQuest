@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="description" content="KnockQuest Privacy Policy explains what information the app handles, how it is used and shared, and how to request account and data deletion.">
+  <title>Privacy Policy | KnockQuest</title>
+  <style>
+    :root { color-scheme: light dark; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #0e1b37; color: #eef3ff; line-height: 1.65; }
+    main { width: min(860px, calc(100% - 32px)); margin: 40px auto; padding: 32px; border: 1px solid #33476c; border-radius: 24px; background: #142344; }
+    h1, h2 { line-height: 1.25; }
+    h1 { margin-top: 0; font-size: clamp(2rem, 5vw, 2.7rem); }
+    h2 { margin-top: 32px; font-size: 1.2rem; }
+    p, li { color: #d1dbef; }
+    a { color: #9ab4ff; }
+    a:focus-visible { outline: 3px solid #9ab4ff; outline-offset: 3px; }
+    .updated { color: #aab9d5; }
+    .callout { padding: 16px; border-radius: 14px; background: #20355d; }
+    footer { margin-top: 36px; border-top: 1px solid #33476c; padding-top: 20px; color: #aab9d5; }
+    @media (max-width: 600px) { main { margin: 16px auto; padding: 22px; border-radius: 18px; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>KnockQuest Privacy Policy</h1>
+  <p class="updated">Effective date: November 1, 2026</p>
+  <p>This policy describes how KnockQuest handles information when you use the KnockQuest mobile app or web app. KnockQuest is operated by Miguel Calina. For privacy questions or requests, contact <a href="mailto:knockquest@gmail.com">knockquest@gmail.com</a>.</p>
+
+  <h2>Information we handle</h2>
+  <ul>
+    <li><strong>Account details:</strong> email address, display name, and account identifier used to sign in and associate your workspace. If you sign in with Google, Google and Supabase handle authentication. KnockQuest does not receive your Google password.</li>
+    <li><strong>Workspace records:</strong> information you enter or import, which may include lead or resident names, phone numbers, email addresses, property addresses including house and unit numbers, notes, visit outcomes, status, follow-up dates, tasks, territories, and map pins or coordinates.</li>
+    <li><strong>Location:</strong> when you choose a location feature and grant permission, the app accesses your device or browser location while you use that feature. Location is used to center the map, help identify an address, or save a location you choose. KnockQuest does not run background location tracking.</li>
+    <li><strong>Presence:</strong> while a signed-in account is using the app in the foreground, KnockQuest sends the account identifier and a last-active timestamp to Supabase for account and service administration.</li>
+    <li><strong>CRM settings and imports:</strong> if you configure a CRM connection, its webhook address, API credential, field mappings, sync status, and import history may be stored in the app's local storage. You may import files for local review and choose which records to save.</li>
+  </ul>
+
+  <h2>How we use information</h2>
+  <p>We use information to provide sign-in, save and synchronize your workspace, display map and property information, populate addresses, organize field activity, import records, send CRM updates you configure, provide support, and protect the service. We do not sell lead or customer information or use it for cross-app targeted advertising.</p>
+
+  <h2>Local storage and cloud sync</h2>
+  <p>Workspace records are kept in app or browser storage on your device. If you sign in and cloud sync is available, records associated with your account are synchronized to Supabase. If you do not sign in, records remain on that device or browser. Signing out does not itself erase records stored on a device.</p>
+
+  <h2>Location, maps, and address lookup</h2>
+  <p>Map views use Esri basemap services. Address search and reverse geocoding use OpenStreetMap's Nominatim service, and nearby property queries may use the Overpass API. When you use these features, the relevant search text or map coordinates, along with ordinary connection data such as your IP address, may be sent to those providers. Their own privacy terms apply to that processing.</p>
+
+  <h2>CRM sharing</h2>
+  <p>When you run or enable a CRM sync, KnockQuest sends the selected lead data to the CRM endpoint you configure or authorize. Depending on your field mappings, this can include contact details, full property address, house or unit number, notes, location coordinates, status, outcomes, and follow-up information. For the KnockQuest CRM Bridge, the request passes through Supabase before being forwarded to the selected provider. The CRM provider then handles the information under its own terms. You control the connection and should review its destination and permissions before syncing.</p>
+
+  <h2>Service providers and disclosures</h2>
+  <p>We use Supabase for authentication, cloud database sync, and the CRM Bridge; Google for Google sign-in and on-device text recognition on supported mobile devices; Esri for map tiles; and OpenStreetMap services for address and nearby-property lookup. We disclose information to a CRM provider only when you configure or use that integration, and may disclose information when legally required or necessary to protect users and the service. These providers may process information in countries other than yours under their own privacy and security practices.</p>
+
+  <h2>Files and text recognition</h2>
+  <p>Files you select for CRM import are parsed in the app for your review. Text recognition for supported images runs on your device or in your browser. The original image is not sent to KnockQuest for recognition. If you save extracted information, it becomes a workspace record and follows the storage and sync choices described above.</p>
+
+  <h2>Advertising and analytics</h2>
+  <p>The current production web app and production Android release do not display ads. Staging builds may use Google's test ad inventory, which is not paid advertising. If production advertising or analytics practices change, this policy and the applicable Google Play disclosures will be updated.</p>
+
+  <h2>Retention and deletion</h2>
+  <p>Local records remain on your device or browser until you delete them, clear the app or browser storage, or remove the app. Cloud records are retained while needed to provide the account and sync service. You can request deletion of your KnockQuest account and associated cloud records by emailing <a href="mailto:knockquest@gmail.com?subject=KnockQuest%20account%20and%20data%20deletion%20request">knockquest@gmail.com</a> from your account email and identifying the account to delete. We will verify the request and remove active account data we control, subject to legal and security retention requirements. Copies already sent to a CRM must also be deleted with that CRM provider. Local device copies may need to be removed separately. Some backup copies may remain temporarily in routine recovery systems before they are overwritten.</p>
+  <p class="callout"><strong>To request account and data deletion:</strong> visit <a href="delete-account.html">KnockQuest account deletion</a> or <a href="mailto:knockquest@gmail.com?subject=KnockQuest%20account%20and%20data%20deletion%20request">email KnockQuest privacy support</a>. You can also ask us to correct information or answer questions about your data.</p>
+
+  <h2>Security</h2>
+  <p>We use platform and service-provider safeguards, including encrypted network connections where supported. Local records and CRM credentials are stored in app or browser storage; protect your device and do not share access with people you do not trust. No storage or transmission method is completely secure.</p>
+
+  <h2>Children</h2>
+  <p>KnockQuest is a field-work tool and is not designed for children under 13. We do not knowingly collect personal information from children under 13.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>We may update this policy when the app's data practices change. The effective date above shows when the current version was published. Material changes will be reflected here.</p>
+
+  <footer>KnockQuest privacy contact: <a href="mailto:knockquest@gmail.com">knockquest@gmail.com</a></footer>
+</main>
+</body>
+</html>

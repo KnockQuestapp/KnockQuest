@@ -1,76 +1,91 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <base href="/KnockQuest/">
-
-  <meta charset="UTF-8">
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
-  <!-- iOS meta tags & icons -->
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="knockquest">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>knockquest</title>
-  <link rel="manifest" href="manifest.json">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e1b37">
+  <meta name="description" content="KnockQuest helps field teams map properties, record door visits, manage leads and follow-ups, and keep their canvassing workflow organized.">
+  <meta name="author" content="Miguel Calina">
+  <meta name="copyright" content="Copyright 2026 Miguel Calina. All rights reserved in original KnockQuest materials.">
+  <meta name="knockquest-attribution-id" content="KQ-MC-2026-01">
+  <link rel="alternate" type="application/json" href="ownership.json" title="KnockQuest ownership and provenance record">
+  <title>KnockQuest | Own your area. Every door is an Opportunity</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    :root { color-scheme: dark; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background:#0b1730; color:#f4f7ff; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; background:radial-gradient(ellipse at 80% 0%,#263e70 0,transparent 42%),#0b1730; }
+    a { color:inherit; }
+    .wrap { width:min(1120px,calc(100% - 40px)); margin:auto; }
+    header { display:flex; align-items:center; justify-content:space-between; padding:22px 0; }
+    .brand { display:flex; align-items:center; gap:12px; text-decoration:none; font-weight:800; letter-spacing:.04em; }
+    .brand img { width:42px; height:42px; border-radius:13px; }
+    nav { display:flex; gap:24px; align-items:center; color:#cad5ee; font-size:14px; }
+    nav a { text-decoration:none; }
+    .button { display:inline-flex; align-items:center; justify-content:center; padding:13px 20px; border-radius:14px; background:#8eaaff; color:#0b1730; font-weight:750; text-decoration:none; box-shadow:0 8px 28px #050b1880; transition:transform .18s ease,filter .18s ease; }
+    .button:hover { transform:translateY(-2px); filter:brightness(1.08); }
+    .button.secondary { background:#20345b; color:#f4f7ff; border:1px solid #3b527c; box-shadow:none; }
+    .hero { padding:70px 0 82px; display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center; }
+    .eyebrow { color:#7fe1d0; text-transform:uppercase; font-size:12px; font-weight:800; letter-spacing:.18em; }
+    h1 { font-size:clamp(42px,6vw,72px); letter-spacing:-.055em; line-height:1.02; margin:18px 0; max-width:720px; }
+    .hero p { color:#c3cee4; font-size:18px; line-height:1.65; max-width:610px; }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:28px; }
+    .visual { min-height:390px; border:1px solid #40557c; border-radius:30px; padding:20px; background:linear-gradient(145deg,#1a2b4d,#101e39); box-shadow:0 30px 90px #03091790; transform:rotate(1deg); }
+    .map { position:relative; height:100%; min-height:350px; border-radius:22px; overflow:hidden; background:linear-gradient(30deg,transparent 47%,#92a8c229 48%,#92a8c229 49%,transparent 50%),linear-gradient(120deg,transparent 35%,#92a8c21c 36%,#92a8c21c 37%,transparent 38%),linear-gradient(0deg,#20395f,#172c4d); }
+    .map:before,.map:after { content:""; position:absolute; background:#b6c9e21c; transform:rotate(-25deg); width:140%; height:14px; left:-18%; top:42%; border:1px solid #d5e1f01c; }
+    .map:after { top:68%; transform:rotate(21deg); height:10px; }
+    .pin { position:absolute; width:18px; height:18px; border-radius:50% 50% 50% 0; transform:rotate(-45deg); background:#91aaff; box-shadow:0 0 0 8px #91aaff25,0 0 30px #91aaffaa; }
+    .pin.p1 { left:27%; top:31%; }.pin.p2 { left:63%; top:47%; background:#77dfce; box-shadow:0 0 0 8px #77dfce25,0 0 30px #77dfceaa; }.pin.p3 { left:47%; top:72%; }
+    .map-card { position:absolute; left:18px; right:18px; bottom:18px; border:1px solid #51678d; border-radius:18px; background:#10203dec; padding:16px; box-shadow:0 10px 30px #0005; }
+    .map-card strong { display:block; font-size:17px; }.map-card span { color:#b8c6df; font-size:13px; }
+    section { padding:64px 0; }
+    .section-title { max-width:680px; margin-bottom:28px; }
+    h2 { margin:0 0 12px; font-size:clamp(30px,4vw,44px); letter-spacing:-.04em; }
+    .section-title p { color:#b9c7df; font-size:17px; line-height:1.6; }
+    .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .feature { border:1px solid #30466d; background:#142545cc; border-radius:22px; padding:24px; min-height:190px; }
+    .icon { display:grid; place-items:center; width:44px; height:44px; border-radius:14px; color:#10203b; background:#8eaaff; font-size:21px; font-weight:800; }
+    .feature:nth-child(2) .icon,.feature:nth-child(5) .icon { background:#78dfcf; }
+    .feature h3 { margin:18px 0 8px; font-size:18px; }.feature p { margin:0; color:#bdc9df; line-height:1.55; }
+    .workflow { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; counter-reset:step; }
+    .step { padding:20px; border-radius:18px; background:#142545; border:1px solid #30466d; color:#c4d0e6; line-height:1.55; }
+    .step:before { counter-increment:step; content:"0" counter(step); display:block; color:#7fe1d0; font-weight:800; font-size:13px; margin-bottom:14px; }
+    .cta { margin:44px 0 76px; border:1px solid #425982; border-radius:28px; padding:38px; background:linear-gradient(120deg,#1e3560,#172748); display:flex; justify-content:space-between; align-items:center; gap:24px; }
+    .cta p { color:#c7d3e8; margin-bottom:0; }
+    footer { border-top:1px solid #2a3e63; padding:24px 0 34px; display:flex; justify-content:space-between; gap:16px; color:#aebbd2; font-size:14px; }
+    footer a { color:#c4d1eb; }
+    @media(max-width:760px) { nav { gap:14px; } nav .nav-policy { display:none; } .hero { grid-template-columns:1fr; padding:46px 0 56px; gap:28px; }.visual { min-height:330px; }.map { min-height:290px; }.grid { grid-template-columns:1fr 1fr; }.workflow { grid-template-columns:1fr 1fr; }.cta { align-items:flex-start; flex-direction:column; padding:28px; } }
+    @media(max-width:480px) { .wrap { width:min(100% - 28px,1120px); } header { padding:16px 0; } nav { font-size:12px; gap:10px; } nav .button { padding:10px 12px; }.grid,.workflow { grid-template-columns:1fr; } section { padding:48px 0; } footer { flex-direction:column; } }
+    @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } *,*:before,*:after { transition:none !important; } }
+  </style>
+  <script>
+    if (location.hostname === 'knockquestapp.github.io' && location.pathname === '/KnockQuest/') {
+      location.replace('https://knockquest.app/app/' + location.hash);
+    }
+  </script>
 </head>
 <body>
-  <script src="ocr.js"></script>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
-  <script>
-    (async function loadKnockQuest() {
-      const cleanupKey = 'knockquest-cache-cleaned-address-verification-0.1.93';
-      try {
-        if ('caches' in window) {
-          const names = await caches.keys();
-          await Promise.all(names.map((name) => caches.delete(name)));
-        }
-        if ('serviceWorker' in navigator) {
-          const registrations = await navigator.serviceWorker.getRegistrations();
-          if (registrations.length > 0) {
-            await Promise.all(registrations.map((registration) => registration.unregister()));
-            if (!sessionStorage.getItem(cleanupKey)) {
-              sessionStorage.setItem(cleanupKey, '1');
-              window.location.reload();
-              return;
-            }
-          }
-        }
-      } catch (error) {
-        console.warn('KnockQuest cache cleanup skipped:', error);
-      }
-      const script = document.createElement('script');
-      script.src = 'flutter_bootstrap.js?v=address-verification-0.1.93';
-      script.async = true;
-      document.body.appendChild(script);
-    })();
-  </script>
+  <header class="wrap">
+    <a class="brand" href="#top"><img src="favicon.png" alt=""><span>KNOCKQUEST</span></a>
+    <nav aria-label="Main navigation"><a href="#features">Features</a><a href="#workflow">How it works</a><a class="nav-policy" href="privacy-policy.html">Privacy</a><a class="button" href="/app/">Open the app</a></nav>
+  </header>
+  <main id="top">
+    <div class="hero wrap">
+      <div><div class="eyebrow">Field work, kept in motion</div><h1>Own your area. Every door is an Opportunity</h1><p>Plan a neighborhood, log every door, and keep leads and follow-ups together in one practical canvassing workspace.</p><div class="actions"><a class="button" href="/app/">Open KnockQuest</a><a class="button secondary" href="/downloads/KnockQuest-production.apk">Download Android app</a></div></div>
+      <div class="visual" aria-label="Illustration of mapped properties and a door record"><div class="map"><i class="pin p1"></i><i class="pin p2"></i><i class="pin p3"></i><div class="map-card"><strong>Property visit</strong><span>Address, outcome, notes, and next follow-up - together.</span></div></div></div>
+    </div>
+    <section id="features"><div class="wrap"><div class="section-title"><div class="eyebrow">Made for the field</div><h2>Your canvassing workflow in one place</h2><p>Move from a property pin to a logged visit and a clear next step without losing your neighborhood context.</p></div><div class="grid">
+      <article class="feature"><div class="icon" aria-hidden="true">⌖</div><h3>Map the neighborhood</h3><p>Search addresses, use your current location, and view property pins on street or satellite maps.</p></article>
+      <article class="feature"><div class="icon" aria-hidden="true">⌂</div><h3>Log every door</h3><p>Record the property address, house and unit details, response, outcomes, and visit notes.</p></article>
+      <article class="feature"><div class="icon" aria-hidden="true">＋</div><h3>Keep leads organized</h3><p>Save contact details and property information together so the lead stays tied to the right place.</p></article>
+      <article class="feature"><div class="icon" aria-hidden="true">✓</div><h3>Follow up with purpose</h3><p>Track tasks, appointments, and follow-up dates so the next action is easy to find.</p></article>
+      <article class="feature"><div class="icon" aria-hidden="true">↗</div><h3>Sync to your CRM</h3><p>Connect supported providers or configure a webhook to send lead details into your workflow.</p></article>
+      <article class="feature"><div class="icon" aria-hidden="true">▦</div><h3>See your field activity</h3><p>Review visits, active leads, tasks, and pipeline summaries from the dashboard.</p></article>
+    </div></div></section>
+    <section id="workflow"><div class="wrap"><div class="section-title"><div class="eyebrow">A clear next step</div><h2>From first knock to follow-up</h2><p>Keep the whole field workflow moving without switching between disconnected lists and maps.</p></div><div class="workflow"><div class="step">Choose an area and find a property on the map.</div><div class="step">Log the door response and any relevant outcomes.</div><div class="step">Create or update the lead with a complete property address.</div><div class="step">Set a follow-up task and sync the lead when ready.</div></div></div></section>
+    <div class="wrap"><div class="cta"><div><div class="eyebrow">Ready for your next route?</div><h2>Bring your field workflow together.</h2><p>Open KnockQuest to map, log, and follow up from one workspace.</p></div><a class="button" href="/app/">Open KnockQuest</a></div></div>
+  </main>
+  <footer class="wrap"><span>Copyright 2026 Miguel Calina. All rights reserved in original KnockQuest materials.</span><span><a href="privacy-policy.html">Privacy Policy</a> | <a href="delete-account.html">Request account deletion</a> | <a href="/app/">Open app</a> | <a href="mailto:knockquest@gmail.com">Contact</a></span></footer>
 </body>
 </html>
-
-
